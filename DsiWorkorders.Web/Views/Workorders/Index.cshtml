@@ -1,0 +1,240 @@
+﻿@model DsiWorkorders.Web.ViewModels.WorkOrdersGridViewModel
+
+@{
+    ViewBag.Title = DsiWorkorders.Web.Helpers.Settings.ApplicationName;
+}
+
+<div class="row" style="margin-top:20px;">
+    <div class="col-md-4 col-xs-12">
+        @using (Html.BeginForm("SelectCompany", "Workorders"))
+        {
+            <div class="row" style="margin-bottom: 10px;">
+                <div class="col-md-10  col-xs-10">
+                    @Html.DropDownListFor(model => model.SelectedCompany, Model.Companies, "-Select Company-", new { @autofocus = "autofocus", @class = "form-control" })
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="">
+    @if (!string.IsNullOrEmpty(Model.SelectedCompany))
+    {
+        <p>
+            @Html.ActionLink("Add New Workorder", "Create", "Workorders", null, new
+                                                                 {
+                                                                     @class = "btn btn-large btn-default",
+                                                                     @tabindex = "1"
+                                                                 })
+
+        </p>
+    }
+
+
+    <ul class="nav nav-tabs wo-nav-tabs">
+        <li class="active"><a href="#open" data-toggle="tab">Open Workorders</a></li>
+        <li><a href="#closed" data-toggle="tab">Closed Workorders</a></li>
+        <li><a href="#awaiting" data-toggle="tab">Awaiting Approval</a></li>
+
+    </ul>
+
+    <div class="tab-content" style="padding-top: 20px;">
+        <div class="tab-pane fade in active" id="open">
+
+            @if (!string.IsNullOrEmpty(Model.SelectedCompany))
+            {
+                @Html.Action("LoadWorkordersGridPartial", new { type = "open", isApproved = true })
+            }
+            else
+            {
+                <div class="alert alert-info">Please select company first</div>
+            }
+        </div>
+        <div class="tab-pane fade" id="closed">
+            @if (!string.IsNullOrEmpty(Model.SelectedCompany))
+            {
+                @Html.Action("LoadWorkordersGridPartial", new { type = "Resloved", isApproved = false })
+            }
+            else
+            {
+                <div class="alert alert-info">Please select company first</div>
+            }
+
+        </div>
+        <div class="tab-pane fade" id="awaiting">
+            @if (!string.IsNullOrEmpty(Model.SelectedCompany))
+            {
+                @Html.Action("LoadWorkordersGridPartial", new { type = "Awaiting", isApproved = false })
+            }
+            else
+            {
+                <div class="alert alert-info">Please select company first</div>
+            }
+
+        </div>
+
+    </div>
+
+</div>
+
+@Html.Partial("_ApproveConfirmationPartial")
+
+<script>
+    $(function () {
+        $('#SelectedCompany').change(function () {
+
+            $(this).parents('form').submit();
+        });
+    });
+
+</script>
+
+<script>
+    function areaFilterJsFunction(element) {
+
+        element.kendoDropDownList({
+            dataSource: {
+                transport: {
+                    read: "@Url.Action("GetAreaDropdownItems")"
+                }
+            },
+            optionLabel: "--Select Area--"
+        });
+    }
+
+    function departmentFilterJsFunction(element) {
+
+        element.kendoDropDownList({
+            dataSource: {
+                transport: {
+                    read: $('.tab-content .tab-pane.active').find('div[id^="Workorders"]').parent().data('departmentfilterurl')
+                }
+            },
+            optionLabel: "--Select Department--"
+        });
+    }
+
+    function priorityFilterJsFunction(element) {
+
+        element.kendoDropDownList({
+            dataSource: {
+                transport: {
+                    read: "@Url.Action("GetPriorityDropdownItems")"
+                }
+            },
+            optionLabel: "--Select Priority--"
+        });
+    }
+
+    function consumerFilterJsFunction(element) {
+
+        element.kendoDropDownList({
+            dataSource: {
+                transport: {
+                    read: "@Url.Action("GetConsumerDropdownItems")"
+                }
+            },
+            optionLabel: "--Select Consumers--"
+        });
+    }
+
+
+    function getOpenIssues(grid) {
+
+        var filterObj = grid.sender._filter;
+
+        var filterString = '';
+
+        if (filterObj != undefined && typeof filterObj != "undefined" && typeof filterObj.filters != "undefined") {
+
+            for (var i = 0; i < filterObj.filters.length; i++) {
+                var filter = filterObj.filters[i];
+
+                if (filter.filters == undefined) {
+
+                    if (filterString == '') {
+                        filterString = filter.field + '~' + filter.operator + '~' + "'" + filter.value + "'";
+
+                    } else {
+                        filterString += '~' + filterObj.logic + '~' + filter.field + '~' + filter.operator + '~' + "'" + filter.value + "'";
+                    }
+                } else {
+                    var nestedFilters = filter.filters;
+                    var nestedFilterString = '';
+
+                    for (var j = 0; j < nestedFilters.length; j++) {
+
+                        var nestedfilter = nestedFilters[j];
+
+                        //set user friendly filer names
+                        if (nestedFilterString == '') {
+
+                            if (filterString != '') {
+                                nestedFilterString = '~' + filterObj.logic + '~(' + nestedfilter.field + '~' + nestedfilter.operator + '~' + "'" + nestedfilter.value + "'";
+                            }
+                            else {
+                                nestedFilterString = nestedfilter.field + '~' + nestedfilter.operator + '~' + "'" + nestedfilter.value + "'";
+                            }
+                        } else {
+                            nestedFilterString += '~' + filter.logic + '~' + nestedfilter.field + '~' + nestedfilter.operator + '~' + "'" + nestedfilter.value + "'";
+                        }
+                    }
+
+                    filterString += nestedFilterString + ')';
+                }
+            }
+        }
+
+
+        $.ajax({
+            url: '@Url.Action("GetFilteredOpenIssues", "Workorders")',
+            dataType: 'JSON',
+            method: 'POST',
+            data: { filter: filterString, page: 1, pageSize: 0 },
+            success: function (response) {
+                var issues = response.issues;
+
+                if (filterString != '') {
+                    issues += " Open - Filtered";
+                } else {
+                    issues += " Open";
+                }
+                $('.wo-mobile-grid-count').text('(' + issues + ')');
+            }
+        });
+    }
+
+    function doNothing() {
+
+    }
+
+    function onWorkOrderRequestEnd(e) {
+        if (e.response.Data && e.response.Data.length) {
+            var data = e.response.Data;
+            if (e.type == "read") {
+                for (var i = 0; i < data.length; i++) {
+                    var gr = data[i];
+                    gr.Reported = gr.Reported.replace(/\d+/, function (n) { return parseInt(n) + getOffsetMilliSeconds(n); });
+                    if (gr.Closed) {
+                        gr.Closed = gr.Closed.replace(/\d+/, function (n) { return parseInt(n) + getOffsetMilliSeconds(n); });
+                    }
+                }
+            } else {
+                for (var j = 0; j < data.length; j++) {
+                    data[j].Reported = data[j].Reported.replace(/\d+/, function (n) { return parseInt(n) + getOffsetMilliSeconds(n); });
+
+                    if (data.Closed) {
+                        data[j].Closed = data[j].Closed.replace(/\d+/, function (n) { return parseInt(n) + getOffsetMilliSeconds(n); });
+                    }
+                };
+            }
+        }
+    }
+
+    function getOffsetMilliSeconds(n) {
+        return new Date(parseInt(n)).getTimezoneOffset() * 60000;
+    }
+
+</script>
+
+<script src="@Url.Content("~/Scripts/wo-persist-grid-settings.js")"></script>

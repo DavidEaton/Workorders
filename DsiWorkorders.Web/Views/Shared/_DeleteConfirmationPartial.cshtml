@@ -1,0 +1,77 @@
+﻿<div class="modal fade cac-delete-modal" id="deleteModal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p class="msg">Are you sure you want to delete?</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-danger jq-delete-action" data-wait="Please wait...">Yes</a>
+                <a href="#" class="btn btn-default" data-dismiss="modal">No</a>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<script>
+
+    $('body').delegate('.jq-delete-link', 'click', function (event) {
+
+        event.preventDefault();
+        //get url of button
+        var url = $(this).attr('href');
+        var reloadUrl = $(this).data('reload');
+        var msg = $(this).data('msg');
+
+        if (msg) {
+            // set msg for delete upload document
+            $("#deleteModal").find(".msg").text(msg);
+        } else {
+            $("#deleteModal").find(".msg").text('Are you sure you want to delete?');
+        }
+
+
+        // set href of delete link with in modal and show modal.
+        $('#deleteModal').find('a.jq-delete-action').attr('href', url).data('reload',reloadUrl).end().modal('show');
+    });
+
+
+    // this is to avoid httpGet request and make httpPost request to delete action
+    $('#deleteModal a.jq-delete-action').click(function (event) {
+        event.preventDefault();
+        var url = $(this).attr('href');
+        var reloadUrl = $(this).data('reload');
+
+        var textInitial = $(this).text();
+        var $this = $(this).attr('disabled', 'disabled').text($(this).data('wait'));
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            success: function (response) {
+
+                if (response.success) {  //if success just reload the page
+                    if (typeof reloadUrl != "undefined" && reloadUrl != '') {
+                        window.location.href = reloadUrl;
+                    }
+                    else {
+                        window.location.reload();
+                    }
+                }
+                else {
+                    window.location.reload();
+                }
+            },
+            error: function (msg) {
+                //got here means, server returned error. Hide modal silently
+                $('#deleteModal').modal('hide');
+                $this.removeAttr('disabled').text(textInitial);
+            }
+        });
+    });
+</script>
+
+
+

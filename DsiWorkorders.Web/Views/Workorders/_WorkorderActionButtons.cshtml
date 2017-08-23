@@ -1,0 +1,60 @@
+﻿@using DsiWorkorders.Web.Helpers
+@model int
+@*DEVELOPEMNT*@
+
+@if (Settings.IsProduction)
+{
+    if (DsiWorkorders.Web.Helpers.UserFunctions.IsAdminOrEditor())
+    {
+        @Html.ActionLink("Edit", "Edit", "Workorders", new { id = Model }, new
+                                                                    {
+                                                                        @class = "btn btn-primary pull-right"
+
+                                                                    })
+        if (DsiWorkorders.Web.Helpers.UserFunctions.IsAdmin())
+        {
+            <a class="btn btn-danger jq-delete-link pull-right" data-reload="@Url.Action("Index", "Workorders")" href="@Url.Action("Delete", "Workorders", new { id = Model })">Delete</a>
+        }
+
+        @Html.ActionLink("Cancel", "Index", "Workorders", null, new
+                                                                    {
+                                                                        @class = "btn btn-default pull-left"
+                                                                    })
+    }
+    else
+    {
+        @Html.ActionLink("Ok", "Index", "Workorders", null, new
+                                                                    {
+                                                                        @class = "btn btn-primary pull-right"
+                                                                    })
+    }
+}
+else
+{
+    if (DsiWorkorders.Web.Helpers.UserFunctions.IsAdminOrEditor())
+    {
+        @Html.ActionLink("Edit", "Edit", "Workorders", new { id = Model }, new
+                                                                    {
+                                                                        @class = "btn btn-primary pull-right"
+                                                                    })
+
+        if (DsiWorkorders.Web.Helpers.UserFunctions.IsAdmin())
+        {
+            <a class="btn btn-danger jq-delete-link pull-right" data-reload="@Url.Action("Index", "Workorders")" href="@Url.Action("Delete", "Workorders", new { id = Model })">Delete</a>
+        }
+
+        @Html.ActionLink("Cancel", "Index", "Workorders", null, new
+                                                                    {
+                                                                        @class = "btn btn-default pull-left"
+                                                                    })
+    }
+    else
+    {
+        @Html.ActionLink("Ok", "Index", "Workorders", null, new
+                                                                    {
+                                                                        @class = "btn btn-primary pull-right"
+                                                                    })
+    }
+
+}
+

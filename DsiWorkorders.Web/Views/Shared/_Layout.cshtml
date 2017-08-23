@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@DsiWorkorders.Web.Helpers.Settings.ApplicationName</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+
+    <link rel="apple-touch-icon" href="~/Content/Images/apple-touch-icon-iphone-60x60.pn" sizes="60x60">
+    <link rel="apple-touch-icon" sizes="76x76" href="~/Content/Images/apple-touch-icon-ipad-76x76.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="~/Content/Images/apple-touch-icon-iphone-retina-120x120.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="~/Content/Images/apple-touch-icon-ipad-retina-152x152.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <!-- Pinned Site IE11 Code -->
+    <meta name="application-name" content="Workorders DSI" />
+    <meta name="msapplication-tooltip" content="Workorders DSI">
+    <!-- IE11 tiles -->
+    <meta name="msapplication-square70x70logo" content="~/Content/Images/tiny.png" />
+    <meta name="msapplication-square150x150logo" content="~/Content/Images/square.png" />
+    <meta name="msapplication-wide310x150logo" content="~/Content/Images/wide.png" />
+    <meta name="msapplication-square310x310logo" content="~/Content/Images/large.png" />
+    <meta name="msapplication-TileImage" content="/favicon-144.png">
+
+    @*    <meta name="msapplication-TileColor" content="#ffffff" />
+        <meta name="msapplication-TileImage" content="~/Content/favicon-144.png">*@
+
+
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/kendo")
+    @Styles.Render("~/Content/jqueryui")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/kendo")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link href="@Url.Content("~/Content/ATH/addtohomescreen.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/ATH/addtohomescreen.js")"></script>
+    <script>
+        addToHomescreen();
+    </script>
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="javascript:void(0);" class="navbar-brand wo-brand hidden-xs">@DsiWorkorders.Web.Helpers.Settings.CompanyName</a>
+                <a href="javascript:void(0);" class="navbar-brand wo-brand visible-xs">@DsiWorkorders.Web.Helpers.Settings.CompanyAbbr</a>
+
+                <ul class="nav navbar-nav pull-left" style="margin-left: 0; margin-right: 0;">
+
+                    @{
+                        if (DsiWorkorders.Web.Helpers.UserFunctions.IsValidUser())
+                        {
+                            var openIssuesCount = Html.Action("GetOpenIssuesCount", "Workorders");
+                            <li class="visible-xs">
+                                <a href="@Url.Action("Index", "Workorders")">
+                                    Workorders
+                                    @if (string.IsNullOrEmpty(DsiWorkorders.Web.Helpers.CompanyCookie.SelectedCompany) == false)
+                                    {
+                                        <span class="wo-mobile-grid-count">(@openIssuesCount)</span>
+                                    }
+                                </a>
+                            </li>
+                            <li class="hidden-xs">
+                                <a href="@Url.Action("Index", "Workorders")">
+                                    Workorders
+                                    @if (string.IsNullOrEmpty(DsiWorkorders.Web.Helpers.CompanyCookie.SelectedCompany) == false)
+                                    {
+                                        <span class="wo-mobile-grid-count">(@openIssuesCount Open)</span>
+                                    }
+                                </a>
+                            </li>
+                        }
+
+                    }
+                </ul>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @if (DsiWorkorders.Web.Helpers.UserFunctions.IsAdmin())
+                    {
+                        <li class="dropdown">
+
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">Report</a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="@Url.Action("Index", "ReportRecipient")">Report Recipients</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "AlertRecipient")">Workorder Alert Recipients</a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+
+                    <li>@Html.ActionLink("About", "About", "Workorders")</li>
+
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">Help</a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href=@DsiWorkorders.Web.Helpers.Settings.HelpVideoLinkUsers target="_blank">Users Video</a>
+                            </li>
+                            <li>
+                                <a href=@DsiWorkorders.Web.Helpers.Settings.HelpVideoLinkEditors target="_blank">Editors Video</a>
+                            </li>
+                            @*<li>
+                                    <a href=@DsiWorkorders.Web.Helpers.Settings.HelpVideoLinkMobile target="_blank">Mobile Video</a>
+                                </li>*@
+
+                        </ul>
+                    </li>
+
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @Html.Partial("_DisplayMessagePartial")
+        @RenderBody()
+    </div>
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/bootstrapSwitch")
+
+    <script type="text/javascript" src="@Url.Content("~/Scripts/wo-main.js?v=1.0")"></script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,78 @@
+﻿<div class="modal fade cac-delete-modal" id="approveModal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p class="msg">Are you sure you want to approve?</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-primary jq-approve-action" data-wait="Please wait...">Yes</a>
+                <a href="#" class="btn btn-default" data-dismiss="modal">No</a>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<script>
+
+    $('body').delegate('.jq-approve-link', 'click', function (event) {
+        event.preventDefault();
+        //get url of button
+        var url = $(this).attr('href');
+        var reloadUrl = $(this).data('reload');
+        var msg = $(this).data('msg');
+
+        if (msg) {
+            // set msg for approve upload document
+            $("#approveModal").find(".msg").text(msg);
+        } else {
+            $("#approveModal").find(".msg").text('Are you sure you want to approve?');
+        }
+
+        // set href of approve link with in modal and show modal.
+        $('#approveModal').find('a.jq-approve-action').attr('href', url).data('reload', reloadUrl).end().modal('show');
+
+        return false;
+    });
+
+
+    // this is to avoid httpGet request and make httpPost request to approve action
+    $('#approveModal a.jq-approve-action').click(function (event) {
+        event.preventDefault();
+        var url = $(this).attr('href');
+        var reloadUrl = $(this).data('reload');
+
+        var textInitial = $(this).text();
+        var $this = $(this).attr('disabled', 'disabled').text($(this).data('wait'));
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            success: function (response) {
+
+                if (response.success) {  //if success just reload the page
+                    if (typeof reloadUrl != "undefined" && reloadUrl != '') {
+                        window.location.href = reloadUrl;
+                    }
+                    else {
+                        window.location.reload();
+                    }
+                }
+                else {
+                    window.location.reload();
+                }
+            },
+            error: function (msg) {
+                //got here means, server returned error. Hide modal silently
+                $('#approveModal').modal('hide');
+                $this.removeAttr('disabled').text(textInitial);
+            }
+        });
+    });
+</script>
+
+
+
+

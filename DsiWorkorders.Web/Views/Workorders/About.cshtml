@@ -1,0 +1,64 @@
+﻿@model DsiWorkorders.Web.ViewModels.AboutViewModel
+
+@{
+    ViewBag.Title = "About";
+}
+<div class="col-sm-6">
+    <h3>About</h3>
+
+    <hr />
+    <div class="favicon-ico">
+        <img src="~/Content/Images/apple-touch-icon-iphone-60x60.png" />
+    </div>
+    <div class="application-detail">
+        <div>
+            <h4>
+                @Model.ApplicationName
+            </h4>
+            <div>
+                @Model.ApplicationDescription
+            </div>
+        </div>
+
+    </div>
+    <div class="clearfix"></div>
+    <p>User Permissions are granted via company group membership:</p>
+    <table class="table table-bordered table-striped table-margin">
+        <tr>
+            <th>Permission</th>
+            <th>Group CSI</th>
+            <th>Group DSI</th>
+        </tr>
+        <tr>
+            <td>View</td>
+            <td>CSI_Users</td>
+            <td>DSI_Users</td>
+        </tr>
+        <tr>
+            <td>Edit</td>
+            <td>CSI_WorkorderEditors</td>
+            <td>DSI_WorkorderEditors</td>
+        </tr>
+        <tr>
+            <td>Admin</td>
+            <td>CSI_WorkorderAdmins</td>
+            <td>DSI_WorkorderAdmins</td>
+        </tr>
+    </table>
+    <div class="about-page-btn">
+
+        <a href="@Model.UrlReferrer" class="btn btn-default backlist-btn"><i class="fa fa-arrow-left"></i>OK</a>
+
+    </div>
+
+    <p>
+        @Model.ApplicationName
+    </p>
+    <p>
+        Copyright @Model.CurrentYear Alpha Information Systems, Inc All rights reserved.
+    </p>
+
+
+</div>
+
+

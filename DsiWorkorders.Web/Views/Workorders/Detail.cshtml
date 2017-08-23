@@ -1,0 +1,105 @@
+﻿@model DsiWorkorders.Web.ViewModels.WorkorderDetailViewModel
+
+@{
+    ViewBag.Title = "Workorder";
+}
+
+<div class="row">
+    <div class="col-md-7">
+        <p class="muted lead">@ViewBag.Title</p>
+
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <div class="wo-form-contents">
+            <div class="wo-form-child">
+                <fieldset>
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.DepartmentAreaId)
+                                @Html.DropDownListFor(model => model.DepartmentAreaId, Model.Areas, "Select Area", new { @class = "form-control", @disabled = "disabled" })
+                                @Html.ValidationMessageFor(model => model.DepartmentAreaId)
+                            </div>
+                        </div>
+
+                        
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.DepartmentId)
+                                @Html.DropDownListFor(model => model.DepartmentId, Model.Departments, "Select Department", new { @class = "form-control", @disabled = "disabled" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Reported)
+                                @Html.TextBoxFor(model => model.Reported, string.Format("{0:MM/dd/yyyy}", Model.Reported), new { @class = "form-control", @disabled = "disabled" })
+                                @Html.ValidationMessageFor(model => model.Reported)
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Reporter)
+                                @Html.TextBoxFor(model => model.Reporter, new { @class = "form-control", @disabled = "disabled" })
+                                @Html.ValidationMessageFor(model => model.Reporter)
+
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Priority)
+                                @Html.DropDownListFor(model => model.Priority, Model.Priorities, "Select Priority", new { @class = "form-control", @disabled = "disabled" })
+                                @Html.ValidationMessageFor(model => model.Priority)
+                                @*<div class="help-block">Emergencies are to be phoned in and then submitted as High Priority</div>*@
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Details)
+                                @Html.TextAreaFor(model => model.Details, new { @class = "form-control", @rows = "4", @readonly = "readonly"  })
+                                @Html.ValidationMessageFor(model => model.Details)
+                            </div>
+                        </div>
+                    </div>
+
+@*                  //Consumers will be implemented at a later date...  
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ConsumerId)
+                                @Html.DropDownListFor(model => model.ConsumerId, Model.Consumers, "Select Responsible Person", new { @class = "form-control", @disabled = "disabled"  })
+                                @Html.ValidationMessageFor(model => model.ConsumerId)
+
+                            </div>
+                        </div>
+                        
+                    </div>*@
+                    
+                </fieldset>
+            </div>
+          <div class="wo-form-buttons clearfix">
+              @Html.Partial("_WorkorderActionButtons",Model.Id)
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+@Html.Partial("_DeleteConfirmationPartial")
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

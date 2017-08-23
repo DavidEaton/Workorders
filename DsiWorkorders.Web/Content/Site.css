@@ -1,0 +1,411 @@
+﻿/*body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}*/
+
+/* Set padding to keep content from hitting the edges */
+/*.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}*/
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+/*.dl-horizontal dt {
+    white-space: normal;
+}*/
+
+/* Set width on the form input elements since they're 100% wide by default */
+/*input,
+select,
+textarea {
+    max-width: 280px;
+}*/
+
+
+
+
+body {
+    padding-top: 60px;
+}
+
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #e80c4d;
+    font-weight: bold;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+.input-validation-error {
+    border: 1px solid #e80c4d !important;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #e80c4d;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+footer .content-wrapper {
+    margin-top: 30px;
+}
+
+.wo-nav-tabs {
+    background: #F06C17;
+    padding-bottom: 1px;
+    border-bottom: 0 !important;
+}
+
+    .wo-nav-tabs li a,
+    .wo-nav-tabs li:hover a,
+    .wo-nav-tabs li:hover a:hover {
+        color: #fff;
+        font-weight: bold;
+        margin-left: 10px;
+        background: #F7801C;
+        border: 2px solid #E65D00 !important;
+        margin-top: 5px;
+        border-radius: 8px 8px 0 0 !important;
+        padding: 8px 10px !important;
+    }
+
+        .wo-nav-tabs li:hover a:hover {
+            background: #E65D00;
+        }
+
+    .wo-nav-tabs li.active a,
+    .wo-nav-tabs li.active a:hover {
+        background: #fff;
+        border-bottom: 2px solid #fff !important;
+    }
+
+.wo-form-contents {
+    background: #F06C17;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+    .wo-form-contents .wo-form-child {
+        background: #fff;
+        border-radius: 10px;
+        padding: 10px;
+    }
+
+.wo-form-buttons {
+    padding: 10px 10px 0;
+}
+
+    .wo-form-buttons a {
+        margin-right: 10px;
+    }
+
+.align-right {
+    text-align: right;
+}
+
+.text-color-red {
+    color: #ff0000 !important;
+}
+
+.wo-mobile-grid {
+    /*max-width: 480px;*/
+    /*border: 1px solid #000;*/
+    position: relative;
+}
+
+.wo-mobile-grid-header {
+    /*border-bottom: 1px solid #000;*/
+    padding: 5px;
+}
+
+.wo-mobile-grid-title {
+    font-weight: bold;
+    font-size: 15px;
+    text-align: center;
+}
+
+.wo-mobile-grid-action-links {
+    text-align: right;
+}
+
+.wo-mobile-grid-action-link {
+    color: #fff;
+    text-align: center;
+    padding: 2px 4px !important;
+    font-size: 20px !important;
+    opacity: 0.7;
+    margin-right: 5px;
+    position: relative;
+    top: 2px;
+}
+
+    .wo-mobile-grid-action-link.bright {
+        opacity: 1;
+    }
+
+.wo-mobile-grid-action-link-small {
+    color: #000;
+}
+
+.wo-mobile-grid-filters-row {
+    /*padding: 5px;*/
+}
+
+.wo-mobile-grid-content-row-wrapper,
+.wo-mobile-grid-content-row-wrapper:hover {
+    /*border-top: 1px solid #000;*/
+    padding-left: 45px;
+    font-size: 12px;
+    position: relative;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.wo-mobile-grid-content-row,
+.wo-mobile-grid-content-row:hover {
+    display: block;
+    color: #000;
+    text-decoration: none;
+    padding: 5px 5px 5px 0;
+}
+
+.wo-mobile-grid-content-row-wrapper:before {
+    content: "";
+    height: 100%;
+    width: 40px;
+    position: absolute;
+    margin-right: 10px;
+    left: 0;
+    top: 0;
+    border-radius: 7px;
+    opacity: 0.6;
+}
+
+.high-priority:before {
+    background: red;
+    opacity: 0.6;
+}
+
+.normal-priority:before {
+    background: #0000FF;
+    opacity: 0.6;
+}
+
+.low-priority:before {
+    background: #008040;
+    opacity: 0.6;
+}
+
+.wo-mobile-grid-content-row > .row {
+    margin-bottom: 5px;
+}
+
+
+.wo-mobile-grid-department {
+    text-align: right;
+}
+
+.wo-mobile-grid-days-overdue {
+    font-weight: bold;
+    color: red;
+}
+
+.wo-mobile-grid-footer > div {
+    position: relative;
+    margin-top: 3px;
+    min-height: 100px;
+    padding-left: 40px;
+    font-size: 20px;
+}
+
+    .wo-mobile-grid-footer > div:before {
+        content: "";
+        height: 100px;
+        width: 30px;
+        position: absolute;
+        margin-right: 10px;
+        left: 0;
+        top: 0;
+    }
+
+    .wo-mobile-grid-footer > div > span {
+        position: relative;
+        top: 40px;
+    }
+
+
+.filter-page {
+    /*max-width: 320px;*/
+    border: 2px solid black;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    position: relative;
+}
+
+
+.clearbtn {
+    margin-left: 70%;
+}
+
+.apply {
+    width: 90%;
+    margin: 5%;
+}
+
+.sort-page {
+    /*max-width: 320px;*/
+    border: 2px solid black;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    position: relative;
+}
+
+
+.search-page {
+    /*max-width: 320px;*/
+    border: 2px solid black;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    position: relative;
+}
+
+.sort-action-button {
+    margin-left: 20px;
+}
+
+
+.wo-mobile-grid-search-box {
+    border-radius: 20px !important;
+    background-image: url("/images/small-search.png") !important;
+    background-repeat: no-repeat;
+    background-position: 5px;
+    padding-left: 30px !important;
+}
+
+.wo-mobile-grid-close-modal {
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    font-size: 50px !important;
+}
+
+.wo-mobile-grid-modal-body {
+    padding: 0 !important;
+}
+
+.wo-mobile-grid-loader {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    display: none;
+}
+
+.wo-mobile-grid-bottom-loader {
+    position: absolute;
+    bottom: -50px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    text-align: center;
+    display: none;
+}
+
+    .wo-mobile-grid-bottom-loader img {
+        max-width: 200px;
+    }
+
+
+.kendo-grid-filters {
+    margin-bottom: 10px;
+    margin-left: 5px;
+    position: relative;
+    top: -2px;
+}
+
+.wo-mobile-grid-content-row-wrapper:nth-child(even) {
+    background: #D9ECFF;
+    border-radius: 7px;
+}
+
+
+@media (max-width: 767px) {
+    .wo-brand {
+        margin-top: 4px;
+    }
+}
+
+
+.btn-up {
+    transition: all 0.1s !important;
+    -webkit-box-shadow: 0px 9px 0px #379BA8 !important;
+    -moz-box-shadow: 0px 4px 0px #379BA8 !important;
+    box-shadow: 4px 4px 0px #379BA8 !important;
+    opacity: 1;
+    position: relative;
+    top: 0px;
+}
+
+
+.btn-info {
+    color: #ffffff;
+    background-color: #3FCCDF !important;
+    border-color: #3FCCDF !important;
+}
+
+div.k-grid-content {
+    min-height: 500px;
+}
+
+.favicon-ico {
+    float: left;
+}
+
+.application-detail {
+    margin-bottom: 40px;
+    float: left;
+    margin-left: 6px;
+}
+
+.table-margin, .about-page-btn {
+    margin-bottom: 20px;
+}
+
+.backlist-btn {
+    margin-top: 10px;
+}
+
+.container.body-content {
+    padding-bottom: 40px;
+}
+
+@media (max-width:767px) {
+    .navbar-inverse .navbar-text {
+        float: none;
+        margin-left: 15px;
+    }
+}
+
+.k-grid tbody tr{
+    cursor: pointer;
+}
+.tooltip-icon{
+    font-size:30px;
+}

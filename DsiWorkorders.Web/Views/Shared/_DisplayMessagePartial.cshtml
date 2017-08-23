@@ -1,0 +1,15 @@
+﻿@if (ViewBag.SuccessMessage != null || TempData["SuccessMessage"] != null)
+{
+    <div id="SuccessMessage" class="alert alert-success sf-smaller-alert">
+        <a href="#" class="close" data-dismiss="alert">×</a>
+        @Html.Raw(ViewBag.SuccessMessage) @Html.Raw(TempData["SuccessMessage"])
+    </div>
+}
+
+@if (ViewBag.ErrorMessage != null || TempData["ErrorMessage"] != null)
+{
+    <div id="ErrorMessage" class="alert alert-danger sf-smaller-alert">
+        <a href="#" class="close" data-dismiss="alert">×</a>
+        @Html.Raw(ViewBag.ErrorMessage) @Html.Raw(TempData["ErrorMessage"])
+    </div>
+}

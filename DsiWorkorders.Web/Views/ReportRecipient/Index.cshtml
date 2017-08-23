@@ -1,0 +1,117 @@
+﻿@model DsiWorkorders.Web.ViewModels.ReportRecipient.ReportRecipientGridViewModel
+@using DsiWorkorders.Web.ViewModels.ReportRecipient
+@using Kendo.Mvc.UI;
+
+<div class="row" style="margin-top:20px;">
+    <div class="col-md-4 col-xs-12">
+        @using (Html.BeginForm("SelectCompany", "Workorders"))
+        {
+            <div class="row" style="margin-bottom: 10px;">
+                <div class="col-md-10  col-xs-10">
+                    @Html.DropDownListFor(model => model.SelectedCompany, Model.Companies, "-Select Company-", new { @autofocus = "autofocus", @class = "form-control" })
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@if (!string.IsNullOrEmpty(Model.SelectedCompany))
+{
+    <div class="row">
+        <div class="col-sm-5">
+            <p>
+                @Html.ActionLink("Add New Report Recipient", "Create", "ReportRecipient", null, new
+   {
+       @class = "btn btn-large btn-default",
+       @tabindex = "1"
+   })
+
+            </p>
+        </div>
+        <div class="col-sm-7">
+            <div class="glyphicon glyphicon-question-sign tooltip-icon pull-right" data-content="Periodic Workorder Reports are emailed to the Recipients listed here." rel="popover" data-placement="left" data-trigger="hover"></div>
+        </div>
+    </div>
+
+}
+
+<ul class="nav nav-tabs wo-nav-tabs">
+    <li class="active"><a href="#ReportRecipients" data-toggle="tab">Report Recipient</a></li>
+
+</ul>
+<div class="tab-content" style="padding-top: 20px;">
+    <div class="tab-pane fade in active" id="ReportRecipients">
+        <div class="jq-kendo-filters-wrapper hide" style="margin-bottom: 10px;">
+
+            <i class="glyphicon glyphicon-filter"></i>
+            <span class="jq-kendo-filters kendo-grid-filters"></span>
+            <a href="#" class="btn btn-warning jq-clear-kendo-filters" data-id="RecordRecipients" style="margin-left: 15px; padding: 1px 5px;">Clear Filters</a>
+        </div>
+
+        @(Html.Kendo().Grid<ReportRecipientGridViewModel>().Name("RecordRecipients").Columns(c =>
+{
+    c.Bound(w => w.AreaName).Title("Area").Filterable(w => w.UI("areaFilterJsFunction")).ClientTemplate(
+                                                   "<span data-url='" +
+                                                   Url.Action("Edit", "ReportRecipient") +
+                                                   "/#= Id #'" +
+                                                   ">#=AreaName#</span>"
+                                                   );
+    c.Bound(w => w.Emails).Title("Emails").Width(550);
+})
+      .DataSource(d => d
+                         .Ajax()
+          // .Events(x => x.RequestStart((ViewBag.ReportRecipient == "Resolved" ? "doNothing" : "getOpenIssues")))
+          //      .Events(ev => ev.RequestEnd("onWorkOrderRequestEnd"))
+                         .Read(r => r.Action("GetReportRecipient", "ReportRecipient", new { }))
+                         .PageSize(15))
+                         .AutoBind(false)
+                         .Pageable(pager => pager
+                         .PageSizes(true)
+      )
+      .Sortable()
+      .Resizable(d => d.Columns(true))
+      .Reorderable(d => d.Columns(true))
+      .Scrollable()
+      .Events(evt => evt.DataBound("persistGridSettings"))
+      .Events(evt => evt.ColumnHide("persistGridSettings"))
+      .Events(evt => evt.ColumnShow("persistGridSettings"))
+      .Filterable()
+      .ColumnMenu()
+        )
+
+
+    </div>
+</div>
+
+<script>
+
+    $(function () {
+
+        var grid = $('#RecordRecipients').data().kendoGrid;
+        loadGridStateFromCookie(grid);
+
+        $('#SelectedCompany').change(function () {
+
+            $(this).parents('form').submit();
+        });
+
+        // tooltip
+        $('.tooltip-icon').popover();
+    });
+
+</script>
+<script>
+    function areaFilterJsFunction(element) {
+
+        element.kendoDropDownList({
+            dataSource: {
+                transport: {
+                    read: "@Url.Action("GetAreaDropdownItems", "Workorder")"
+                }
+            },
+            optionLabel: "--Select Area--"
+        });
+    }
+</script>
+
+<script src="@Url.Content("~/Scripts/wo-persist-grid-settings.js")"></script>
+

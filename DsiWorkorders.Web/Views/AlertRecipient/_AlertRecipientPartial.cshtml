@@ -1,0 +1,55 @@
+﻿@model DsiWorkorders.Web.ViewModels.AlertRecipient.AlertRecipientViewModel
+
+<div class="row">
+    <div class="col-md-7">
+        <p class="muted lead">@ViewBag.Title</p>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(m => m.Id)
+
+            <div class="wo-form-contents">
+                <div class="wo-form-child">
+                    <fieldset>
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.AreaId)
+                                    @Html.DropDownListFor(model => model.AreaId, Model.Areas, "", new { @class = "form-control", @autofocus = "" })
+                                    @Html.ValidationMessageFor(model => model.AreaId)
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Emails)
+                                    @Html.TextBoxFor(model => model.Emails, new { @class = "form-control", @autofocus = "" })
+                                    <div ><small class="">Enter semicolon( ; ) seperated emails</small></div>
+                                    @Html.ValidationMessageFor(model => model.Emails)
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="wo-form-buttons clearfix">
+                    <button type="submit" class="btn btn-primary pull-right">Save</button>
+
+                    @if (DsiWorkorders.Web.Helpers.UserFunctions.IsAdmin() && Model.Id > 0)
+                    {
+                        <a class="btn btn-danger jq-delete-link pull-right" data-reload="@Url.Action("Index", "AlertRecipient")" href="@Url.Action("Delete", "AlertRecipient", new { id = Model.Id })">Delete</a>
+                    }
+
+                    @Html.ActionLink("Cancel", "Index", "AlertRecipient", null, new
+               {
+                   @class = "btn btn-default pull-left"
+               })
+
+                </div>
+            </div>
+
+        }
+    </div>
+</div>

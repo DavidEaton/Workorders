@@ -1,0 +1,124 @@
+﻿@model List<DsiWorkorders.Web.ViewModels.WorkOrdersGridViewModel>
+@using DsiWorkorders.Web.Helpers;
+
+@{
+    ViewBag.Title = "Report";
+    Layout = null;
+}
+
+<h2>@ViewBag.CompanyName Weekly Maintenance Work Orders Report</h2>
+<h5>Report created @DateTime.UtcNow.ToCentralTime()</h5><br />
+
+<h4><i>Workorders opened During The Past Week</i> </h4>
+<table class="table ">
+    <tr>
+        <th>
+            Area
+        </th>
+        <th>
+            Departments
+        </th>
+        <th>
+            Reported
+        </th>
+        <th>
+            Details
+        </th>
+
+        <th>
+            Priorty Due
+        </th>
+        <th>
+            Days OverDue
+        </th>
+        <th>
+            Days Open
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartmentAreaName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartmentName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reported)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Details)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Priority)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DaysOverdue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DaysOpen)
+            </td>
+        </tr>
+    }
+
+</table><br />
+<h4><i>Workorders Closed During The Past Week</i> </h4>
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Area
+        </th>
+        <th>
+            Departments
+        </th>
+        <th>
+            Reported
+        </th>
+        <th>
+            Details
+        </th>
+
+        <th>
+            Priorty Due
+        </th>
+        <th>
+            Days OverDue
+        </th>
+        <th>
+            Days Open
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if (item.Closed != null)
+        {
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DepartmentAreaName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DepartmentName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Reported)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Details)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Priority)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DaysOverdue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DaysOpen)
+                </td>
+            </tr>
+        }
+    }
+</table>

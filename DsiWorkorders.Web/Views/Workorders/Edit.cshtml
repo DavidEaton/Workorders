@@ -1,0 +1,253 @@
+﻿@model DsiWorkorders.Web.ViewModels.WorkorderEditViewModel
+
+@{
+    ViewBag.Title = "Edit Workorder";
+}
+
+<div class="row">
+    <div class="col-md-7">
+        <p class="muted lead">@ViewBag.Title</p>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.Reported)
+            @Html.HiddenFor(m => m.Reporter)
+
+            <div class="wo-form-contents">
+                <div class="wo-form-child">
+                    <fieldset>
+                        <div class="row">
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.DepartmentAreaId)
+                                    @Html.DropDownListFor(model => model.DepartmentAreaId, Model.Areas, "Select Area", new { @class = "form-control", @autofocus = "" })
+                                    @Html.ValidationMessageFor(model => model.DepartmentAreaId)
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.DepartmentId)
+                                    @Html.DropDownListFor(model => model.DepartmentId, Model.Departments, "Select Department", new { @class = "form-control", @disabled = "disabled" })
+                                    @Html.ValidationMessageFor(model => model.DepartmentId)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Reported)
+                                    @Html.TextBoxFor(model => model.Reported, string.Format("{0:MM/dd/yyyy}", Model.Reported), new { @class = "form-control", @disabled = "disabled" })
+                                    @Html.ValidationMessageFor(model => model.Reported)
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Reporter)
+                                    @Html.TextBoxFor(model => model.Reporter, new { @class = "form-control", @disabled = "disabled" })
+                                    @Html.ValidationMessageFor(model => model.Reporter)
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Due)
+                                    @Html.TextBoxFor(model => model.Due, string.Format("{0:MM/dd/yyyy}", Model.Due), new { @class = "form-control", @disabled = "disabled" })
+                                    @Html.ValidationMessageFor(model => model.Due)
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.DaysOpen)
+                                    @Html.TextBoxFor(model => model.DaysOpen, new { @class = "form-control", @disabled = "disabled" })
+                                    @Html.ValidationMessageFor(model => model.DaysOpen)
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Details)
+                                    @Html.TextAreaFor(model => model.Details, new { @class = "form-control", @rows = "5" })
+                                    @Html.ValidationMessageFor(model => model.Details)
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                @*                                <div class="form-group" style="margin-bottom: 8px;">
+                                        @Html.LabelFor(model => model.Overdue)
+                                        @Html.CheckBoxFor(model => model.Overdue, new { @class = "checkbox", @disabled = "disabled"  })
+                                    </div>
+                                *@
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.DaysOverdue)
+                                    @Html.TextBoxFor(model => model.DaysOverdue, new { @class = "form-control", @disabled = "disabled" })
+                                    @Html.ValidationMessageFor(model => model.DaysOverdue)
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Closed)
+                                    @Html.TextBoxFor(model => model.Closed, Model.Closed.HasValue ? string.Format("{0:MM/dd/yyyy}", Model.Closed) : string.Empty, new { @class = "form-control wo-jquery-datepicker" })
+                                    @Html.ValidationMessageFor(model => model.Closed)
+
+                                </div>
+                            </div>
+                        </div>
+
+                        @* <div class="row">
+                                                           <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.ConsumerId)
+                                        @Html.DropDownListFor(model => model.ConsumerId, Model.Consumers, "Select Responsible Person", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.ConsumerId)
+
+                                    </div>
+                                </div>
+
+                            </div>*@
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Priority)
+                                    @Html.DropDownListFor(model => model.Priority, Model.Priorities, "Select Priority", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Priority)
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Closer)
+                                    @Html.TextBoxFor(model => model.Closer, new { @class = "form-control", @autocomplete = "on" })
+                                    @Html.ValidationMessageFor(model => model.Closer)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Estimate)
+                                    @Html.TextBoxFor(model => model.Estimate, string.Format("{0:c}", Model.Estimate))
+                                    @Html.ValidationMessageFor(model => model.Estimate)
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.PoNumber)
+                                    @Html.TextBoxFor(model => model.PoNumber, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.PoNumber)
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Resolution)
+                                    @Html.TextAreaFor(model => model.Resolution, new { @class = "form-control", @rows = "4" })
+                                    @Html.ValidationMessageFor(model => model.Resolution)
+                                </div>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+                <div class="wo-form-buttons clearfix">
+                    <button type="submit" class="btn btn-primary pull-right">Save</button>
+
+                    @if (Model.SupervisorApproved != true)
+                    {
+                        <a class="btn btn-primary jq-approve-link pull-right" data-reload="@Url.Action("Edit", "Workorders", new {id = Model.Id })" href="@Url.Action("Approve", "Workorders", new { id = Model.Id })">Approve</a>
+                    }
+
+                    @if (DsiWorkorders.Web.Helpers.UserFunctions.IsAdmin())
+                    {
+                        <a class="btn btn-danger jq-delete-link pull-right" data-reload="@Url.Action("Index", "Workorders")" href="@Url.Action("Delete", "Workorders", new { id = Model.Id })">Delete</a>
+                    }
+
+
+                    @Html.ActionLink("Cancel", "Index", "Workorders", null, new
+               {
+                   @class = "btn btn-default pull-left"
+               })
+
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+@Html.Partial("_ApproveConfirmationPartial")
+@Html.Partial("_DeleteConfirmationPartial")
+
+
+@section Scripts {
+    <script>
+        $(function () {
+            $('#Estimate').addClass('form-control align-right').removeAttr("data-val-number");
+        });
+    </script>
+
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="@Url.Content("~/Scripts/mvcfoolproof.unobtrusive.min.js")"></script>
+
+    <script>
+        $(function () {
+            var minDate = '@Model.Reported.ToShortDateString()';
+            var maxDate = '@DateTime.Now.ToShortDateString()';
+            $('.wo-jquery-datepicker').datepicker({ minDate: minDate, maxDate: maxDate });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            var selectValue = "";
+
+
+            var departmentAreaId = $("#DepartmentAreaId").val();
+
+            if (departmentAreaId != '') {
+
+                $("#DepartmentId").attr('disabled', false);
+            }
+            else {
+                $("#DepartmentId").attr('disabled', true);
+            }
+
+            $("#DepartmentAreaId").change(function () {
+
+                $("#DepartmentId").empty();
+
+                $("#DepartmentId").attr('disabled', true);
+
+                selectValue = $("#DepartmentAreaId option:selected").val();
+
+                $.ajax({
+                    url: '@Url.Action("GetAreaDepartmnentList", "Workorders")' + '/' + selectValue,
+                    dataType: 'JSON',
+                    method: 'POST',
+                    success: function (data, response) {
+
+                        if (data.length != 0) {
+
+                            var select = $("#DepartmentId");
+
+                            select.empty();
+
+                            for (var i = 0; i < data.length; i++) {
+
+                                select.append('<option value="' + data[i].Value + '">' + data[i].Text + '</option>');
+                            }
+
+                            $("#DepartmentId").removeAttr("disabled");
+                        }
+
+                    }
+                });
+            });
+        })
+
+    </script>
+}

@@ -1,0 +1,169 @@
+﻿@model DsiWorkorders.Web.ViewModels.WorkorderCreateViewModel
+
+
+<div class="row">
+    <div class="col-md-7">
+        <p class="muted lead">@ViewBag.Title</p>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div class="wo-form-contents">
+                <div class="wo-form-child">
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.DepartmentAreaId)
+                                    @Html.DropDownListFor(model => model.DepartmentAreaId, Model.Areas, "Select Area", new { @class = "form-control", @autofocus = "" })
+                                    @Html.ValidationMessageFor(model => model.DepartmentAreaId)
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.DepartmentId)
+                                    @Html.DropDownListFor(model => model.DepartmentId, Model.Departments, "Select Department", new { @class = "form-control", @disabled = "disabled" })
+                                    @Html.ValidationMessageFor(model => model.DepartmentId)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Priority)
+                                    @Html.DropDownListFor(model => model.Priority, Model.Priorities, "Select Priority", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Priority)
+                                    <div class="help-block text-color-red">Emergencies are to be phoned in and then submitted as High Priority.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Details)
+                                    @Html.TextAreaFor(model => model.Details, new { @class = "form-control", @rows = "5" })
+                                    @Html.ValidationMessageFor(model => model.Details)
+                                </div>
+                            </div>
+                        </div>
+                       
+                        @*                      //Consumers will be implemented at a later date...
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.ConsumerId)
+                                        @Html.DropDownListFor(model => model.ConsumerId, Model.Consumers, "Select Responsible Person", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.ConsumerId)
+
+                                    </div>
+                                </div>
+                            </div>*@
+
+
+
+
+                    </fieldset>
+                </div>
+                <div class="wo-form-buttons clearfix">
+                    <button type="submit" class="btn btn-primary pull-right">Save</button>
+
+                    <a href="@Url.Action("Index")" class="btn btn-default pull-left"><i class="glyphicon glyphicon-arrow-left"></i>&nbsp;Back to List</a>
+
+
+                    @Html.ActionLink("Cancel", "Index", "Workorders", null, new
+                                                                    {
+                                                                        @class = "btn btn-default pull-left"
+                                                                    })
+
+                </div>
+            </div>
+            @*
+
+                <div>
+                    <h4>Departments</h4>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Area
+                                </th>
+                                <th>Name
+                                </th>
+                            </tr>
+                        </thead>
+
+                        @foreach (var item in Model.Departments)
+                        {
+                            <tbody>
+                                <tr class="">
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.AreaName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                </tr>
+                            </tbody>
+                        }
+
+                    </table>
+                </div>*@
+        }
+    </div>
+</div>
+
+
+@*<div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
+
+@section Scripts {
+    
+    @Scripts.Render("~/bundles/jqueryval")
+    
+<script>
+        $(document).ready(function(){
+            var selectValue = "";
+
+            $("#DepartmentAreaId").change(function () {
+
+                $("#DepartmentId").empty();
+
+                $("#DepartmentId").attr('disabled', true);
+
+                selectValue = $("#DepartmentAreaId option:selected").val();
+
+                $.ajax({
+                    url: '@Url.Action("GetAreaDepartmnentList", "Workorders")' + '/' + selectValue,
+                    dataType: 'JSON',
+                    method: 'POST',
+                    success: function (data, response) {
+
+                        if (data.length != 0) {
+
+                            var select = $("#DepartmentId");
+
+                            select.empty();
+
+                            for (var i = 0; i < data.length; i++) {
+
+                                select.append('<option value="' + data[i].Value + '">' + data[i].Text + '</option>');
+                            }
+
+                            $("#DepartmentId").removeAttr("disabled");
+                        }
+
+                    }
+                });
+
+
+
+
+
+
+
+
+            });
+        })
+
+</script>
+}
