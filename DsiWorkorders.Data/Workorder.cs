@@ -26,8 +26,12 @@ namespace DsiWorkorders.Data
         public Nullable<int> PoNumber { get; set; }
 
         public virtual Consumer Consumer { get; set; }
-        public virtual Department Department { get; set; }
-        public bool? SupervisorApproved { get; set; }
-        public string Supervisor { get; set; }
+        public virtual Department Department { get; set; }       
+
+        public Nullable<System.DateTime> Approved { get; set; }
+        public string Approver { get; set; }
+
+        public Nullable<System.DateTime> Rejected { get; set; }
+        public string Rejector { get; set; }
     }
 }

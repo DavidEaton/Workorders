@@ -14,7 +14,6 @@
             <div class="wo-form-child">
                 <fieldset>
                     <div class="row">
-
                         <div class="col-md-6">
                             <div class="form-group">
                                 @Html.LabelFor(model => model.DepartmentAreaId)
@@ -22,13 +21,27 @@
                                 @Html.ValidationMessageFor(model => model.DepartmentAreaId)
                             </div>
                         </div>
-
-                        
-
                         <div class="col-md-6">
                             <div class="form-group">
                                 @Html.LabelFor(model => model.DepartmentId)
                                 @Html.DropDownListFor(model => model.DepartmentId, Model.Departments, "Select Department", new { @class = "form-control", @disabled = "disabled" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Priority)
+                                @Html.DropDownListFor(model => model.Priority, Model.Priorities, "Select Priority", new { @class = "form-control", @disabled = "disabled" })
+                                @Html.ValidationMessageFor(model => model.Priority)
+                                @*<div class="help-block">Emergencies are to be phoned in and then submitted as High Priority</div>*@
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ConsumerId)
+                                @Html.DropDownListFor(model => model.ConsumerId, Model.Consumers, "Select Responsible Person", new { @class = "form-control", @disabled = "disabled" })
+                                @Html.ValidationMessageFor(model => model.ConsumerId)
                             </div>
                         </div>
                     </div>
@@ -49,20 +62,7 @@
 
                             </div>
                         </div>
-                        
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Priority)
-                                @Html.DropDownListFor(model => model.Priority, Model.Priorities, "Select Priority", new { @class = "form-control", @disabled = "disabled" })
-                                @Html.ValidationMessageFor(model => model.Priority)
-                                @*<div class="help-block">Emergencies are to be phoned in and then submitted as High Priority</div>*@
-                            </div>
-                        </div>
-                    </div>
-                    
+                    </div>                
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">

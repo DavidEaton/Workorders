@@ -2,7 +2,7 @@
     
     //click event on all anchor tags to fix iOS links open in new window 
     //source: http://stackoverflow.com/questions/2898740/iphone-safari-web-app-opens-links-in-new-window
-    $('body').delegate('a:not(".k-grid-header a,#deleteModal a, .jq-delete-link,.jq-approve-link,#approveModal a, .wo-nav-tabs a")', 'click', function (event) {
+    $('body').delegate('a:not(".k-grid-header a,#deleteModal a, .jq-delete-link,.jq-approve-link,.jq-reject-link,#approveModal a, .wo-nav-tabs a")', 'click', function (event) {
 
         var url = $.trim($(this).attr("href"));
         

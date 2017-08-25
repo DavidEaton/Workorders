@@ -17,7 +17,7 @@
 
 <script>
 
-    $('body').delegate('.jq-approve-link', 'click', function (event) {
+    $('body').delegate('.jq-approve-link, .jq-reject-link', 'click', function (event) {      
         event.preventDefault();
         //get url of button
         var url = $(this).attr('href');
@@ -36,10 +36,10 @@
 
         return false;
     });
-
-
+  
+    
     // this is to avoid httpGet request and make httpPost request to approve action
-    $('#approveModal a.jq-approve-action').click(function (event) {
+    $('#approveModal a.jq-approve-action').click(function (event) {      
         event.preventDefault();
         var url = $(this).attr('href');
         var reloadUrl = $(this).data('reload');
@@ -51,7 +51,7 @@
             type: "POST",
             url: url,
             success: function (response) {
-
+              
                 if (response.success) {  //if success just reload the page
                     if (typeof reloadUrl != "undefined" && reloadUrl != '') {
                         window.location.href = reloadUrl;

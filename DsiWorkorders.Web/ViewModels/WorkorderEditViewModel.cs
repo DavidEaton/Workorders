@@ -131,12 +131,15 @@ namespace DsiWorkorders.Web.ViewModels
                 return 0;
             }
         }
-        public bool SupervisorApproved { get; set; }
+        // public bool Approved { get; set; }
+        public Nullable<System.DateTime> Approved { get; set; }
 
         public SelectList Departments { get; set; }
         public SelectList Priorities { get; set; }
         public SelectList Consumers { get; set; }
         public SelectList Areas { get; set; }
+
+        public string Rejected { get; set; }
 
     }
 }

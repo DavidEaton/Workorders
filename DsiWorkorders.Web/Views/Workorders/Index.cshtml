@@ -35,7 +35,7 @@
         <li class="active"><a href="#open" data-toggle="tab">Open Workorders</a></li>
         <li><a href="#closed" data-toggle="tab">Closed Workorders</a></li>
         <li><a href="#awaiting" data-toggle="tab">Awaiting Approval</a></li>
-
+        <li><a href="#rejected" data-toggle="tab">Rejected</a></li>
     </ul>
 
     <div class="tab-content" style="padding-top: 20px;">
@@ -72,7 +72,17 @@
             }
 
         </div>
+        <div class="tab-pane fade" id="rejected">
+            @if (!string.IsNullOrEmpty(Model.SelectedCompany))
+            {
+                @Html.Action("LoadWorkordersGridPartial", new { type = "Rejected", isApproved = false })
+            }
+            else
+            {
+                <div class="alert alert-info">Please select company first</div>
+            }
 
+        </div>
     </div>
 
 </div>

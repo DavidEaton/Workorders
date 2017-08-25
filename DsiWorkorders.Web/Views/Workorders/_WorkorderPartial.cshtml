@@ -36,6 +36,7 @@
       ">#=Details#</a>"
       ).Title("Details").Width(300);
     c.Bound(w => w.Priority).Filterable(w => w.UI("priorityFilterJsFunction"));
+
     //Consumers will be implemented at a later date...
     //c.Bound(w => w.ConsumerName).Title("Individual").Filterable(w => w.UI("consumerFilterJsFunction"));
     if (ViewBag.WorkorderType == "Resloved")
@@ -45,25 +46,45 @@
     }
     else
     {
-        c.Bound(w => w.Due).Title("Due").Format("{0:MM/dd/yyyy}");
+        if (ViewBag.WorkorderType != "Rejected")
+        {
+            c.Bound(w => w.Due).Title("Due").Format("{0:MM/dd/yyyy}");
+        }
     }
-    c.Bound(w => w.DaysOverdue).Title("Days Overdue");
-    c.Bound(w => w.DaysOpen).Title("Days Open");
+
+    if (ViewBag.WorkorderType == "Rejected")
+    {
+        c.Bound(w => w.Rejected).Title("Rejected").Format("{0:MM/dd/yyyy}");
+        c.Bound(w => w.Rejector).Title("Rejector");
+    }
+    else
+    {
+        c.Bound(w => w.DaysOverdue).Title("Days Overdue");
+        c.Bound(w => w.DaysOpen).Title("Days Open");
+    }
+    //c.Bound(w => w.DaysOverdue).Title("Days Overdue");
+    //c.Bound(w => w.DaysOpen).Title("Days Open");
     if (ViewBag.WorkorderType == "Awaiting" && DsiWorkorders.Web.Helpers.UserFunctions.IsAdminOrEditor())
     {
-            c.Template(m => m)
-               .Width(100)
-               .ClientTemplate(
-               "<a class='btn btn-xs jq-approve-link btn-primary' data-reload='" + Url.Content("~/Workorders/Index") + "'  href='" + Url.Content("~/Workorders/Approve/#=Id #") + "'>Approve</a>&nbsp;"
-                );
+        c.Template(m => m)
+           .Width(100)
+           .ClientTemplate(
+           "<a class='btn btn-xs jq-approve-link btn-primary' data-reload='" + Url.Content("~/Workorders/Index") + "'  href='" + Url.Content("~/Workorders/Approve/#=Id #") + "'>Approve</a>&nbsp;"
+            );
+
+        c.Template(m => m)
+           .Width(100)
+           .ClientTemplate(
+           "<a class='btn btn-xs jq-reject-link btn-warning' data-msg='Are you sure you want to Reject the selected workorder ? Rejected workorders appear under the Rejected tab.' data-reload='" + Url.Content("~/Workorders/Index") + "'  href='" + Url.Content("~/Workorders/Reject/#=Id #") + "'>Reject</a>&nbsp;"
+            );
     }
-    
+
 })
       .DataSource(d => d
                          .Ajax()
                           .Events(x => x.RequestStart((ViewBag.WorkorderType == "Resolved" ? "doNothing" : "getOpenIssues")))
                                   .Events(ev => ev.RequestEnd("onWorkOrderRequestEnd"))
-                         .Read(r => r.Action(ViewBag.WorkorderType == "Resloved" ? "GetClosed" : "GetOpen", "Workorders", new { isOpen = ViewBag.isApproved , type = ViewBag.WorkorderType }))
+                         .Read(r => r.Action(ViewBag.WorkorderType == "Resloved" ? "GetClosed" : ViewBag.WorkorderType == "Rejected" ? "GetRejected" : "GetOpen", "Workorders", new { isOpen = ViewBag.isApproved , type = ViewBag.WorkorderType }))
                          .PageSize(15))
                          .AutoBind(false)
       .Pageable(pager => pager

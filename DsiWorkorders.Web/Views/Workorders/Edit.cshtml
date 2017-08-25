@@ -20,74 +20,71 @@
                 <div class="wo-form-child">
                     <fieldset>
                         <div class="row">
+                            <div class="col-md-6">
 
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.DepartmentAreaId)
-                                    @Html.DropDownListFor(model => model.DepartmentAreaId, Model.Areas, "Select Area", new { @class = "form-control", @autofocus = "" })
-                                    @Html.ValidationMessageFor(model => model.DepartmentAreaId)
-                                </div>
-                            </div>
-                            <div class="col-md-6">
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.DepartmentId)
-                                    @Html.DropDownListFor(model => model.DepartmentId, Model.Departments, "Select Department", new { @class = "form-control", @disabled = "disabled" })
+                                    @Html.DropDownListFor(model => model.DepartmentId, Model.Departments, "Select Department", new { @class = "form-control", @autofocus = "" })
                                     @Html.ValidationMessageFor(model => model.DepartmentId)
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.Reported)
-                                    @Html.TextBoxFor(model => model.Reported, string.Format("{0:MM/dd/yyyy}", Model.Reported), new { @class = "form-control", @disabled = "disabled" })
-                                    @Html.ValidationMessageFor(model => model.Reported)
-                                </div>
-                            </div>
-                            <div class="col-md-6">
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.Reporter)
                                     @Html.TextBoxFor(model => model.Reporter, new { @class = "form-control", @disabled = "disabled" })
                                     @Html.ValidationMessageFor(model => model.Reporter)
 
                                 </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Priority)
+                                    @Html.DropDownListFor(model => model.Priority, Model.Priorities, "Select Priority", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Priority)
+
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Details)
+                                    @Html.TextAreaFor(model => model.Details, new { @class = "form-control", @rows = "5" })
+                                    @Html.ValidationMessageFor(model => model.Details)
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ConsumerId)
+                                    @Html.DropDownListFor(model => model.ConsumerId, Model.Consumers, "Select Responsible Person", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ConsumerId)
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Estimate)
+                                    @Html.TextBoxFor(model => model.Estimate, string.Format("{0:c}", Model.Estimate))
+                                    @Html.ValidationMessageFor(model => model.Estimate)
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.PoNumber)
+                                    @Html.TextBoxFor(model => model.PoNumber, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.PoNumber)
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-md-6">
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Reported)
+                                    @Html.TextBoxFor(model => model.Reported, string.Format("{0:MM/dd/yyyy}", Model.Reported), new { @class = "form-control", @disabled = "disabled" })
+                                    @Html.ValidationMessageFor(model => model.Reported)
+                                </div>
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.Due)
                                     @Html.TextBoxFor(model => model.Due, string.Format("{0:MM/dd/yyyy}", Model.Due), new { @class = "form-control", @disabled = "disabled" })
                                     @Html.ValidationMessageFor(model => model.Due)
-                                </div>
-                            </div>
 
-                            <div class="col-md-6">
+                                </div>
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.DaysOpen)
                                     @Html.TextBoxFor(model => model.DaysOpen, new { @class = "form-control", @disabled = "disabled" })
                                     @Html.ValidationMessageFor(model => model.DaysOpen)
 
                                 </div>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.Details)
-                                    @Html.TextAreaFor(model => model.Details, new { @class = "form-control", @rows = "5" })
-                                    @Html.ValidationMessageFor(model => model.Details)
+                                    <label class="checkbox">
+                                        Overdue <span style="margin-left:25px;">@Html.CheckBoxFor(model => model.Overdue, new { @disabled = "disabled" }) </span>
+                                    </label>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                @*                                <div class="form-group" style="margin-bottom: 8px;">
-                                        @Html.LabelFor(model => model.Overdue)
-                                        @Html.CheckBoxFor(model => model.Overdue, new { @class = "checkbox", @disabled = "disabled"  })
-                                    </div>
-                                *@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.DaysOverdue)
                                     @Html.TextBoxFor(model => model.DaysOverdue, new { @class = "form-control", @disabled = "disabled" })
@@ -99,51 +96,11 @@
                                     @Html.ValidationMessageFor(model => model.Closed)
 
                                 </div>
-                            </div>
-                        </div>
-
-                        @* <div class="row">
-                                                           <div class="col-md-6">
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.ConsumerId)
-                                        @Html.DropDownListFor(model => model.ConsumerId, Model.Consumers, "Select Responsible Person", new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(model => model.ConsumerId)
-
-                                    </div>
-                                </div>
-
-                            </div>*@
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.Priority)
-                                    @Html.DropDownListFor(model => model.Priority, Model.Priorities, "Select Priority", new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.Priority)
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.Closer)
-                                    @Html.TextBoxFor(model => model.Closer, new { @class = "form-control", @autocomplete = "on" })
+                                    @Html.TextBoxFor(model => model.Closer, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.Closer)
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.Estimate)
-                                    @Html.TextBoxFor(model => model.Estimate, string.Format("{0:c}", Model.Estimate))
-                                    @Html.ValidationMessageFor(model => model.Estimate)
-                                </div>
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.PoNumber)
-                                    @Html.TextBoxFor(model => model.PoNumber, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.PoNumber)
-                                </div>
-                            </div>
-                            <div class="col-md-6">
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.Resolution)
                                     @Html.TextAreaFor(model => model.Resolution, new { @class = "form-control", @rows = "4" })
@@ -153,11 +110,12 @@
                         </div>
 
                     </fieldset>
+
                 </div>
                 <div class="wo-form-buttons clearfix">
                     <button type="submit" class="btn btn-primary pull-right">Save</button>
 
-                    @if (Model.SupervisorApproved != true)
+                    @if (Model.Approved == null)
                     {
                         <a class="btn btn-primary jq-approve-link pull-right" data-reload="@Url.Action("Edit", "Workorders", new {id = Model.Id })" href="@Url.Action("Approve", "Workorders", new { id = Model.Id })">Approve</a>
                     }

@@ -84,7 +84,8 @@ namespace DsiWorkorders.Web.ViewModels
             }
         }
 
-        public bool SupervisorApproved { get; set; }
+        //public bool Approved { get; set; }
+        public Nullable<System.DateTime> Approved { get; set; }
 
         //required for mobile grid filter dropdowns
         public SelectList Departments { get; set; }
@@ -93,6 +94,9 @@ namespace DsiWorkorders.Web.ViewModels
         public SelectList Closers { get; set; }
         public string SelectedCompany { get; set; }
         public SelectList Companies { get; set; }
+
+        public DateTime? Rejected { get; set; }
+        public string Rejector { get; set; }
     }
 
 }

@@ -26,11 +26,12 @@ namespace DsiWorkorders.Web.Controllers
         AppDbContext _db = new AppDbContext(Settings.GetConnectionStringName());
 
         public JsonResult GetOpen([DataSourceRequest]DataSourceRequest request, bool isOpen)
-        {
+        {          
             var model = _db.Workorders
                                 .OrderBy(w => w.Department.AreaName)
                                 .ThenBy(w => w.Department.Name)
-                                .Where(w => w.Closed == null && w.SupervisorApproved == isOpen).Select(m => new WorkOrdersGridViewModel
+                                //.Where(w => w.Closed == null && w.Approved == isOpen).Select(m => new WorkOrdersGridViewModel
+                                .Where(w => w.Closed == null).Select(m => new WorkOrdersGridViewModel
                                 {
                                     //Changed by David since all but ConsumerName can never be null.
                                     //DepartmentAreaName = m.Department != null ? m.Department.AreaName : string.Empty,
@@ -82,6 +83,33 @@ namespace DsiWorkorders.Web.Controllers
             return this.Json(model.ToDataSourceResult(request));
         }
 
+        public JsonResult GetRejected([DataSourceRequest]DataSourceRequest request)
+        {
+
+            // Get Rejected workorders
+
+            // JavaScriptSerializer class used by the Json method cannot serialize object graphs which contain circular references (refer to each other). 
+            //The best solution is to use View Model objects and avoid the serializing the properties which create the circular reference.
+            var model = _db.Workorders
+                                    .OrderBy(w => w.Department.AreaName)
+                                    .ThenBy(w => w.Department.Name)
+                                    .Where(w => w.Rejected != null).Select(m => new WorkOrdersGridViewModel
+                                    {
+                                        DepartmentAreaName = m.Department != null ? m.Department.AreaName : string.Empty,
+                                        DepartmentName = m.Department != null ? m.Department.Name : string.Empty,
+                                        Reported = m.Reported,
+                                        Details = m.Details,
+                                        Priority = m.Priority,
+                                        ConsumerName = m.Consumer != null ? m.Consumer.Name : string.Empty,
+                                        Rejected = m.Rejected,
+                                        Rejector = m.Rejector,
+                                        Id = m.Id
+                                    });
+
+
+            return this.Json(model.ToDataSourceResult(request));
+        }
+
         public JsonResult GetMobileGridData([DataSourceRequest]DataSourceRequest request, string workOrderType, string workOrderDueType)
         {
             // JavaScriptSerializer class used by the Json method cannot serialize object graphs which contain circular references (refer to each other). 
@@ -102,7 +130,8 @@ namespace DsiWorkorders.Web.Controllers
                                         Id = m.Id,
                                         Resolution = m.Resolution,
                                         Estimate = m.Estimate,
-                                        SupervisorApproved = m.SupervisorApproved ?? false
+                                        //Approved = m.Approved ?? false
+                                        Approved=m.Approved
                                     });
 
             //filter by workorder type
@@ -114,11 +143,13 @@ namespace DsiWorkorders.Web.Controllers
                 }
                 else if (workOrderType.Equals("Open"))
                 {
-                    model = model.Where(x => x.Closed == null && x.SupervisorApproved == true);
+                    //model = model.Where(x => x.Closed == null && x.Approved == true);
+                    model = model.Where(x => x.Closed == null);
                 }
                 else if (workOrderType.Equals("Awaiting Approval"))
                 {
-                    model = model.Where(x => x.Closed == null && x.SupervisorApproved == false);
+                    //model = model.Where(x => x.Closed == null && x.Approved == false);
+                    model = model.Where(x => x.Closed == null);
                 }
             }
 
@@ -207,8 +238,8 @@ namespace DsiWorkorders.Web.Controllers
 
         public JsonResult GetFilteredOpenIssues([DataSourceRequest]DataSourceRequest request)
         {
-
-            var model = _db.Workorders.Where(x => x.Closed == null && x.SupervisorApproved == true).Select(m => new WorkOrdersGridViewModel
+            //var model = _db.Workorders.Where(x => x.Closed == null && x.Approved == true).Select(m => new WorkOrdersGridViewModel
+            var model = _db.Workorders.Where(x => x.Closed == null).Select(m => new WorkOrdersGridViewModel
             {
                 DepartmentAreaName = m.Department != null ? m.Department.AreaName : string.Empty,
                 DepartmentName = m.Department != null ? m.Department.Name : string.Empty,
@@ -226,7 +257,8 @@ namespace DsiWorkorders.Web.Controllers
 
         public ActionResult GetOpenIssuesCount()
         {
-            return Content(_db.Workorders.Count(x => x.Closed == null && x.SupervisorApproved == true).ToString());
+            return Content(_db.Workorders.Count(x => x.Closed == null).ToString());
+            // return Content(_db.Workorders.Count(x => x.Closed == null && x.Approved == true).ToString());
         }
 
         public ActionResult Resolved()
@@ -282,8 +314,9 @@ namespace DsiWorkorders.Web.Controllers
             viewModel.Closed = model.Closed;
             viewModel.Closer = model.Closer;
             viewModel.Resolution = model.Resolution;
-            viewModel.SupervisorApproved = model.SupervisorApproved ?? false;
-
+            //viewModel.Approved = model.Approved ?? false;
+            viewModel.Approved = model.Approved;
+                        
             //fill dropdowns data
             viewModel.Departments = GetDepartmentsSelectList(viewModel.DepartmentId);
             viewModel.Consumers = GetConsumersSelectList(viewModel.ConsumerId);
@@ -349,7 +382,8 @@ namespace DsiWorkorders.Web.Controllers
         public ActionResult Create()
         {
             var model = new WorkorderCreateViewModel();
-
+                      
+            model.Reporter =  User.Identity.Name;
             //fill dropdowns data
             model.Departments = GetDepartmentsSelectList(null);
             model.Consumers = GetConsumersSelectList(null);
@@ -393,8 +427,8 @@ namespace DsiWorkorders.Web.Controllers
                     Reported = viewModel.Reported,
                     Details = viewModel.Details,
                     ConsumerId = viewModel.ConsumerId,
-                    Supervisor = supervisorName,
-                    SupervisorApproved = false
+                    Approver = supervisorName,
+                    Approved = DateTime.Now
                 };
 
                 _db.Workorders.Add(workorder);
@@ -493,12 +527,37 @@ namespace DsiWorkorders.Web.Controllers
                 return Json(new { success = false });
             }
 
-            workorder.SupervisorApproved = true;
-            workorder.Supervisor = User.Identity.Name;
+            workorder.Approved = DateTime.Now;
+            workorder.Approver = User.Identity.Name;
+            workorder.Rejected = null;
+            workorder.Rejector = null;
 
             _db.SaveChanges();
 
             TempData["SuccessMessage"] = "Workorder has been Approved and moved to Open Workorders.";
+
+            return Json(new { success = true });
+        }
+
+        [HttpPost]
+        [CustomAuthorize(AccessType = AccessType.Editors)]
+        public JsonResult Reject(int id)
+        {
+            Workorder workorder = _db.Workorders.FirstOrDefault(x => x.Id == id);
+            if (workorder == null)
+            {
+                TempData["ErrorMessage"] = "Something went wrong. Please try again later.";
+                return Json(new { success = false });
+            }
+
+            workorder.Rejected = DateTime.Now;
+            workorder.Rejector = User.Identity.Name;
+            workorder.Approved =null;
+            workorder.Approver = null;
+
+            _db.SaveChanges();
+
+            TempData["SuccessMessage"] = "Workorder has been Rejected.";
 
             return Json(new { success = true });
         }
@@ -597,7 +656,7 @@ namespace DsiWorkorders.Web.Controllers
         {
             return new SelectList(_db.Consumers.ToList()
                                         .OrderBy(c => c.Name), "Id", "Name", consumerId);
-        }
+        }       
 
         private SelectList GetPrioritiesSelectList(Priority? priority)
         {
