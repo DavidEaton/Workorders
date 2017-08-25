@@ -1,17 +1,10 @@
 ﻿using Microsoft.Azure.ActiveDirectory.GraphClient;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.WebPages;
 using System.Globalization;
-using Microsoft.Azure.ActiveDirectory.GraphClient.Extensions;
-using System.Diagnostics;
-using System.Threading;
 
 namespace DsiWorkorders.Web.Helpers
 {
