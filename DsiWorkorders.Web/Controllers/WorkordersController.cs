@@ -26,12 +26,12 @@ namespace DsiWorkorders.Web.Controllers
         AppDbContext _db = new AppDbContext(Settings.GetConnectionStringName());
 
         public JsonResult GetOpen([DataSourceRequest]DataSourceRequest request, bool isOpen)
-        {          
+        {           
             var model = _db.Workorders
                                 .OrderBy(w => w.Department.AreaName)
                                 .ThenBy(w => w.Department.Name)
                                 //.Where(w => w.Closed == null && w.Approved == isOpen).Select(m => new WorkOrdersGridViewModel
-                                .Where(w => w.Closed == null).Select(m => new WorkOrdersGridViewModel
+                                .Where(w => w.Closed == null && w.Approved != null).Select(m => new WorkOrdersGridViewModel
                                 {
                                     //Changed by David since all but ConsumerName can never be null.
                                     //DepartmentAreaName = m.Department != null ? m.Department.AreaName : string.Empty,
@@ -144,12 +144,12 @@ namespace DsiWorkorders.Web.Controllers
                 else if (workOrderType.Equals("Open"))
                 {
                     //model = model.Where(x => x.Closed == null && x.Approved == true);
-                    model = model.Where(x => x.Closed == null);
+                    model = model.Where(x => x.Closed == null && x.Approved != null);
                 }
                 else if (workOrderType.Equals("Awaiting Approval"))
                 {
                     //model = model.Where(x => x.Closed == null && x.Approved == false);
-                    model = model.Where(x => x.Closed == null);
+                    model = model.Where(x => x.Closed == null && x.Approved == null && x.Rejected == null);
                 }
             }
 
@@ -316,7 +316,7 @@ namespace DsiWorkorders.Web.Controllers
             viewModel.Resolution = model.Resolution;
             //viewModel.Approved = model.Approved ?? false;
             viewModel.Approved = model.Approved;
-                        
+            viewModel.PersonServed = model.PersonServed;
             //fill dropdowns data
             viewModel.Departments = GetDepartmentsSelectList(viewModel.DepartmentId);
             viewModel.Consumers = GetConsumersSelectList(viewModel.ConsumerId);
@@ -353,6 +353,7 @@ namespace DsiWorkorders.Web.Controllers
                     workorder.Closed = viewModel.Closed;
                     workorder.Closer = viewModel.Closer;
                     workorder.Resolution = viewModel.Resolution;
+                    workorder.PersonServed = viewModel.PersonServed;
 
                     _db.Entry(workorder).State = EntityState.Modified;
 
@@ -428,7 +429,8 @@ namespace DsiWorkorders.Web.Controllers
                     Details = viewModel.Details,
                     ConsumerId = viewModel.ConsumerId,
                     Approver = supervisorName,
-                    Approved = DateTime.Now
+                    Approved = DateTime.Now,
+                    PersonServed = viewModel.PersonServed
                 };
 
                 _db.Workorders.Add(workorder);
@@ -487,7 +489,7 @@ namespace DsiWorkorders.Web.Controllers
             viewModel.Details = model.Details;
             viewModel.Reporter = model.Reporter;
             viewModel.ConsumerId = model.ConsumerId;
-
+            viewModel.PersonServed = model.PersonServed;
             //fill dropdowns data
             viewModel.Departments = GetDepartmentsSelectList(viewModel.DepartmentId);
             viewModel.Consumers = GetConsumersSelectList(viewModel.ConsumerId);
@@ -541,7 +543,7 @@ namespace DsiWorkorders.Web.Controllers
 
         [HttpPost]
         [CustomAuthorize(AccessType = AccessType.Editors)]
-        public JsonResult Reject(int id)
+        public JsonResult Reject(int id, string reason)
         {
             Workorder workorder = _db.Workorders.FirstOrDefault(x => x.Id == id);
             if (workorder == null)
@@ -550,6 +552,7 @@ namespace DsiWorkorders.Web.Controllers
                 return Json(new { success = false });
             }
 
+            workorder.Rejection = reason;
             workorder.Rejected = DateTime.Now;
             workorder.Rejector = User.Identity.Name;
             workorder.Approved =null;

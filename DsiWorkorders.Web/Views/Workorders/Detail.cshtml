@@ -37,11 +37,15 @@
                                 @*<div class="help-block">Emergencies are to be phoned in and then submitted as High Priority</div>*@
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6">                           
                             <div class="form-group">
-                                @Html.LabelFor(model => model.ConsumerId)
-                                @Html.DropDownListFor(model => model.ConsumerId, Model.Consumers, "Select Responsible Person", new { @class = "form-control", @disabled = "disabled" })
-                                @Html.ValidationMessageFor(model => model.ConsumerId)
+                                <div class="checkbox person-toggle-btn">
+                                    <label><input type="checkbox" value="" checked="checked" disabled>Result of Person Served</label>
+                                </div>
+                                <div class="person-served-inputbox">
+                                    @Html.TextBoxFor(model => model.PersonServed, new { @class = "form-control", @disabled = "disabled", placeholder = "Enter Name of Person" })
+                                    @Html.ValidationMessageFor(model => model.PersonServed)
+                                </div>
                             </div>
                         </div>
                     </div>

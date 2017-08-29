@@ -134,5 +134,17 @@
     <script type="text/javascript" src="@Url.Content("~/Scripts/wo-main.js?v=1.0")"></script>
 
     @RenderSection("scripts", required: false)
+    <script>
+        
+        $(".person-toggle-btn").click(function () {            
+            if ($(this).find('input:checkbox').is(':checked')) {
+                $('.person-served-inputbox').removeClass('hide');
+            }
+            else {
+                $('.person-served-inputbox').addClass('hide');
+            }
+        });
+
+    </script>
 </body>
 </html>

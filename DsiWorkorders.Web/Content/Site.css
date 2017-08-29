@@ -409,3 +409,7 @@ div.k-grid-content {
 .tooltip-icon{
     font-size:30px;
 }
+
+.input-error{
+  border: 1px solid red !important;
+}

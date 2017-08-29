@@ -43,12 +43,17 @@
                                     @Html.LabelFor(model => model.Details)
                                     @Html.TextAreaFor(model => model.Details, new { @class = "form-control", @rows = "5" })
                                     @Html.ValidationMessageFor(model => model.Details)
-                                </div>
+                                </div>                               
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.ConsumerId)
-                                    @Html.DropDownListFor(model => model.ConsumerId, Model.Consumers, "Select Responsible Person", new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.ConsumerId)
+                                    <div class="checkbox person-toggle-btn">
+                                        <label><input type="checkbox" value="" checked="checked">Result of Person Served</label>
+                                    </div>
+                                    <div class="person-served-inputbox">
+                                        @Html.TextBoxFor(model => model.PersonServed, new { @class = "form-control", placeholder = "Enter Name of Person" })
+                                        @Html.ValidationMessageFor(model => model.PersonServed)
+                                    </div>
                                 </div>
+
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.Estimate)
                                     @Html.TextBoxFor(model => model.Estimate, string.Format("{0:c}", Model.Estimate))

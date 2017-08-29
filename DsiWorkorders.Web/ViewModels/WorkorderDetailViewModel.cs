@@ -51,5 +51,6 @@ namespace DsiWorkorders.Web.ViewModels
     public SelectList Consumers { get; set; }
     public SelectList Areas { get; set; }
 
+    public string PersonServed { get; set; }
   }
 }

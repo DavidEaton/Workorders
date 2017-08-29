@@ -76,7 +76,7 @@ namespace DsiWorkorders.Web.ViewModels
         [Display(Name = "PO Number")]
         public Nullable<int> PoNumber { get; set; }
 
-
+       
         public virtual Consumer Consumer { get; set; }
         public virtual Department Department { get; set; }
 
@@ -140,6 +140,8 @@ namespace DsiWorkorders.Web.ViewModels
         public SelectList Areas { get; set; }
 
         public string Rejected { get; set; }
+
+        public string PersonServed { get; set; }
 
     }
 }

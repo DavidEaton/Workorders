@@ -52,6 +52,8 @@ namespace DsiWorkorders.Web.ViewModels
                                         //Reporter = User.Identity.Name;
                                     }
 
+        public string PersonServed { get; set; }
+
 
     }
 }

@@ -53,6 +53,7 @@ namespace DsiWorkorders.Web
             modelBuilder.Entity<Workorder>().Property(m => m.Closed).HasColumnName("MaintWorkorderComplete");
             modelBuilder.Entity<Workorder>().Property(m => m.Details).HasColumnName("MaintWorkorderDetail");
             modelBuilder.Entity<Workorder>().Property(m => m.Closer).HasColumnName("CompletedBy");
+            modelBuilder.Entity<Workorder>().Property(m => m.PersonServed).HasColumnName("Consumer");
 
 
             //Department

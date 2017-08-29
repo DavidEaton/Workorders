@@ -1,12 +1,22 @@
-﻿<div class="modal fade cac-delete-modal" id="approveModal">
+﻿
+<div class="modal fade cac-delete-modal" id="approveModal">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-body">
-                <p class="msg">Are you sure you want to approve?</p>
+                <p class="msg text-center">Are you sure you want to approve?</p>
+                <div class="reject-form hide">
+                    @using (Html.BeginForm())
+                    {
+                        <div class="form-group">
+                            <textarea rows="3" name="reason" id="reason" class="col-sm-12" placeholder="Enter Reason(s) for Rejection"></textarea>
+                            <div style="clear:both;"></div>
+                        </div>
+                    }
+                </div>
             </div>
             <div class="modal-footer">
                 <a href="#" class="btn btn-primary jq-approve-action" data-wait="Please wait...">Yes</a>
-                <a href="#" class="btn btn-default" data-dismiss="modal">No</a>
+                <a href="#" class="btn btn-default jq-cancel-action" data-dismiss="modal">No</a>
             </div>
         </div>
         <!-- /.modal-content -->
@@ -17,12 +27,23 @@
 
 <script>
 
-    $('body').delegate('.jq-approve-link, .jq-reject-link', 'click', function (event) {      
+    $('body').delegate('.jq-approve-link, .jq-reject-link', 'click', function (event) {       
         event.preventDefault();
         //get url of button
         var url = $(this).attr('href');
         var reloadUrl = $(this).data('reload');
         var msg = $(this).data('msg');
+
+        if ($(this).hasClass('jq-reject-link')) {
+            $("#approveModal").find(".reject-form").removeClass('hide');
+            $("#approveModal").find(".jq-approve-action").text("Ok");
+            $("#approveModal").find(".jq-cancel-action").text("Cancel");
+        }
+        else {
+            $("#approveModal").find(".reject-form").addClass('hide');
+            $("#approveModal").find(".jq-approve-action").text("Yes");
+            $("#approveModal").find(".jq-cancel-action").text("No");
+        }
 
         if (msg) {
             // set msg for approve upload document
@@ -33,25 +54,41 @@
 
         // set href of approve link with in modal and show modal.
         $('#approveModal').find('a.jq-approve-action').attr('href', url).data('reload', reloadUrl).end().modal('show');
-
+       
         return false;
     });
-  
-    
+
+
     // this is to avoid httpGet request and make httpPost request to approve action
-    $('#approveModal a.jq-approve-action').click(function (event) {      
+    $('#approveModal a.jq-approve-action').click(function (event) {
         event.preventDefault();
-        var url = $(this).attr('href');
+        
+        var url = "";       
+        var $data = $('#reason').val();
+
+        if ($("#approveModal").find(".reject-form").hasClass('hide')) {
+            url = $(this).attr('href');
+        }
+        else {
+            if ($('#reason').val() == "") {
+                $('#reason').addClass('input-error');
+                return false;
+            }
+            else {
+                $('#reason').removeClass('input-error');
+            }
+            url = $(this).attr('href') + "?reason=" + $data;
+        }
+        //var url = $(this).attr('href');
         var reloadUrl = $(this).data('reload');
 
         var textInitial = $(this).text();
         var $this = $(this).attr('disabled', 'disabled').text($(this).data('wait'));
-
+        
         $.ajax({
             type: "POST",
-            url: url,
-            success: function (response) {
-              
+            url: url,            
+            success: function (response) {                
                 if (response.success) {  //if success just reload the page
                     if (typeof reloadUrl != "undefined" && reloadUrl != '') {
                         window.location.href = reloadUrl;

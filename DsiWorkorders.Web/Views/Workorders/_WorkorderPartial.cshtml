@@ -75,7 +75,7 @@
         c.Template(m => m)
            .Width(100)
            .ClientTemplate(
-           "<a class='btn btn-xs jq-reject-link btn-warning' data-msg='Are you sure you want to Reject the selected workorder ? Rejected workorders appear under the Rejected tab.' data-reload='" + Url.Content("~/Workorders/Index") + "'  href='" + Url.Content("~/Workorders/Reject/#=Id #") + "'>Reject</a>&nbsp;"
+           "<a class='btn btn-xs jq-reject-link btn-warning' data-msg='Please Enter the reason(S) for Rejecting this Workorder.' data-reload='" + Url.Content("~/Workorders/Index") + "'  href='" + Url.Content("~/Workorders/Reject/#=Id #") + "'>Reject</a>&nbsp;"
             );
     }
 

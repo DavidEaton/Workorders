@@ -47,8 +47,9 @@ namespace DsiWorkorders.Web.ModelBinder
                      Closer = bindingContext.ValueProvider.GetValue("Closer").AttemptedValue,
                      Resolution = bindingContext.ValueProvider.GetValue("Resolution").AttemptedValue,
                      PoNumber = poNumber,
-                     Estimate = estimate
-                   };
+                     Estimate = estimate,
+                     PersonServed= bindingContext.ValueProvider.GetValue("PersonServed").AttemptedValue
+          };
 
         }
       }
