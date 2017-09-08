@@ -418,6 +418,8 @@ namespace DsiWorkorders.Web.Controllers
                 {
                     supervisorName = departmentSupervisorEmail.SupervisorName;
                     supervisorEmail = departmentSupervisorEmail.EmailAddress;
+                    //supervisorName = "David Eaton";
+                    //supervisorEmail = "davidzaeaton@outlook.com";
                 }
 
                 Workorder workorder = new Workorder()
@@ -427,9 +429,9 @@ namespace DsiWorkorders.Web.Controllers
                     Reporter = reporter,
                     Reported = viewModel.Reported,
                     Details = viewModel.Details,
-                    ConsumerId = viewModel.ConsumerId,
-                    Approver = supervisorName,
-                    Approved = DateTime.Now,
+                    //ConsumerId = viewModel.ConsumerId,
+                    //Approver = supervisorName,
+                    //Approved = DateTime.Now,
                     PersonServed = viewModel.PersonServed
                 };
 
