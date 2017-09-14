@@ -36,7 +36,9 @@ body {
     color: #e80c4d;
     font-weight: bold;
 }
-
+.input-error{
+    border:1px solid red;
+}
 .field-validation-valid {
     display: none;
 }
@@ -413,3 +415,4 @@ div.k-grid-content {
 .input-error{
   border: 1px solid red !important;
 }
+

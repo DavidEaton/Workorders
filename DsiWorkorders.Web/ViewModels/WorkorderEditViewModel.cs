@@ -143,5 +143,6 @@ namespace DsiWorkorders.Web.ViewModels
 
         public string PersonServed { get; set; }
 
+        public bool ResultOfPersonServed { get; set; }
     }
 }

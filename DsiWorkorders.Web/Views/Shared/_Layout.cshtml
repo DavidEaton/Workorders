@@ -135,13 +135,18 @@
 
     @RenderSection("scripts", required: false)
     <script>
-        
-        $(".person-toggle-btn").click(function () {            
+        $(".person-toggle-btn").click(function () {
             if ($(this).find('input:checkbox').is(':checked')) {
-                $('.person-served-inputbox').removeClass('hide');
+                $('.person-served-inputbox').removeClass('hide')
+                if ($('#PersonServed').val().length < 3) {
+                    $('.person-served-inputbox input').addClass('input-error');
+                    $('.person-served-inputbox .field-validation-valid').addClass('field-validation-error').fadeIn().text('Please enter at least 3 characters.');
+                }
             }
             else {
                 $('.person-served-inputbox').addClass('hide');
+                $('.person-served-inputbox input').removeClass('input-error');
+                $('.person-served-inputbox .field-validation-valid').removeClass('field-validation-error').fadeOut().text('');
             }
         });
 

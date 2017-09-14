@@ -110,6 +110,32 @@ namespace DsiWorkorders.Web.Controllers
             return this.Json(model.ToDataSourceResult(request));
         }
 
+        public JsonResult GetAwaiting([DataSourceRequest]DataSourceRequest request)
+        {
+            // Get Awaiting workorders
+
+            // JavaScriptSerializer class used by the Json method cannot serialize object graphs which contain circular references (refer to each other). 
+            //The best solution is to use View Model objects and avoid the serializing the properties which create the circular reference.
+            var model = _db.Workorders
+                                    .OrderBy(w => w.Department.AreaName)
+                                    .ThenBy(w => w.Department.Name)
+                                    .Where(w => w.Closed == null && w.Approved == null && w.Rejected == null).Select(m => new WorkOrdersGridViewModel
+                                    {
+                                        DepartmentAreaName = m.Department != null ? m.Department.AreaName : string.Empty,
+                                        DepartmentName = m.Department != null ? m.Department.Name : string.Empty,
+                                        Reported = m.Reported,
+                                        Details = m.Details,
+                                        Priority = m.Priority,
+                                        ConsumerName = m.Consumer != null ? m.Consumer.Name : string.Empty,
+                                        Rejected = m.Rejected,
+                                        Rejector = m.Rejector,
+                                        Id = m.Id
+                                    });
+
+
+            return this.Json(model.ToDataSourceResult(request));
+        }
+
         public JsonResult GetMobileGridData([DataSourceRequest]DataSourceRequest request, string workOrderType, string workOrderDueType)
         {
             // JavaScriptSerializer class used by the Json method cannot serialize object graphs which contain circular references (refer to each other). 
@@ -317,6 +343,7 @@ namespace DsiWorkorders.Web.Controllers
             //viewModel.Approved = model.Approved ?? false;
             viewModel.Approved = model.Approved;
             viewModel.PersonServed = model.PersonServed;
+            viewModel.ResultOfPersonServed = !string.IsNullOrEmpty(viewModel.PersonServed) ? true : false;
             //fill dropdowns data
             viewModel.Departments = GetDepartmentsSelectList(viewModel.DepartmentId);
             viewModel.Consumers = GetConsumersSelectList(viewModel.ConsumerId);
@@ -353,7 +380,7 @@ namespace DsiWorkorders.Web.Controllers
                     workorder.Closed = viewModel.Closed;
                     workorder.Closer = viewModel.Closer;
                     workorder.Resolution = viewModel.Resolution;
-                    workorder.PersonServed = viewModel.PersonServed;
+                    workorder.PersonServed = viewModel.ResultOfPersonServed == true ? viewModel.PersonServed : null;
 
                     _db.Entry(workorder).State = EntityState.Modified;
 
@@ -385,6 +412,8 @@ namespace DsiWorkorders.Web.Controllers
             var model = new WorkorderCreateViewModel();
                       
             model.Reporter =  User.Identity.Name;
+            model.ResultOfPersonServed = false;
+
             //fill dropdowns data
             model.Departments = GetDepartmentsSelectList(null);
             model.Consumers = GetConsumersSelectList(null);
@@ -432,7 +461,8 @@ namespace DsiWorkorders.Web.Controllers
                     //ConsumerId = viewModel.ConsumerId,
                     //Approver = supervisorName,
                     //Approved = DateTime.Now,
-                    PersonServed = viewModel.PersonServed
+
+                    PersonServed = viewModel.ResultOfPersonServed ? viewModel.PersonServed : null
                 };
 
                 _db.Workorders.Add(workorder);
@@ -491,7 +521,7 @@ namespace DsiWorkorders.Web.Controllers
             viewModel.Details = model.Details;
             viewModel.Reporter = model.Reporter;
             viewModel.ConsumerId = model.ConsumerId;
-            viewModel.PersonServed = model.PersonServed;
+            viewModel.PersonServed = model.PersonServed;            
             //fill dropdowns data
             viewModel.Departments = GetDepartmentsSelectList(viewModel.DepartmentId);
             viewModel.Consumers = GetConsumersSelectList(viewModel.ConsumerId);
@@ -505,19 +535,29 @@ namespace DsiWorkorders.Web.Controllers
         [CustomAuthorize(AccessType = AccessType.Admins)]
         public JsonResult DeleteConfirmed(int id = 0)
         {
-            Workorder workorder = _db.Workorders.FirstOrDefault(x => x.Id == id);
-            if (workorder == null)
+
+            try
+            {
+                Workorder workorder = _db.Workorders.FirstOrDefault(x => x.Id == id);
+                if (workorder == null)
+                {
+                    TempData["ErrorMessage"] = "Something went wrong. Please try again later.";
+                    return Json(new { success = false });
+                }
+
+                _db.Workorders.Remove(workorder);
+                _db.SaveChanges();
+
+                TempData["SuccessMessage"] = "Workorder has been deleted successfully.";
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
             {
                 TempData["ErrorMessage"] = "Something went wrong. Please try again later.";
+
                 return Json(new { success = false });
             }
-
-            _db.Workorders.Remove(workorder);
-            _db.SaveChanges();
-
-            TempData["SuccessMessage"] = "Workorder has been deleted successfully.";
-
-            return Json(new { success = true });
         }
 
         [HttpPost]

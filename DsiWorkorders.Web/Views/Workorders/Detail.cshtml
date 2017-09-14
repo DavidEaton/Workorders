@@ -37,7 +37,7 @@
                                 @*<div class="help-block">Emergencies are to be phoned in and then submitted as High Priority</div>*@
                             </div>
                         </div>
-                        <div class="col-md-6">                           
+                        <div class="col-md-6" style="@(Model.PersonServed ==null || Model.PersonServed == "" ? "display:none" : "")">                           
                             <div class="form-group">
                                 <div class="checkbox person-toggle-btn">
                                     <label><input type="checkbox" value="" checked="checked" disabled>Result of Person Served</label>

@@ -8,7 +8,7 @@
     <div class="col-md-7">
         <p class="muted lead">@ViewBag.Title</p>
 
-        @using (Html.BeginForm())
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "editform" })) 
         {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true)
@@ -45,11 +45,12 @@
                                     @Html.ValidationMessageFor(model => model.Details)
                                 </div>                               
                                 <div class="form-group">
-                                    <div class="checkbox person-toggle-btn">
-                                        <label><input type="checkbox" value="" checked="checked">Result of Person Served</label>
+                                    <div class="checkbox person-checkbox-toggle-btn">
+                                        <label>@Html.CheckBoxFor(model => model.ResultOfPersonServed)@*<input type="checkbox" value="" checked="checked">*@Result of Person Served</label>
                                     </div>
+                                 
                                     <div class="person-served-inputbox">
-                                        @Html.TextBoxFor(model => model.PersonServed, new { @class = "form-control", placeholder = "Enter Name of Person" })
+                                        @Html.TextBoxFor(model => model.PersonServed, new { @class = "form-control", placeholder = "Enter Name of Person", @minlength = "3" })
                                         @Html.ValidationMessageFor(model => model.PersonServed)
                                     </div>
                                 </div>
@@ -168,6 +169,53 @@
         $(document).ready(function () {
             var selectValue = "";
 
+            var resultOfPersonServed = "@Html.Raw(Model.PersonServed)";
+           
+            if (resultOfPersonServed != "") {
+                $('#PersonServed').attr('readonly', false);
+            }
+            else {
+                $('#PersonServed').attr('readonly', true);
+                //$('#PersonServed').attr('disabled', true );
+            }
+
+
+            $(".person-checkbox-toggle-btn").click(function () {
+                if ($(this).find('input:checkbox').is(':checked')) {                    
+                    
+                    $('#PersonServed').attr('readonly', false);
+                    if ($('#PersonServed').val().length < 3) {
+                        $('.person-served-inputbox .field-validation-valid').addClass('field-validation-error').fadeIn().text('Please enter at least 3 characters.');
+                    }
+                }
+                else {                  
+                    
+                    $('#PersonServed').attr('readonly', true);
+                    $('.person-served-inputbox .field-validation-valid').removeClass('field-validation-error').fadeOut().text('');
+                }
+            });
+          
+            $('#PersonServed').keyup(function () {
+               
+                if ($('#PersonServed').val().length < 3) {
+                    $('.person-served-inputbox .field-validation-valid').addClass('field-validation-error').fadeIn().text('Please enter at least 3 characters.');
+                    $('.person-served-inputbox input').addClass('input-error');
+                }
+                else {
+                    $('.person-served-inputbox .field-validation-valid').removeClass('field-validation-error').fadeOut().text('');
+                    $('.person-served-inputbox input').removeClass('input-error');
+                }
+            });
+
+            $('#editform').submit(function () {
+                if ($('.person-served-inputbox input').attr('readonly') == undefined && $('#PersonServed').val().length < 3) {
+                    return false;
+                }
+                if ($('.person-served-inputbox input').attr('readonly') == "readonly" ) {
+                    return true;
+                }
+                return true;
+            });
 
             var departmentAreaId = $("#DepartmentAreaId").val();
 

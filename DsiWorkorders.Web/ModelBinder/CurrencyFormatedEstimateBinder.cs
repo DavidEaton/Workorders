@@ -35,7 +35,7 @@ namespace DsiWorkorders.Web.ModelBinder
           {
             poNumber = int.Parse(bindingContext.ValueProvider.GetValue("PoNumber").AttemptedValue);
           }
-
+          
           return new WorkorderEditViewModel
 
                    { //only editable fields + Id
@@ -48,7 +48,8 @@ namespace DsiWorkorders.Web.ModelBinder
                      Resolution = bindingContext.ValueProvider.GetValue("Resolution").AttemptedValue,
                      PoNumber = poNumber,
                      Estimate = estimate,
-                     PersonServed= bindingContext.ValueProvider.GetValue("PersonServed").AttemptedValue
+                     PersonServed= bindingContext.ValueProvider.GetValue("PersonServed").AttemptedValue,
+                     ResultOfPersonServed = bool.Parse(bindingContext.ValueProvider.GetValue("ResultOfPersonServed").AttemptedValue.Split(',')[0])
           };
 
         }

@@ -176,7 +176,7 @@
 
     //method will create data row and append it to grid
     mobileGrid.createDataRow = function (workorder) {
-        debugger;
+       
         //get priority class
         var priorityClass = mobileGrid.getPriorityClass(workorder.Priority);
 

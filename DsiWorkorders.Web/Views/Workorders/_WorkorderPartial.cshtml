@@ -69,13 +69,13 @@
         c.Template(m => m)
            .Width(100)
            .ClientTemplate(
-           "<a class='btn btn-xs jq-approve-link btn-primary' data-reload='" + Url.Content("~/Workorders/Index") + "'  href='" + Url.Content("~/Workorders/Approve/#=Id #") + "'>Approve</a>&nbsp;"
+           "<a class='btn btn-xs jq-approve-link btn-primary' data-reload='" + Url.Content("~/Workorders/Index") + "'  href='" + Url.Content("~/Workorders/Approve/#=Id #") + "'  data-toggle='tooltip' title='Approve and move to Open Workorders tab' data-placement='top'>Approve</a>&nbsp;"
             );
 
         c.Template(m => m)
            .Width(100)
            .ClientTemplate(
-           "<a class='btn btn-xs jq-reject-link btn-warning' data-msg='Please Enter the reason(S) for Rejecting this Workorder.' data-reload='" + Url.Content("~/Workorders/Index") + "'  href='" + Url.Content("~/Workorders/Reject/#=Id #") + "'>Reject</a>&nbsp;"
+           "<a class='btn btn-xs jq-reject-link btn-warning' data-toggle='tooltip' title='Move to Rejected tab' data-placement='top' data-msg='Please Enter the reason(S) for Rejecting this Workorder.' data-reload='" + Url.Content("~/Workorders/Index") + "'  href='" + Url.Content("~/Workorders/Reject/#=Id #") + "'>Reject</a>&nbsp;"
             );
     }
 
@@ -84,7 +84,7 @@
                          .Ajax()
                           .Events(x => x.RequestStart((ViewBag.WorkorderType == "Resolved" ? "doNothing" : "getOpenIssues")))
                                   .Events(ev => ev.RequestEnd("onWorkOrderRequestEnd"))
-                         .Read(r => r.Action(ViewBag.WorkorderType == "Resloved" ? "GetClosed" : ViewBag.WorkorderType == "Rejected" ? "GetRejected" : "GetOpen", "Workorders", new { isOpen = ViewBag.isApproved , type = ViewBag.WorkorderType }))
+                         .Read(r => r.Action(ViewBag.WorkorderType == "Resloved" ? "GetClosed" : ViewBag.WorkorderType == "Rejected" ? "GetRejected" : ViewBag.WorkorderType == "Awaiting" ? "GetAwaiting" : "GetOpen", "Workorders", new { isOpen = ViewBag.isApproved , type = ViewBag.WorkorderType }))
                          .PageSize(15))
                          .AutoBind(false)
       .Pageable(pager => pager
@@ -105,8 +105,20 @@
 <script>
 
     $(function () {
+        $('[data-toggle="tooltip"]').tooltip();       
         var grid = $('#Workorders' + '@ViewBag.WorkorderType').data().kendoGrid;
         loadGridStateFromCookie(grid);
+
     });
 
+
+</script>
+<script>
+    $(document).ready(function () {
+        var tooltip = $("#Workorders"+ '@ViewBag.WorkorderType').kendoTooltip({
+            filter: ".btn",
+            width: 120,
+            position: "top"
+        }).data("kendoTooltip");
+    });
 </script>

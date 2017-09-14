@@ -5,7 +5,7 @@
     <div class="col-md-7">
         <p class="muted lead">@ViewBag.Title</p>
 
-        @using (Html.BeginForm())
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "createform" }))
         {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true)
@@ -16,7 +16,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.DepartmentAreaId)
-                                    @Html.DropDownListFor(model => model.DepartmentAreaId, Model.Areas, "Select Area", new { @class = "form-control", @autofocus = "" })
+                                    @Html.DropDownListFor(model => model.DepartmentAreaId, Model.Areas, new { @class = "form-control", @autofocus = "" })
                                     @Html.ValidationMessageFor(model => model.DepartmentAreaId)
                                 </div>
                             </div>
@@ -40,10 +40,10 @@
                             <div class="col-md-6">                                
                                 <div class="form-group">
                                     <div class="checkbox person-toggle-btn">
-                                        <label><input type="checkbox" value="" checked="checked">Result of Person Served</label>
+                                        <label>@Html.CheckBoxFor(model => model.ResultOfPersonServed) @*<input type="checkbox" value="">*@Result of Person Served</label>
                                     </div>
                                     <div class="person-served-inputbox">
-                                        @Html.TextBoxFor(model => model.PersonServed, new { @class = "form-control", placeholder = "Enter Name of Person" })
+                                        @Html.TextBoxFor(model => model.PersonServed, new { @class = "form-control", placeholder = "Enter Name of Person", @minlength = "3" })
                                         @Html.ValidationMessageFor(model => model.PersonServed)
                                     </div>
                                 </div>
@@ -139,11 +139,50 @@
     @Scripts.Render("~/bundles/jqueryval")
     
 <script>
-        $(document).ready(function(){
-            var selectValue = "";
+    $(document).ready(function () {
+        var selectValue = "";
+
+        var resultOfPersonServed = "@Html.Raw(Model.ResultOfPersonServed)";
+
+            if (resultOfPersonServed == "True") {
+                $('.person-served-inputbox').removeClass('hide').addClass('input-error');
+                $(".person-toggle-btn").find('input:checkbox').attr('checked', 'checked');
+            }
+            else {
+                $('.person-served-inputbox').addClass('hide');
+            }
+
+            $('#PersonServed').keyup(function () {
+
+                if ($('#PersonServed').val().length < 3) {
+                    $('.person-served-inputbox .field-validation-valid').addClass('field-validation-error').fadeIn().text('Please enter at least 3 characters.');
+                    $('.person-served-inputbox input').addClass('input-error');
+                }
+                else {
+                    $('.person-served-inputbox .field-validation-valid').removeClass('field-validation-error').fadeOut().text('');
+                    $('.person-served-inputbox input').removeClass('input-error');
+                }
+            });
+
+            $('#createform').submit(function () {
+
+                if ($('.person-served-inputbox').hasClass('hide') == false && $('#PersonServed').val().length < 3) {
+                    return false;
+                }
+                if ($('.person-served-inputbox').hasClass('hide')) {
+                    return true;
+                }
+                return true;
+            });
+        
+            getDepartmentByAreaId();
 
             $("#DepartmentAreaId").change(function () {
+                getDepartmentByAreaId();
+            });
 
+            function getDepartmentByAreaId() {
+               
                 $("#DepartmentId").empty();
 
                 $("#DepartmentId").attr('disabled', true);
@@ -172,15 +211,7 @@
 
                     }
                 });
-
-
-
-
-
-
-
-
-            });
+            }
         })
 
 </script>
