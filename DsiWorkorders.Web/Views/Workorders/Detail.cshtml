@@ -37,7 +37,7 @@
                                 @*<div class="help-block">Emergencies are to be phoned in and then submitted as High Priority</div>*@
                             </div>
                         </div>
-                        <div class="col-md-6" style="@(Model.PersonServed ==null || Model.PersonServed == "" ? "display:none" : "")">                           
+                        <div class="col-md-6" style="@(Model.PersonServed ==null || Model.PersonServed == "" ? "display:none" : "")">
                             <div class="form-group">
                                 <div class="checkbox person-toggle-btn">
                                     <label><input type="checkbox" value="" checked="checked" disabled>Result of Person Served</label>
@@ -66,34 +66,65 @@
 
                             </div>
                         </div>
-                    </div>                
+                    </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Details)
-                                @Html.TextAreaFor(model => model.Details, new { @class = "form-control", @rows = "4", @readonly = "readonly"  })
+                                @Html.TextAreaFor(model => model.Details, new { @class = "form-control", @rows = "4", @readonly = "readonly" })
                                 @Html.ValidationMessageFor(model => model.Details)
                             </div>
                         </div>
                     </div>
 
-@*                  //Consumers will be implemented at a later date...  
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.ConsumerId)
-                                @Html.DropDownListFor(model => model.ConsumerId, Model.Consumers, "Select Responsible Person", new { @class = "form-control", @disabled = "disabled"  })
-                                @Html.ValidationMessageFor(model => model.ConsumerId)
+                    @if (!string.IsNullOrEmpty(Model.Rejection))
+                    {
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Rejected)
+                                    @Html.TextBoxFor(model => model.Rejected, string.Format("{0:MM/dd/yyyy}", Model.Rejected), new { @class = "form-control", @disabled = "disabled" })
+                                    @Html.ValidationMessageFor(model => model.Rejected)
+                                </div>
+                            </div>
 
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Rejector)
+                                    @Html.TextBoxFor(model => model.Rejector, new { @class = "form-control", @disabled = "disabled" })
+                                    @Html.ValidationMessageFor(model => model.Rejector)
+
+                                </div>
                             </div>
                         </div>
-                        
-                    </div>*@
-                    
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Rejection)
+                                    @Html.TextAreaFor(model => model.Rejection, new { @class = "form-control", @rows = "4", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.Rejection)
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    @*                  //Consumers will be implemented at a later date...
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ConsumerId)
+                                    @Html.DropDownListFor(model => model.ConsumerId, Model.Consumers, "Select Responsible Person", new { @class = "form-control", @disabled = "disabled"  })
+                                    @Html.ValidationMessageFor(model => model.ConsumerId)
+
+                                </div>
+                            </div>
+
+                        </div>*@
+
                 </fieldset>
             </div>
-          <div class="wo-form-buttons clearfix">
-              @Html.Partial("_WorkorderActionButtons",Model.Id)
+            <div class="wo-form-buttons clearfix">
+                @Html.Partial("_WorkorderActionButtons", Model.Id)
             </div>
         </div>
 

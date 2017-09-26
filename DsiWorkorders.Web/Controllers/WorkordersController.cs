@@ -521,7 +521,10 @@ namespace DsiWorkorders.Web.Controllers
             viewModel.Details = model.Details;
             viewModel.Reporter = model.Reporter;
             viewModel.ConsumerId = model.ConsumerId;
-            viewModel.PersonServed = model.PersonServed;            
+            viewModel.PersonServed = model.PersonServed;
+            viewModel.Rejected = model.Rejected;
+            viewModel.Rejection = model.Rejection;
+            viewModel.Rejector = model.Rejector;
             //fill dropdowns data
             viewModel.Departments = GetDepartmentsSelectList(viewModel.DepartmentId);
             viewModel.Consumers = GetConsumersSelectList(viewModel.ConsumerId);

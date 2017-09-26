@@ -52,5 +52,10 @@ namespace DsiWorkorders.Web.ViewModels
     public SelectList Areas { get; set; }
 
     public string PersonServed { get; set; }
-  }
+
+    public Nullable<System.DateTime> Rejected { get; set; }
+    public string Rejector { get; set; }
+    public string Rejection { get; set; }
+
+    }
 }

@@ -1,15 +1,30 @@
 ﻿
 <div class="modal fade cac-delete-modal" id="approveModal">
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <p class="msg text-center">Are you sure you want to approve?</p>
+                <p class="msg text-center"></p>
                 <div class="reject-form hide">
                     @using (Html.BeginForm())
                     {
                         <div class="form-group">
+                            <label for="Rejected">Rejection</label>
                             <textarea rows="3" name="reason" id="reason" class="col-sm-12" placeholder="Enter Reason(s) for Rejection"></textarea>
                             <div style="clear:both;"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="Rejected">Rejected</label>
+                                    <input class="form-control" type="text" value="@DateTime.Now.ToString("MM/dd/yyyy")" disabled="disabled">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="Rejected">Rejector</label>
+                                    <input class="form-control" type="text" value="@User.Identity.Name" disabled="disabled">
+                                </div>
+                            </div>
                         </div>
                     }
                 </div>
@@ -33,21 +48,24 @@
         var url = $(this).attr('href');
         var reloadUrl = $(this).data('reload');
         var msg = $(this).data('msg');
-
+       
         if ($(this).hasClass('jq-reject-link')) {
             $("#approveModal").find(".reject-form").removeClass('hide');
             $("#approveModal").find(".jq-approve-action").text("Ok");
             $("#approveModal").find(".jq-cancel-action").text("Cancel");
+            $("#approveModal .modal-dialog").removeClass("modal-sm");
         }
         else {
             $("#approveModal").find(".reject-form").addClass('hide');
             $("#approveModal").find(".jq-approve-action").text("Yes");
-            $("#approveModal").find(".jq-cancel-action").text("No");
+            $("#approveModal").find(".jq-cancel-action").text("No");           
+            $("#approveModal .modal-dialog").addClass("modal-sm");
         }
-
+       
         if (msg) {
             // set msg for approve upload document
-            $("#approveModal").find(".msg").text(msg);
+            $("#approveModal").find(".msg").text("");
+           // $("#approveModal").find(".msg").text(msg);
         } else {
             $("#approveModal").find(".msg").text('Are you sure you want to approve?');
         }
