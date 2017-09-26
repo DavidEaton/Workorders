@@ -20,7 +20,10 @@ namespace DsiWorkorders.Web
 
         public AppDbContext()
             : base(nameOrConnectionString: AppDbContext.ConnectionStringName)
-        { }
+        {
+            //disable initializer
+            Database.SetInitializer<AppDbContext>(null);
+        }
 
         public AppDbContext(string connectionStringName) : base(nameOrConnectionString: connectionStringName) { }
 

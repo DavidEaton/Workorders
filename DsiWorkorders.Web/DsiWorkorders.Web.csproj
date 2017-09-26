@@ -340,6 +340,8 @@
     <Content Include="Scripts\BootstrapSwitch\bootstrap-switch.js" />
     <Content Include="Scripts\BootstrapSwitch\bootstrap-switch.min.js" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <None Include="Properties\PublishProfiles\WorkordersCsi - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\WorkordersCsi - Web Deploy.pubxml" />
     <None Include="Scripts\_references.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
