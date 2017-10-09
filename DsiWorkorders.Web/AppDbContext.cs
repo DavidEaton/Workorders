@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using DsiWorkorders.Data;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DsiWorkorders.Web
 {
@@ -57,7 +58,7 @@ namespace DsiWorkorders.Web
             modelBuilder.Entity<Workorder>().Property(m => m.Details).HasColumnName("MaintWorkorderDetail");
             modelBuilder.Entity<Workorder>().Property(m => m.Closer).HasColumnName("CompletedBy");
             modelBuilder.Entity<Workorder>().Property(m => m.PersonServed).HasColumnName("Consumer");
-
+            modelBuilder.Entity<Workorder>().Property(m => m.Open).HasColumnName("Open").HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
 
             //Department
             //Common.Departments

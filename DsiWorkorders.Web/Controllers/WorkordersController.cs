@@ -31,7 +31,7 @@ namespace DsiWorkorders.Web.Controllers
                                 .OrderBy(w => w.Department.AreaName)
                                 .ThenBy(w => w.Department.Name)
                                 //.Where(w => w.Closed == null && w.Approved == isOpen).Select(m => new WorkOrdersGridViewModel
-                                .Where(w => w.Closed == null && w.Approved != null).Select(m => new WorkOrdersGridViewModel
+                                .Where(w => w.Open == true).Select(m => new WorkOrdersGridViewModel
                                 {
                                     //Changed by David since all but ConsumerName can never be null.
                                     //DepartmentAreaName = m.Department != null ? m.Department.AreaName : string.Empty,
@@ -265,7 +265,7 @@ namespace DsiWorkorders.Web.Controllers
         public JsonResult GetFilteredOpenIssues([DataSourceRequest]DataSourceRequest request)
         {
             //var model = _db.Workorders.Where(x => x.Closed == null && x.Approved == true).Select(m => new WorkOrdersGridViewModel
-            var model = _db.Workorders.Where(x => x.Closed == null).Select(m => new WorkOrdersGridViewModel
+            var model = _db.Workorders.Where(x => x.Open == true).Select(m => new WorkOrdersGridViewModel
             {
                 DepartmentAreaName = m.Department != null ? m.Department.AreaName : string.Empty,
                 DepartmentName = m.Department != null ? m.Department.Name : string.Empty,
@@ -283,8 +283,9 @@ namespace DsiWorkorders.Web.Controllers
 
         public ActionResult GetOpenIssuesCount()
         {
-            return Content(_db.Workorders.Count(x => x.Closed == null).ToString());
-            // return Content(_db.Workorders.Count(x => x.Closed == null && x.Approved == true).ToString());
+
+            return Content(_db.Workorders.Count(x => x.Open).ToString());
+
         }
 
         public ActionResult Resolved()
@@ -445,10 +446,10 @@ namespace DsiWorkorders.Web.Controllers
 
                 if (departmentSupervisorEmail != null)
                 {
-                    supervisorName = departmentSupervisorEmail.SupervisorName;
-                    supervisorEmail = departmentSupervisorEmail.EmailAddress;
-                    //supervisorName = "David Eaton";
-                    //supervisorEmail = "davidzaeaton@outlook.com";
+                    //supervisorName = departmentSupervisorEmail.SupervisorName;
+                    //supervisorEmail = departmentSupervisorEmail.EmailAddress;
+                    supervisorName = "David Eaton";
+                    supervisorEmail = "davidzaeaton@outlook.com";
                 }
 
                 Workorder workorder = new Workorder()

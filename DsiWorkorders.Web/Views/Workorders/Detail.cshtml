@@ -76,8 +76,8 @@
                             </div>
                         </div>
                     </div>
-
-                    @if (!string.IsNullOrEmpty(Model.Rejection))
+                    @*Rejector will never = null if record is Rejected (vs. Rejection).*@
+                    @if (!string.IsNullOrEmpty(Model.Rejector))
                     {
                         <div class="row">
                             <div class="col-md-6">

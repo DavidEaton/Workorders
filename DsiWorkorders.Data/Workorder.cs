@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DsiWorkorders.Data.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DsiWorkorders.Data
 {
@@ -24,6 +25,8 @@ namespace DsiWorkorders.Data
         public string Closer { get; set; }
         public string Resolution { get; set; }
         public Nullable<int> PoNumber { get; set; }
+        //[DatabaseGenerated(DatabaseGenerationOption.Computed)]
+        public bool Open { get; set; }
 
         public virtual Consumer Consumer { get; set; }
         public virtual Department Department { get; set; }       
