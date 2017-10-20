@@ -41,7 +41,7 @@ namespace DsiWorkorders.Web.Helpers
             var customMessageTextOnly = customMessage;
 
             //send email
-            Helpers.Email.SendEmail(toEmails, emailSubject, customMessage, customMessageTextOnly, null, null);
+            Email.SendEmail(toEmails, emailSubject, customMessage, customMessageTextOnly, null, null);
         }
     }
 

@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
-using System.Web;
-using DsiShifts.Data.Enums;
-using DsiWorkorders.Data.Enums;
 using DsiWorkorders.Web.ViewModels;
-using DsiWorkorders.Data;
+using System.Configuration;
 
 namespace DsiWorkorders.Web.Helpers
 {
     public class ReportEmailMessage
     {
-        public static string GetReportEmailMessage(CompanyEnum company, string areaName, int areaId, AppDbContext _db)
+        public static string GetReportEmailMessage(string areaName, int areaId, AppDbContext _db)
         {
 
             var today = System.DateTime.UtcNow.ToCentralTime();
@@ -40,7 +36,7 @@ namespace DsiWorkorders.Web.Helpers
                 openedWorkOrderModels.Add(model);
             }
 
-            var message = @"<h2>" + company.ToString() + @" Weekly Maintenance Work Orders Report</h2>
+            var message = @"<h2>" + ConfigurationManager.AppSettings["CompanyName"] + @" Weekly Maintenance Work Orders Report</h2>
                                     <h2>" + areaName + @"</h2>
                                     <h5>Report created " + @DateTime.UtcNow.ToCentralTime() + @"</h5><br />
                                       <h4 ><i>Workorders Opened over the past week</i> </h4> ";

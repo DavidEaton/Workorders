@@ -8,102 +8,46 @@ namespace DsiWorkorders.Web.Helpers
 {
     public class Settings
     {
-        public static string GetConnectionStringName()
-        {
-            var company = CompanyCookie.SelectedCompany;
 
-            if (string.IsNullOrEmpty(company) == false)
-            {
-                if (ConfigurationManager.AppSettings[company] != null)
-                {
-                    return ConfigurationManager.AppSettings[company];
-                }
-            }
-
-            return "AppConnectionDsiDEV";
-        }
-
-        public static string CsiViewersRole
+        public static string ViewersRole
         {
             get
             {
-                if (ConfigurationManager.AppSettings["CsiViewers"]
+                if (ConfigurationManager.AppSettings["Viewers"]
                     != null)
                 {
                     return ConfigurationManager.
-                        AppSettings["CsiViewers"].ToString();
+                        AppSettings["Viewers"].ToString();
                 }
-                return "CsiViewers";
+                return "Viewers";
             }
         }
 
-        public static string CsiEditorsRole
+        public static string EditorsRole
         {
             get
             {
-                if (ConfigurationManager.AppSettings["CsiEditors"]
+                if (ConfigurationManager.AppSettings["Editors"]
                     != null)
                 {
                     return ConfigurationManager.
-                        AppSettings["CsiEditors"].ToString();
+                        AppSettings["Editors"].ToString();
                 }
-                return "CsiEditors";
+                return "Editors";
             }
         }
 
-        public static string CsiAdminsRole
+        public static string AdminsRole
         {
             get
             {
-                if (ConfigurationManager.AppSettings["CsiAdmins"]
+                if (ConfigurationManager.AppSettings["Admins"]
                     != null)
                 {
                     return ConfigurationManager.
-                        AppSettings["CsiAdmins"].ToString();
+                        AppSettings["Admins"].ToString();
                 }
-                return "CsiAdmins";
-            }
-        }
-
-        public static string DsiViewersRole
-        {
-            get
-            {
-                if (ConfigurationManager.AppSettings["DsiViewers"]
-                    != null)
-                {
-                    return ConfigurationManager.
-                        AppSettings["DsiViewers"].ToString();
-                }
-                return "DsiViewers";
-            }
-        }
-
-        public static string DsiEditorsRole
-        {
-            get
-            {
-                if (ConfigurationManager.AppSettings["DsiEditors"]
-                    != null)
-                {
-                    return ConfigurationManager.
-                        AppSettings["DsiEditors"].ToString();
-                }
-                return "DsiEditors";
-            }
-        }
-
-        public static string DsiAdminsRole
-        {
-            get
-            {
-                if (ConfigurationManager.AppSettings["DsiAdmins"]
-                    != null)
-                {
-                    return ConfigurationManager.
-                        AppSettings["DsiAdmins"].ToString();
-                }
-                return "DsiAdmins";
+                return "Admins";
             }
         }
 
@@ -159,7 +103,7 @@ namespace DsiWorkorders.Web.Helpers
               return ConfigurationManager.
                   AppSettings["CompanyName"].ToString();
             }
-            return "CompanyName";
+            return "Alpha Information Systems, Inc.";
           }
         }
 
@@ -173,7 +117,7 @@ namespace DsiWorkorders.Web.Helpers
                     return ConfigurationManager.
                         AppSettings["CompanyAbbr"].ToString();
                 }
-                return "CompanyAbbr";
+                return "AISI";
             }
         }
 
@@ -187,7 +131,7 @@ namespace DsiWorkorders.Web.Helpers
                     return ConfigurationManager.
                         AppSettings["ApplicationName"].ToString();
                 }
-                return "ApplicationName";
+                return "Workorders";
             }
         }
 
@@ -214,7 +158,7 @@ namespace DsiWorkorders.Web.Helpers
                     return ConfigurationManager.
                         AppSettings["ApplicationDescription"].ToString();
                 }
-                return "ApplicationDescription";
+                return "Manage Service Location Maintenance issues, aka Workorders.";
             }
         }
     

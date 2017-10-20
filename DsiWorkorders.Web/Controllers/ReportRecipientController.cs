@@ -7,41 +7,29 @@ using DsiWorkorders.Web.Filters;
 using DsiWorkorders.Data;
 using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
-using System;
 using System.Configuration;
-using System.Collections.Generic;
-using DsiShifts.Data.Enums;
 
 namespace DsiWorkorders.Web.Controllers
 {
     [CustomAuthorize(AccessType = AccessType.Admins)]
     public class ReportRecipientController : Controller
     {
-        AppDbContext _db = new AppDbContext(Settings.GetConnectionStringName());
+        AppDbContext _db = new AppDbContext();
         // GET: ReportRecipients
         [CustomAuthorize(AccessType = AccessType.Admins)]
         public ActionResult Index()
         {
             ReportRecipientGridViewModel model = new ReportRecipientGridViewModel();
-            var selectedCompany = CompanyCookie.SelectedCompany;
-            model.Companies = Helpers.UserFunctions.GetCompaniesSelectList(selectedCompany);
-            model.SelectedCompany = selectedCompany;
-            model.Areas = Helpers.UserFunctions.GetAreasSelectList(_db);
+            model.Areas = UserFunctions.GetAreasSelectList(_db);
 
             return View(model);
         }
 
         public void TestSendEmails()
         {
-            var companies = new List<CompanyEnum>();
-            companies.Add(CompanyEnum.CSI);
-            companies.Add(CompanyEnum.DSI);
 
-            foreach (var company in companies)
             {
-                string companyConnectionString = null;
-                companyConnectionString = ConfigurationManager.AppSettings[company.ToString()];
-                AppDbContext _db = new AppDbContext(companyConnectionString);
+                AppDbContext _db = new AppDbContext();
                 //get al areas
                 var areas = _db.Areas.ToList();
 
@@ -49,10 +37,10 @@ namespace DsiWorkorders.Web.Controllers
                 {
 
                     string toBeSentEmails = "davidzaeaton@outlook.com";
-                    string emailBodyText = ReportEmailMessage.GetReportEmailMessage(company, area.Name, area.Id, _db);
+                    string emailBodyText = ReportEmailMessage.GetReportEmailMessage(area.Name, area.Id, _db);
 
                     //send email 
-                    Email.SendEmail(toBeSentEmails, company + " Weekly Maintenance Work Orders Report", emailBodyText, emailBodyText, null, null);
+                    Email.SendEmail(toBeSentEmails, ConfigurationManager.AppSettings["CompanyName"] + " Weekly Maintenance Work Orders Report", emailBodyText, emailBodyText, null, null);
                 }
             }
         }
@@ -75,13 +63,6 @@ namespace DsiWorkorders.Web.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var selectedCompany = CompanyCookie.SelectedCompany;
-
-            if (string.IsNullOrEmpty(selectedCompany))
-            {
-                return RedirectToAction("Index");
-            }
-
             var model = _db.ReportRecipients.Find(id);
             if (model == null)
             {
@@ -93,7 +74,7 @@ namespace DsiWorkorders.Web.Controllers
             viewModel.Id = id;
             viewModel.AreaId = model.AreaId;
             viewModel.Emails = model.Emails;
-            viewModel.Areas = Helpers.UserFunctions.GetAreasSelectList(_db, viewModel.AreaId);
+            viewModel.Areas = UserFunctions.GetAreasSelectList(_db, viewModel.AreaId);
             return View(viewModel);
         }
 
@@ -115,7 +96,7 @@ namespace DsiWorkorders.Web.Controllers
                 return RedirectToAction("Index");
             }
 
-            viewModel.Areas = Helpers.UserFunctions.GetAreasSelectList(_db, viewModel.AreaId);
+            viewModel.Areas = UserFunctions.GetAreasSelectList(_db, viewModel.AreaId);
 
             return View(viewModel);
 
@@ -143,7 +124,7 @@ namespace DsiWorkorders.Web.Controllers
         public ActionResult Create()
         {
             ReportRecipientViewModel model = new ReportRecipientViewModel();
-            model.Areas = Helpers.UserFunctions.GetAreasSelectList(_db);
+            model.Areas = UserFunctions.GetAreasSelectList(_db);
             return View(model);
         }
 
@@ -166,14 +147,14 @@ namespace DsiWorkorders.Web.Controllers
                 return RedirectToAction("Index");
             }
 
-            viewModel.Areas = Helpers.UserFunctions.GetAreasSelectList(_db, viewModel.AreaId);
+            viewModel.Areas = UserFunctions.GetAreasSelectList(_db, viewModel.AreaId);
             return View(viewModel);
         }
 
         public ActionResult Mobile()
         {
             ReportRecipientGridViewModel model = new ReportRecipientGridViewModel();
-            model.Areas = Helpers.UserFunctions.GetAreasSelectList(_db);
+            model.Areas = UserFunctions.GetAreasSelectList(_db);
             return View(model);
         }
 

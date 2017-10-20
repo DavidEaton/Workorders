@@ -14,7 +14,5 @@ namespace DsiWorkorders.Web.ViewModels.ReportRecipient
         public string Emails { get; set; }
         public int AreaId { get; set; }
         public SelectList Areas { get; set; }
-        public SelectList Companies { get; set; }
-        public string SelectedCompany { get; set; }
     }
 }

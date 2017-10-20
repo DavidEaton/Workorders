@@ -12,23 +12,6 @@
                 <h1 class="text-error">Access Denied</h1>
             </div>
 
-            <div class="row" style="margin-top:12px;">
-                @if (Model != null && Model.Companies != null && Model.Companies.Any())
-                {
-                    <div class="col-md-4 col-xs-12 col-md-offset-4">
-                        @using (Html.BeginForm("SelectCompany", "Workorders"))
-                        {
-                            <div class="row">
-                                <div class="col-md-10  col-xs-10 col-md-offset-1">
-                                    @Html.DropDownListFor(model => model.SelectedCompany, Model.Companies, "-Select Company-", new { @autofocus = "autofocus", @class = "form-control" })
-                                </div>
-                            </div>
-                        }
-
-                    </div>
-                }
-            </div>
-
             <div class="row" style="text-align:center;">
                 <h3>
                     @if (TempData["ErrorMessage"] != null)
@@ -37,7 +20,7 @@
                     }
                     else
                     {
-                        <text>Sorry to inform you that you don't have access to requested page. We recommend you contact us if you think this is an error!  </text>
+                        <text>Sorry to inform you that you don't have access to requested page. We recommend you contact the IT Department if you think this is an error.  </text>
 
                     }
 
@@ -47,14 +30,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    $(function () {
-
-        $('#SelectedCompany').change(function () {
-
-            $(this).parents('form').submit();
-        });
-    });
-
-</script>

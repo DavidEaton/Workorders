@@ -22,27 +22,25 @@ namespace DsiWorkorders.Web.Filters
             if (!httpContext.User.Identity.IsAuthenticated)
                 return false;
 
-            var selectedCompany = CompanyCookie.SelectedCompany;
-
-            //if valid user and no company is selected
-            if (Helpers.UserFunctions.IsValidUser() && string.IsNullOrEmpty(selectedCompany))
+            //if valid user
+            if (UserFunctions.IsValidUser())
             {
                 return true;
             }
-            else if (Helpers.UserFunctions.IsValidUser() == false)
+            else if (UserFunctions.IsValidUser() == false)
             {
                 return false;
             }
 
             //check if user is an admin
-            var isAdmin = Helpers.UserFunctions.IsAdmin();
+            var isAdmin = UserFunctions.IsAdmin();
 
             if (isAdmin) //if user is admin then allow it access all pages of app
             {
                 return true;
             }
 
-            //NOTE: if we are means user is not an admin
+            //NOTE: if we are here means user is not an admin
 
             //if access type is admins
             if (AccessType == AccessType.Admins)
@@ -53,7 +51,7 @@ namespace DsiWorkorders.Web.Filters
             //NOTE: if we are here means user is not an admin and AccessType is not Admins
 
             //check if user is an editor
-            var isEditor = Helpers.UserFunctions.IsEditor();
+            var isEditor = UserFunctions.IsEditor();
 
             if (isEditor) //if user is editor then allow it access all non-admin pages
             {
@@ -68,7 +66,7 @@ namespace DsiWorkorders.Web.Filters
             }
 
             //check if user is a viewer
-            var isViewer = Helpers.UserFunctions.IsViewer();
+            var isViewer = UserFunctions.IsViewer();
 
             return isViewer;
 

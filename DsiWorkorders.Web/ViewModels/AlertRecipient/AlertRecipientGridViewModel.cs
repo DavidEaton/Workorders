@@ -15,7 +15,5 @@ namespace DsiWorkorders.Web.ViewModels.AlertRecipient
         public string AreaName { get; set; }
         public string Emails { get; set; }
         public SelectList Areas { get; set; }
-        public SelectList Companies { get; set; }
-        public string SelectedCompany { get; set; }
     }
 }

@@ -1,5 +1,5 @@
-﻿
-@model DsiWorkorders.Web.ViewModels.ReportRecipient.ReportRecipientViewModel
+﻿@model DsiWorkorders.Web.ViewModels.ReportRecipient.ReportRecipientViewModel
+@using DsiWorkorders.Web.Helpers
 
 <div class="row">
     <div class="col-md-7">
@@ -40,7 +40,7 @@
                 </div>
                 <div class="wo-form-buttons clearfix">
                     <button type="submit" class="btn btn-primary pull-right">Save</button>
-                    @if (DsiWorkorders.Web.Helpers.UserFunctions.IsAdmin() && Model.Id > 0)
+                    @if (UserFunctions.IsAdmin() && Model.Id > 0)
                     {
                         <a class="btn btn-danger jq-delete-link pull-right" data-reload="@Url.Action("Index", "ReportRecipient")" href="@Url.Action("Delete", "ReportRecipient", new { id = Model.Id })">Delete</a>
                     }

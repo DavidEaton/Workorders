@@ -2,41 +2,26 @@
 
 @using DsiWorkorders.Web.ViewModels.AlertRecipient
 @using Kendo.Mvc.UI;
+@using DsiWorkorders.Web.Helpers
 @{
-    ViewBag.Title = DsiWorkorders.Web.Helpers.Settings.ApplicationName;
+    ViewBag.Title = Settings.ApplicationName;
 }
-<div class="row" style="margin-top:20px;">
-    <div class="col-md-4 col-xs-12">
-        @using (Html.BeginForm("SelectCompany", "Workorders"))
-        {
-            <div class="row" style="margin-bottom: 10px;">
-                <div class="col-md-10  col-xs-10">
-                    @Html.DropDownListFor(model => model.SelectedCompany, Model.Companies, "-Select Company-", new { @autofocus = "autofocus", @class = "form-control" })
-                </div>
-            </div>
-        }
+
+<div class="row">
+    <div class="col-sm-5">
+        <p class="">
+            @Html.ActionLink("Add New Alert Recipient", "Create", "AlertRecipient", null, new
+            {
+                @class = "btn btn-large btn-default",
+                @tabindex = "1"
+            })
+
+        </p>
+    </div>
+    <div class="col-sm-7">
+        <div class="glyphicon glyphicon-question-sign tooltip-icon pull-right" data-content="Every time a new Workorder is created, an alert email is sent to the Department Supervisor, and Cc'd to the Recipients listed here." rel="popover" data-placement="left" data-trigger="hover"></div>
     </div>
 </div>
-@if (!string.IsNullOrEmpty(Model.SelectedCompany))
-{
-    <div class="row">
-         <div class="col-sm-5">
-             <p class="">
-                 @Html.ActionLink("Add New Alert Recipient", "Create", "AlertRecipient", null, new
-   {
-       @class = "btn btn-large btn-default",
-       @tabindex = "1"
-   })
-
-             </p>
-         </div>
-        <div class="col-sm-7">
-            <div class="glyphicon glyphicon-question-sign tooltip-icon pull-right" data-content="Every time a new Workorder is created, an alert email is sent to the Department Supervisor, and Cc'd to the Recipients listed here." rel="popover" data-placement="left" data-trigger="hover"></div>
-        </div>
-    </div>
-  
-}
-
 
 <ul class="nav nav-tabs wo-nav-tabs">
     <li class="active"><a href="#alerts" data-toggle="tab">Workorder Alert Recipient</a></li>
@@ -91,33 +76,28 @@
 
 <script>
 
-        $(function () {
+    $(function () {
 
-            var grid = $('#AlertRecipients').data().kendoGrid;
-            loadGridStateFromCookie(grid);
+        var grid = $('#AlertRecipients').data().kendoGrid;
+        loadGridStateFromCookie(grid);
 
-            $('#SelectedCompany').change(function () {
-
-                $(this).parents('form').submit();
-            });
-           
-            // tooltip
-            $('.tooltip-icon').popover();
-        });
+        // tooltip
+        $('.tooltip-icon').popover();
+    });
 
 </script>
 <script>
-        function areaFilterJsFunction(element) {
+    function areaFilterJsFunction(element) {
 
-            element.kendoDropDownList({
-                dataSource: {
-                    transport: {
-                        read: "@Url.Action("GetAreaDropdownItems")"
-                    }
-                },
-                optionLabel: "--Select Area--"
-            });
-        }
+        element.kendoDropDownList({
+            dataSource: {
+                transport: {
+                    read: "@Url.Action("GetAreaDropdownItems")"
+                }
+            },
+            optionLabel: "--Select Area--"
+        });
+    }
 
 </script>
 

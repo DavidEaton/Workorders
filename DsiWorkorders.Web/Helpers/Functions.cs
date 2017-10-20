@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
+﻿using System.Collections.Generic;
 using System.Security.Claims;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
 using DsiWorkorders.Data.Enums;
 using System.Web.Mvc;
-using DsiShifts.Data.Enums;
 using DsiWorkorders.Web.Services.Tasks;
 
 namespace DsiWorkorders.Web.Helpers
@@ -39,168 +36,36 @@ namespace DsiWorkorders.Web.Helpers
     public class UserFunctions
     {
 
-        // User is Valid
-        public static bool IsValidUser()
-        {
-            return IsCSIValidUser() || IsDSIValidUser();
-        }
-
         public static bool IsAdminOrEditor()
         {
             return IsEditor() || IsAdmin();
         }
 
-        // User is Valid for Csi
-        public static bool IsCSIValidUser()
-        {
-            return IsCsiViewer() || IsCsiEditor() || IsCsiAdmin();
-        }
-
         //User is valid for Dsi
-        public static bool IsDSIValidUser()
+        public static bool IsValidUser()
         {
-            return IsDsiViewer() || IsDsiEditor() || IsDsiAdmin();
-        }
-        // If user is Csi Viewer
-        public static bool IsCsiViewer()
-        {
-            var identity = (ClaimsPrincipal)HttpContext.Current.User;
-            return identity.Claims.Any(x => x.Type == "IsCsiViewer" && bool.Parse(x.Value));
+            return IsViewer() || IsEditor() || IsAdmin();
         }
 
-        // If user is Csi Editor
-        public static bool IsCsiEditor()
-        {
-            var identity = (ClaimsPrincipal)HttpContext.Current.User;
-            return identity.Claims.Any(x => x.Type == "IsCsiEditor" && bool.Parse(x.Value));
-        }
-
-        // If user is Csi Admin
-        public static bool IsCsiAdmin()
-        {
-            var identity = (ClaimsPrincipal)HttpContext.Current.User;
-            return identity.Claims.Any(x => x.Type == "IsCsiAdmin" && bool.Parse(x.Value));
-        }
-
-        // If user is Dsi Viewer
-        public static bool IsDsiViewer()
-        {
-            var identity = (ClaimsPrincipal)HttpContext.Current.User;
-            return identity.Claims.Any(x => x.Type == "IsDsiViewer" && bool.Parse(x.Value));
-        }
-
-        // If user is Dsi Editor
-        public static bool IsDsiEditor()
-        {
-            var identity = (ClaimsPrincipal)HttpContext.Current.User;
-            return identity.Claims.Any(x => x.Type == "IsDsiEditor" && bool.Parse(x.Value));
-        }
-
-        // If user is Dsi Admin
-        public static bool IsDsiAdmin()
-        {
-            var identity = (ClaimsPrincipal)HttpContext.Current.User;
-            return identity.Claims.Any(x => x.Type == "IsDsiAdmin" && bool.Parse(x.Value));
-        }
-
-        // If user is Viewer Admin Editor of Selected Company than allow 
-        public static bool IsAllowedAccessToCompany(bool isCsiViewer, bool isCsiEditor, bool isCsiAdmin, bool isDsiViewer, bool isDsiEditor, bool isDsiAdmin)
-        {
-            var selectedCompany = CompanyCookie.SelectedCompany;
-
-            if (selectedCompany == CompanyEnum.CSI.ToString() && isCsiViewer)
-            {
-                return true;
-            }
-            else if (selectedCompany == CompanyEnum.CSI.ToString() && isCsiEditor)
-            {
-                return true;
-            }
-            else if (selectedCompany == CompanyEnum.CSI.ToString() && isCsiAdmin)
-            {
-                return true;
-            }
-            else if (selectedCompany == CompanyEnum.DSI.ToString() && isDsiViewer)
-            {
-                return true;
-            }
-            else if (selectedCompany == CompanyEnum.DSI.ToString() && isDsiEditor)
-            {
-                return true;
-            }
-            else if (selectedCompany == CompanyEnum.DSI.ToString() && isDsiAdmin)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        public static bool IsAdmin()
-        {
-            var selectedCompany = CompanyCookie.SelectedCompany;
-            if (selectedCompany == CompanyEnum.CSI.ToString())
-            {
-                return IsCsiAdmin();
-            }
-            else if (selectedCompany == CompanyEnum.DSI.ToString())
-            {
-                return IsDsiAdmin();
-            }
-
-            return false;
-        }
-
-        public static bool IsEditor()
-        {
-            var selectedCompany = CompanyCookie.SelectedCompany;
-            if (selectedCompany == CompanyEnum.CSI.ToString())
-            {
-                return IsCsiEditor();
-            }
-            else if (selectedCompany == CompanyEnum.DSI.ToString())
-            {
-                return IsDsiEditor();
-            }
-
-            return false;
-        }
-
+        // If user is Viewer
         public static bool IsViewer()
         {
-            var selectedCompany = CompanyCookie.SelectedCompany;
-            if (selectedCompany == CompanyEnum.CSI.ToString())
-            {
-                return IsCsiViewer();
-            }
-            else if (selectedCompany == CompanyEnum.DSI.ToString())
-            {
-                return IsDsiViewer();
-            }
-
-            return false;
+            var identity = (ClaimsPrincipal)HttpContext.Current.User;
+            return identity.Claims.Any(x => x.Type == "IsViewer" && bool.Parse(x.Value));
         }
 
-        public static SelectList GetCompaniesSelectList(string company)
+        // If user is Editor
+        public static bool IsEditor()
         {
-            //create a list of strings that will have logged in users Roles
+            var identity = (ClaimsPrincipal)HttpContext.Current.User;
+            return identity.Claims.Any(x => x.Type == "IsEditor" && bool.Parse(x.Value));
+        }
 
-            var list = new List<string>();
-
-            if (Helpers.UserFunctions.IsCSIValidUser())
-            {
-
-                list.Add(CompanyEnum.CSI.ToString());
-            }
-
-            if (Helpers.UserFunctions.IsDSIValidUser())
-            {
-                list.Add(CompanyEnum.DSI.ToString());
-            }
-
-            var companies = list.Select(x => new { ID = x, Name = x });
-
-            return new SelectList(companies, "Name", "Name", company);
+        // If user is Admin
+        public static bool IsAdmin()
+        {
+            var identity = (ClaimsPrincipal)HttpContext.Current.User;
+            return identity.Claims.Any(x => x.Type == "IsAdmin" && bool.Parse(x.Value));
         }
 
         public static SelectList GetAreasSelectList(AppDbContext _db, int? areaId = null)

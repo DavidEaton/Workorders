@@ -1,4 +1,5 @@
 ﻿@model DsiWorkorders.Web.ViewModels.WorkorderEditViewModel
+@using DsiWorkorders.Web.Helpers
 
 @{
     ViewBag.Title = "Edit Workorder";
@@ -126,7 +127,7 @@
                         <a class="btn btn-primary jq-approve-link pull-right" data-reload="@Url.Action("Edit", "Workorders", new {id = Model.Id })" href="@Url.Action("Approve", "Workorders", new { id = Model.Id })">Approve</a>
                     }
 
-                    @if (DsiWorkorders.Web.Helpers.UserFunctions.IsAdmin())
+                    @if (UserFunctions.IsAdmin())
                     {
                         <a class="btn btn-danger jq-delete-link pull-right" data-reload="@Url.Action("Index", "Workorders")" href="@Url.Action("Delete", "Workorders", new { id = Model.Id })">Delete</a>
                     }

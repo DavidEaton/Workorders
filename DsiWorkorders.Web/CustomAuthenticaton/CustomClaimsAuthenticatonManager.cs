@@ -1,6 +1,7 @@
 ﻿using DsiWorkorders.Web.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Security.Claims;
 using System.Web;
@@ -9,60 +10,36 @@ namespace DsiWorkorders.Web.CustomAuthenticaton
 {
     public class CustomClaimsAuthenticatonManager : ClaimsAuthenticationManager
     {
+        string company = ConfigurationManager.AppSettings["CompanyAbbr"];
+
         public override ClaimsPrincipal Authenticate(string resourceName, ClaimsPrincipal incomingPrincipal)
         {
             if (incomingPrincipal != null && incomingPrincipal.Identity.IsAuthenticated == true)
             {
                 var logMessage = incomingPrincipal.Identity.Name + " logged in " + DateTime.UtcNow + " <br/>";
 
-                //check if user is an CsiViewer
-                var isCsiViewer = Helpers.AzureGraphAPIFunctions.CheckIfUserIsMemberOfGroup(Helpers.Settings.CsiViewersRole, incomingPrincipal);
+                //check if user is an Viewer
+                var isViewer = AzureGraphAPIFunctions.CheckIfUserIsMemberOfGroup(Settings.ViewersRole, incomingPrincipal);
 
-                ((ClaimsIdentity)incomingPrincipal.Identity).AddClaim(new Claim("IsCsiViewer", isCsiViewer.ToString()));
+                ((ClaimsIdentity)incomingPrincipal.Identity).AddClaim(new Claim("IsViewer", isViewer.ToString()));
 
-                logMessage += incomingPrincipal.Identity.Name + " isCsiViewer = " + isCsiViewer + " " + DateTime.UtcNow + " <br/>";
+                logMessage += incomingPrincipal.Identity.Name + " isViewer = " + isViewer + " " + DateTime.UtcNow + " <br/>";
 
-                //check if user is an CsiEditor
-                var isCsiEditor = Helpers.AzureGraphAPIFunctions.CheckIfUserIsMemberOfGroup(Helpers.Settings.CsiEditorsRole, incomingPrincipal);
+                //check if user is an Editor
+                var isEditor = AzureGraphAPIFunctions.CheckIfUserIsMemberOfGroup(Settings.EditorsRole, incomingPrincipal);
 
-                ((ClaimsIdentity)incomingPrincipal.Identity).AddClaim(new Claim("IsCsiEditor", isCsiEditor.ToString()));
+                ((ClaimsIdentity)incomingPrincipal.Identity).AddClaim(new Claim("IsEditor", isEditor.ToString()));
 
-                logMessage += incomingPrincipal.Identity.Name + " isCsiEditor = " + isCsiEditor + " " + DateTime.UtcNow + " <br/>";
-
-                //check if user is an CsiAdmin
-                var isCsiAdmin = Helpers.AzureGraphAPIFunctions.CheckIfUserIsMemberOfGroup(Helpers.Settings.CsiAdminsRole, incomingPrincipal);
-
-                ((ClaimsIdentity)incomingPrincipal.Identity).AddClaim(new Claim("IsCsiAdmin", isCsiAdmin.ToString()));
-
-                logMessage += incomingPrincipal.Identity.Name + " isCsiAdmin = " + isCsiAdmin + " " + DateTime.UtcNow + " <br/>";
-
-                //check if user is an DsiViewer
-                var isDsiViewer = Helpers.AzureGraphAPIFunctions.CheckIfUserIsMemberOfGroup(Helpers.Settings.DsiViewersRole, incomingPrincipal);
-
-                ((ClaimsIdentity)incomingPrincipal.Identity).AddClaim(new Claim("IsDsiViewer", isDsiViewer.ToString()));
-
-                logMessage += incomingPrincipal.Identity.Name + " isDsiViewer = " + isDsiViewer + " " + DateTime.UtcNow + " <br/>";
-
-                //check if user is an DsiEditor
-                var isDsiEditor = Helpers.AzureGraphAPIFunctions.CheckIfUserIsMemberOfGroup(Helpers.Settings.DsiEditorsRole, incomingPrincipal);
-
-                ((ClaimsIdentity)incomingPrincipal.Identity).AddClaim(new Claim("IsDsiEditor", isDsiEditor.ToString()));
-
-                logMessage += incomingPrincipal.Identity.Name + " isDsiEditor = " + isDsiEditor + " " + DateTime.UtcNow + " <br/>";
+                logMessage += incomingPrincipal.Identity.Name + " isEditor = " + isEditor + " " + DateTime.UtcNow + " <br/>";
 
                 //check if user is an DsiAdmin
-                var isDsiAdmin = Helpers.AzureGraphAPIFunctions.CheckIfUserIsMemberOfGroup(Helpers.Settings.DsiAdminsRole, incomingPrincipal);
+                var isAdmin = AzureGraphAPIFunctions.CheckIfUserIsMemberOfGroup(Settings.AdminsRole, incomingPrincipal);
 
-                ((ClaimsIdentity)incomingPrincipal.Identity).AddClaim(new Claim("IsDsiAdmin", isDsiAdmin.ToString()));
+                ((ClaimsIdentity)incomingPrincipal.Identity).AddClaim(new Claim("IsAdmin", isAdmin.ToString()));
 
-                logMessage += incomingPrincipal.Identity.Name + " isDsiAdmin = " + isDsiAdmin + " " + DateTime.UtcNow + " <br/>";
+                logMessage += incomingPrincipal.Identity.Name + " isAdmin = " + isAdmin + " " + DateTime.UtcNow + " <br/>";
 
-                Logger.LogEvent("Workorders DSI/CSI - " + LogLevel.Info.ToString(), logMessage + DateTime.UtcNow);
-
-                if (UserFunctions.IsAllowedAccessToCompany(isCsiViewer, isCsiEditor, isCsiAdmin, isDsiViewer, isDsiEditor, isDsiAdmin) == false)
-                {
-                    CompanyCookie.SelectedCompany = null;
-                }
+                Logger.LogEvent(company + " Workorders " + LogLevel.Info.ToString(), logMessage + DateTime.UtcNow);
 
             }
 

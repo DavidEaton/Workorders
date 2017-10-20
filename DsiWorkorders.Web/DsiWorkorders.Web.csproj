@@ -181,7 +181,6 @@
     </Compile>
     <Compile Include="Helpers\AsyncHelper.cs" />
     <Compile Include="Helpers\AzureGraphAPIFunctions.cs" />
-    <Compile Include="Helpers\CompanyCookie.cs" />
     <Compile Include="Helpers\Email.cs" />
     <Compile Include="Helpers\Functions.cs" />
     <Compile Include="Helpers\GraphConfiguration.cs" />

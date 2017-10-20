@@ -1,5 +1,6 @@
 ﻿@using DsiWorkorders.Web.ViewModels
-@using Kendo.Mvc.UI;
+@using Kendo.Mvc.UI
+@using DsiWorkorders.Web.Helpers
 
 <div  class="grid-parent" data-departmentfilterurl="@(ViewBag.WorkorderType == "Resloved" ? Url.Action("GetClosedDepartmentDropdownItems") : Url.Action("GetOpenDepartmentDropdownItems"))">
 
@@ -64,7 +65,7 @@
     }
     //c.Bound(w => w.DaysOverdue).Title("Days Overdue");
     //c.Bound(w => w.DaysOpen).Title("Days Open");
-    if (ViewBag.WorkorderType == "Awaiting" && DsiWorkorders.Web.Helpers.UserFunctions.IsAdminOrEditor())
+    if (ViewBag.WorkorderType == "Awaiting" && UserFunctions.IsAdminOrEditor())
     {
         c.Template(m => m)
            .Width(100)

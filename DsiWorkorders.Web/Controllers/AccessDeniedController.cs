@@ -13,13 +13,7 @@ namespace DsiWorkorders.Web.Controllers
         // GET: AccessDenied
         public ActionResult Index()
         {
-            //read selected company from cookie
-            var selectedCompany = CompanyCookie.SelectedCompany;
-
             var model = new WorkOrdersGridViewModel();
-            model.Companies = Helpers.UserFunctions.GetCompaniesSelectList(selectedCompany);
-            model.SelectedCompany = selectedCompany;
-
             return View(model);
         }
     }

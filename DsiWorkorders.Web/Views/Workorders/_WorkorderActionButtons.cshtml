@@ -4,14 +4,14 @@
 
 @if (Settings.IsProduction)
 {
-    if (DsiWorkorders.Web.Helpers.UserFunctions.IsAdminOrEditor())
+    if (UserFunctions.IsAdminOrEditor())
     {
         @Html.ActionLink("Edit", "Edit", "Workorders", new { id = Model }, new
                                                                     {
                                                                         @class = "btn btn-primary pull-right"
 
                                                                     })
-        if (DsiWorkorders.Web.Helpers.UserFunctions.IsAdmin())
+        if (UserFunctions.IsAdmin())
         {
             <a class="btn btn-danger jq-delete-link pull-right" data-reload="@Url.Action("Index", "Workorders")" href="@Url.Action("Delete", "Workorders", new { id = Model })">Delete</a>
         }
@@ -31,14 +31,14 @@
 }
 else
 {
-    if (DsiWorkorders.Web.Helpers.UserFunctions.IsAdminOrEditor())
+    if (UserFunctions.IsAdminOrEditor())
     {
         @Html.ActionLink("Edit", "Edit", "Workorders", new { id = Model }, new
                                                                     {
                                                                         @class = "btn btn-primary pull-right"
                                                                     })
 
-        if (DsiWorkorders.Web.Helpers.UserFunctions.IsAdmin())
+        if (UserFunctions.IsAdmin())
         {
             <a class="btn btn-danger jq-delete-link pull-right" data-reload="@Url.Action("Index", "Workorders")" href="@Url.Action("Delete", "Workorders", new { id = Model })">Delete</a>
         }

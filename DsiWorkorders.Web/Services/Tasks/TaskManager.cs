@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using DsiWorkorders.Web.Helpers;
 
 namespace DsiWorkorders.Web.Services.Tasks
 {
@@ -11,7 +12,6 @@ namespace DsiWorkorders.Web.Services.Tasks
   {
     private static readonly TaskManager _taskManager = new TaskManager();
     private readonly List<TaskThread> _taskThreads = new List<TaskThread>();
-    private int _notRunTasksInterval = 60 * 30; //30 minutes
 
     private TaskManager()
     {
@@ -24,7 +24,7 @@ namespace DsiWorkorders.Web.Services.Tasks
     {
       this._taskThreads.Clear();
 
-      var scheduleTasks = DsiWorkorders.Web.Helpers.UserFunctions.GetReportTasks();
+      var scheduleTasks = UserFunctions.GetReportTasks();
 
       //group by threads with the same seconds
       foreach (var scheduleTaskGrouped in scheduleTasks.GroupBy(x => x.Seconds))

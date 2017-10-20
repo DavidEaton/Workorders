@@ -92,8 +92,6 @@ namespace DsiWorkorders.Web.ViewModels
         public SelectList Areas { get; set; }
         public SelectList Priorities { get; set; }
         public SelectList Closers { get; set; }
-        public string SelectedCompany { get; set; }
-        public SelectList Companies { get; set; }
 
         public DateTime? Rejected { get; set; }
         public string Rejector { get; set; }

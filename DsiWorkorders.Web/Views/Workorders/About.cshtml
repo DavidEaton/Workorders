@@ -26,23 +26,19 @@
     <table class="table table-bordered table-striped table-margin">
         <tr>
             <th>Permission</th>
-            <th>Group CSI</th>
-            <th>Group DSI</th>
+            <th>Group </th>
         </tr>
         <tr>
             <td>View</td>
-            <td>CSI_Users</td>
-            <td>DSI_Users</td>
+            <td>@Model.Users</td>
         </tr>
         <tr>
             <td>Edit</td>
-            <td>CSI_WorkorderEditors</td>
-            <td>DSI_WorkorderEditors</td>
+            <td>@Model.Editors</td>
         </tr>
         <tr>
             <td>Admin</td>
-            <td>CSI_WorkorderAdmins</td>
-            <td>DSI_WorkorderAdmins</td>
+            <td>@Model.Admins</td>
         </tr>
     </table>
     <div class="about-page-btn">

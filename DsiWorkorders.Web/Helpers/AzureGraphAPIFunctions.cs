@@ -56,7 +56,7 @@ namespace DsiWorkorders.Web.Helpers
             var tenantId = incomingPrincipal.FindFirst(GraphConfiguration.TenantIdClaimType).Value;
 
             //create Azure Graph Api client to make api calls
-            var client = Helpers.AzureGraphAPIFunctions.GetActiveDirectoryClient(tenantId);
+            var client = GetActiveDirectoryClient(tenantId);
 
             IGroup group = null;
             try

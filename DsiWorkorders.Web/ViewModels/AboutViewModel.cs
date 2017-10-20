@@ -11,5 +11,9 @@ namespace DsiWorkorders.Web.ViewModels
         public string ApplicationDescription { get; set; }
         public string CurrentYear { get; set; }
         public string UrlReferrer { get; set; }
+        public string CompanyAbbreviation { get; set; }
+        public string Users { get; set; }
+        public string Editors { get; set; }
+        public string Admins { get; set; }
     }
 }

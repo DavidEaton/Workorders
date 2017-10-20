@@ -18,15 +18,12 @@ namespace DsiWorkorders.Web.Controllers
     [CustomAuthorize(AccessType = AccessType.Admins)]
     public class AlertRecipientController : Controller
     {
-        AppDbContext _db = new AppDbContext(Settings.GetConnectionStringName());
+        AppDbContext _db = new AppDbContext();
         // GET: AlertRecipient
         public ActionResult Index()
         {
             AlertRecipientGridViewModel model = new AlertRecipientGridViewModel();
-            var selectedCompany = CompanyCookie.SelectedCompany;
-            model.Companies = Helpers.UserFunctions.GetCompaniesSelectList(selectedCompany);
-            model.SelectedCompany = selectedCompany;
-            model.Areas = Helpers.UserFunctions.GetAreasSelectList(_db);
+            model.Areas = UserFunctions.GetAreasSelectList(_db);
 
             return View(model);
 
@@ -51,12 +48,6 @@ namespace DsiWorkorders.Web.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var selectedCompany = CompanyCookie.SelectedCompany;
-
-            if (string.IsNullOrEmpty(selectedCompany))
-            {
-                return RedirectToAction("Index");
-            }
             var model = _db.AlertRecipients.Find(id);
             if (model == null)
             {
@@ -67,7 +58,7 @@ namespace DsiWorkorders.Web.Controllers
             viewModel.Id = id;
             viewModel.AreaId = model.AreaId;
             viewModel.Emails = model.Emails;
-            viewModel.Areas = Helpers.UserFunctions.GetAreasSelectList(_db, viewModel.AreaId);
+            viewModel.Areas = UserFunctions.GetAreasSelectList(_db, viewModel.AreaId);
             return View(viewModel);
         }
 
@@ -88,7 +79,7 @@ namespace DsiWorkorders.Web.Controllers
                 return RedirectToAction("Index");
             }
 
-            viewModel.Areas = Helpers.UserFunctions.GetAreasSelectList(_db, viewModel.AreaId);
+            viewModel.Areas = UserFunctions.GetAreasSelectList(_db, viewModel.AreaId);
             return View(viewModel);
         }
 
@@ -115,7 +106,7 @@ namespace DsiWorkorders.Web.Controllers
         public ActionResult Create()
         {
             AlertRecipientViewModel model = new AlertRecipientViewModel();
-            model.Areas = Helpers.UserFunctions.GetAreasSelectList(_db);
+            model.Areas = UserFunctions.GetAreasSelectList(_db);
             return View(model);
         }
         [HttpPost]
@@ -136,14 +127,14 @@ namespace DsiWorkorders.Web.Controllers
                 return RedirectToAction("Index");
             }
 
-            viewModel.Areas = Helpers.UserFunctions.GetAreasSelectList(_db, viewModel.AreaId);
+            viewModel.Areas = UserFunctions.GetAreasSelectList(_db, viewModel.AreaId);
 
             return View(viewModel);
         }
         public ActionResult Mobile()
         {
             AlertRecipientGridViewModel model = new AlertRecipientGridViewModel();
-            model.Areas = Helpers.UserFunctions.GetAreasSelectList(_db);
+            model.Areas = UserFunctions.GetAreasSelectList(_db);
             return View(model);
         }
 

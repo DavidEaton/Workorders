@@ -1,8 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using DsiWorkorders.Web.Helpers
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>@DsiWorkorders.Web.Helpers.Settings.ApplicationName</title>
+    <title>@Settings.ApplicationName</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width" />
 
@@ -50,31 +51,25 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="javascript:void(0);" class="navbar-brand wo-brand hidden-xs">@DsiWorkorders.Web.Helpers.Settings.CompanyName</a>
-                <a href="javascript:void(0);" class="navbar-brand wo-brand visible-xs">@DsiWorkorders.Web.Helpers.Settings.CompanyAbbr</a>
+                <a href="javascript:void(0);" class="navbar-brand wo-brand hidden-xs">@Settings.CompanyName</a>
+                <a href="javascript:void(0);" class="navbar-brand wo-brand visible-xs">@Settings.CompanyAbbr</a>
 
                 <ul class="nav navbar-nav pull-left" style="margin-left: 0; margin-right: 0;">
 
                     @{
-                        if (DsiWorkorders.Web.Helpers.UserFunctions.IsValidUser())
+                        if (UserFunctions.IsValidUser())
                         {
                             var openIssuesCount = Html.Action("GetOpenIssuesCount", "Workorders");
                             <li class="visible-xs">
                                 <a href="@Url.Action("Index", "Workorders")">
                                     Workorders
-                                    @if (string.IsNullOrEmpty(DsiWorkorders.Web.Helpers.CompanyCookie.SelectedCompany) == false)
-                                    {
-                                        <span class="wo-mobile-grid-count">(@openIssuesCount)</span>
-                                    }
+                                    <span class="wo-mobile-grid-count">(@openIssuesCount)</span>
                                 </a>
                             </li>
                             <li class="hidden-xs">
                                 <a href="@Url.Action("Index", "Workorders")">
                                     Workorders
-                                    @if (string.IsNullOrEmpty(DsiWorkorders.Web.Helpers.CompanyCookie.SelectedCompany) == false)
-                                    {
-                                        <span class="wo-mobile-grid-count">(@openIssuesCount Open)</span>
-                                    }
+                                    <span class="wo-mobile-grid-count">(@openIssuesCount Open)</span>
                                 </a>
                             </li>
                         }
@@ -84,7 +79,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @if (DsiWorkorders.Web.Helpers.UserFunctions.IsAdmin())
+                    @if (UserFunctions.IsAdmin())
                     {
                         <li class="dropdown">
 
@@ -106,15 +101,11 @@
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">Help</a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href=@DsiWorkorders.Web.Helpers.Settings.HelpVideoLinkUsers target="_blank">Users Video</a>
+                                <a href=@Settings.HelpVideoLinkUsers target="_blank">Users Video</a>
                             </li>
                             <li>
-                                <a href=@DsiWorkorders.Web.Helpers.Settings.HelpVideoLinkEditors target="_blank">Editors Video</a>
+                                <a href=@Settings.HelpVideoLinkEditors target="_blank">Editors Video</a>
                             </li>
-                            @*<li>
-                                    <a href=@DsiWorkorders.Web.Helpers.Settings.HelpVideoLinkMobile target="_blank">Mobile Video</a>
-                                </li>*@
-
                         </ul>
                     </li>
 

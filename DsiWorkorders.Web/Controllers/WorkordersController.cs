@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.Globalization;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using DsiWorkorders.Data;
 using DsiWorkorders.Data.Enums;
@@ -13,17 +10,15 @@ using DsiWorkorders.Web.ViewModels;
 using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
 using System.Configuration;
-using System.Security.Claims;
 using DsiWorkorders.Web.Filters;
 using DsiWorkorders.Web.Helpers;
-using DsiShifts.Data.Enums;
 
 namespace DsiWorkorders.Web.Controllers
 {
     [CustomAuthorize(AccessType = AccessType.Users)]
     public class WorkordersController : Controller
     {
-        AppDbContext _db = new AppDbContext(Settings.GetConnectionStringName());
+        AppDbContext _db = new AppDbContext();
 
         public JsonResult GetOpen([DataSourceRequest]DataSourceRequest request, bool isOpen)
         {           
@@ -205,8 +200,6 @@ namespace DsiWorkorders.Web.Controllers
 
         public ActionResult Index()
         {
-            var selectedCompany = CompanyCookie.SelectedCompany;
-
             WorkOrdersGridViewModel model = new WorkOrdersGridViewModel();
 
             //fill dropdowns data. required for mobile view
@@ -215,31 +208,7 @@ namespace DsiWorkorders.Web.Controllers
             model.Closers = GetMobileFilterClosersSelectList();
             model.Priorities = GetPrioritiesSelectList(null);
 
-            model.Companies = Helpers.UserFunctions.GetCompaniesSelectList(selectedCompany);
-            model.SelectedCompany = selectedCompany;
             return View(model);
-        }
-
-
-        [HttpPost]
-        [AllowAnonymous]
-        public ActionResult SelectCompany(WorkOrdersGridViewModel model)
-        {
-            if (model != null && ModelState.IsValid)
-            {
-                CompanyCookie.SelectedCompany = model.SelectedCompany;
-            }
-
-            if (Request.UrlReferrer != null)
-            {
-                return Redirect(Request.UrlReferrer.ToString());
-
-            }
-            else
-            {
-                return RedirectToAction("Index");
-
-            }
         }
 
         public ActionResult Mobile()
@@ -314,12 +283,6 @@ namespace DsiWorkorders.Web.Controllers
         [CustomAuthorize(AccessType = AccessType.Editors)]
         public ActionResult Edit(int id)
         {
-            var selectedCompany = CompanyCookie.SelectedCompany;
-
-            if (string.IsNullOrEmpty(selectedCompany))
-            {
-                return RedirectToAction("Index");
-            }
             var model = _db.Workorders.Find(id);
             if (model == null)
             {
@@ -485,7 +448,7 @@ namespace DsiWorkorders.Web.Controllers
                     message += "<br />Priority : " + workorder.Priority.ToString() + "<br />";
                     message += "Detail : " + workorder.Details + "<br/>";
 
-                    Helpers.Email.SendEmail(supervisorEmail, "New Workorder for " + department.DepartmentFullName, message, message, null, null, alertRecipientEmails);
+                    Email.SendEmail(supervisorEmail, "New Workorder for " + department.DepartmentFullName, message, message, null, null, alertRecipientEmails);
                 }
 
                 return RedirectToAction("Index");
@@ -681,11 +644,18 @@ namespace DsiWorkorders.Web.Controllers
         {
             var applicationName = Settings.ApplicationName;
             var applicationDescription = Settings.ApplicationDescription;
+            var companyAbbreviation = Settings.CompanyAbbr;
+            var users = companyAbbreviation + "_Users";
+            var editors = companyAbbreviation + "_WorkorderEditors";
+            var admins = companyAbbreviation + "_WorkorderAdmins";
             var currentYear = DateTime.Now.Year.ToString();
 
             var model = new AboutViewModel();
             model.ApplicationName = applicationName;
             model.ApplicationDescription = applicationDescription;
+            model.Users = users;
+            model.Editors = editors;
+            model.Admins = admins;
             model.CurrentYear = currentYear;
             model.UrlReferrer = Request.UrlReferrer != null ? Request.UrlReferrer.ToString() : Url.Action("Index");
             return View(model);
