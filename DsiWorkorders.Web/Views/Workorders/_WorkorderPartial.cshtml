@@ -65,20 +65,21 @@
     }
     //c.Bound(w => w.DaysOverdue).Title("Days Overdue");
     //c.Bound(w => w.DaysOpen).Title("Days Open");
-    if (ViewBag.WorkorderType == "Awaiting" && UserFunctions.IsAdminOrEditor())
-    {
-        c.Template(m => m)
-           .Width(100)
-           .ClientTemplate(
-           "<a class='btn btn-xs jq-approve-link btn-primary' data-reload='" + Url.Content("~/Workorders/Index") + "'  href='" + Url.Content("~/Workorders/Approve/#=Id #") + "'  data-toggle='tooltip' title='Approve and move to Open Workorders tab' data-placement='top'>Approve</a>&nbsp;"
-            );
 
-        c.Template(m => m)
-           .Width(100)
-           .ClientTemplate(
-           "<a class='btn btn-xs jq-reject-link btn-warning' data-toggle='tooltip' title='Move to Rejected tab' data-placement='top' data-msg='Please Enter the reason(S) for Rejecting this Workorder.' data-reload='" + Url.Content("~/Workorders/Index") + "'  href='" + Url.Content("~/Workorders/Reject/#=Id #") + "'>Reject</a>&nbsp;"
-            );
-    }
+    //if (ViewBag.WorkorderType == "Awaiting" && UserFunctions.IsAdminOrEditor())
+    //{
+    //    c.Template(m => m)
+    //       .Width(100)
+    //       .ClientTemplate(
+    //       "<a class='btn btn-xs jq-approve-link btn-primary' data-reload='" + Url.Content("~/Workorders/Index") + "'  href='" + Url.Content("~/Workorders/Approve/#=Id #") + "'  data-toggle='tooltip' title='Approve and move to Open Workorders tab' data-placement='top'>Approve</a>&nbsp;"
+    //        );
+
+    //    c.Template(m => m)
+    //       .Width(100)
+    //       .ClientTemplate(
+    //       "<a class='btn btn-xs jq-reject-link btn-warning' data-toggle='tooltip' title='Move to Rejected tab' data-placement='top' data-msg='Please Enter the reason(S) for Rejecting this Workorder.' data-reload='" + Url.Content("~/Workorders/Index") + "'  href='" + Url.Content("~/Workorders/Reject/#=Id #") + "'>Reject</a>&nbsp;"
+    //        );
+    //}
 
 })
       .DataSource(d => d

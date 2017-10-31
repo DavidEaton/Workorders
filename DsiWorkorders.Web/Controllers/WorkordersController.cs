@@ -529,7 +529,7 @@ namespace DsiWorkorders.Web.Controllers
 
         [HttpPost]
         [CustomAuthorize(AccessType = AccessType.Editors)]
-        public JsonResult Approve(int id)
+        public ActionResult Approve(int id)
         {
             Workorder workorder = _db.Workorders.FirstOrDefault(x => x.Id == id);
             if (workorder == null)
@@ -548,6 +548,8 @@ namespace DsiWorkorders.Web.Controllers
             TempData["SuccessMessage"] = "Workorder has been Approved and moved to Open Workorders.";
 
             return Json(new { success = true });
+            //return RedirectToAction("Index");
+
         }
 
         [HttpPost]
