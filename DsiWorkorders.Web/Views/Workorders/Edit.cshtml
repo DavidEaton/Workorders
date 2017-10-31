@@ -124,9 +124,9 @@
 
                     @if (Model.Approved == null)
                     {
-                        <a class="btn btn-primary jq-approve-link pull-right" data-reload="@Url.Action("Edit", "Workorders", new {id = Model.Id })" href="@Url.Action("Approve", "Workorders", new { id = Model.Id })" data-toggle='tooltip' title='Approve and move to Open Workorders tab' data-placement='top'>Approve</a>
+                        <a class="btn btn-primary jq-approve-link pull-right" data-reload="@Url.Action("Index", "Workorders", new {id = Model.Id })" href="@Url.Action("Approve", "Workorders", new { id = Model.Id })" data-toggle='tooltip' title='Approve and move to Open Workorders tab' data-placement='top'>Approve</a>
 
-                        <a class="btn btn-warning jq-reject-link pull-right" data-reload="@Url.Action("Edit", "Workorders", new {id = Model.Id })" href="@Url.Action("Reject", "Workorders", new { id = Model.Id })" data-toggle='tooltip' title='Move to Rejected tab' data-placement='top' data-msg='Please Enter the reason(S) for Rejecting this Workorder.'>Reject</a>
+                        <a class="btn btn-warning jq-reject-link pull-right" data-reload="@Url.Action("Index", "Workorders", new {id = Model.Id })" href="@Url.Action("Reject", "Workorders", new { id = Model.Id })" data-toggle='tooltip' title='Move to Rejected tab' data-placement='top' data-msg='Please Enter the reason(S) for Rejecting this Workorder.'>Reject</a>
                     }
 
                     @if (UserFunctions.IsAdmin())

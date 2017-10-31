@@ -34,9 +34,10 @@ else
     if (UserFunctions.IsAdminOrEditor())
     {
         @Html.ActionLink("Edit", "Edit", "Workorders", new { id = Model }, new
-                                                                    {
-                                                                        @class = "btn btn-primary pull-right"
-                                                                    })
+   {
+       @class = "btn btn-primary pull-right",
+       @title = "Tap to Edit/Approve/Reject/Close"
+   })
 
         if (UserFunctions.IsAdmin())
         {
