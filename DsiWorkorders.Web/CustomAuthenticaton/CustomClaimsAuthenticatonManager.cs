@@ -10,7 +10,6 @@ namespace DsiWorkorders.Web.CustomAuthenticaton
 {
     public class CustomClaimsAuthenticatonManager : ClaimsAuthenticationManager
     {
-        string company = ConfigurationManager.AppSettings["CompanyAbbr"];
 
         public override ClaimsPrincipal Authenticate(string resourceName, ClaimsPrincipal incomingPrincipal)
         {
@@ -32,14 +31,14 @@ namespace DsiWorkorders.Web.CustomAuthenticaton
 
                 logMessage += incomingPrincipal.Identity.Name + " isEditor = " + isEditor + " " + DateTime.UtcNow + " <br/>";
 
-                //check if user is an DsiAdmin
+                //check if user is an Admin
                 var isAdmin = AzureGraphAPIFunctions.CheckIfUserIsMemberOfGroup(Settings.AdminsRole, incomingPrincipal);
 
                 ((ClaimsIdentity)incomingPrincipal.Identity).AddClaim(new Claim("IsAdmin", isAdmin.ToString()));
 
                 logMessage += incomingPrincipal.Identity.Name + " isAdmin = " + isAdmin + " " + DateTime.UtcNow + " <br/>";
 
-                Logger.LogEvent(company + " Workorders " + LogLevel.Info.ToString(), logMessage + DateTime.UtcNow);
+                Logger.LogEvent("Workorders " + LogLevel.Info.ToString(), logMessage + DateTime.UtcNow);
 
             }
 

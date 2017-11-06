@@ -41,7 +41,7 @@ namespace DsiWorkorders.Web.Helpers
             return IsEditor() || IsAdmin();
         }
 
-        //User is valid for Dsi
+        //User is valid
         public static bool IsValidUser()
         {
             return IsViewer() || IsEditor() || IsAdmin();
