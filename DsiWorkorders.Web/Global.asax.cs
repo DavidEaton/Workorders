@@ -27,8 +27,8 @@ namespace DsiWorkorders.Web
             ModelBinders.Binders.Add(typeof(WorkorderEditViewModel), new CurrencyFormatedEstimateBinder());
 
             //init tasks in background
-            TaskManager.Instance.Initialize();
-            TaskManager.Instance.Start();
+            //TaskManager.Instance.Initialize();
+            //TaskManager.Instance.Start();
         }
 
         private void WSFederationAuthenticationModule_RedirectingToIdentityProvider(object sender, RedirectingToIdentityProviderEventArgs e)

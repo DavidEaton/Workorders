@@ -41,7 +41,7 @@ namespace DsiWorkorders.Web.Services.Common
                     //send email 
                     if (emailBodyText != null)
                     {
-                        Email.SendEmail(toBeSentEmails, ConfigurationManager.AppSettings["CompanyName"] + " Weekly Maintenance Work Orders Report", emailBodyText, emailBodyText, null, null);
+                        Email.SendEmail(toBeSentEmails, ConfigurationManager.AppSettings["CompanyAbbr"] + " Weekly Maintenance Workorders Report", emailBodyText, emailBodyText, null, null);
                     }
                 }
             }

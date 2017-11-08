@@ -11,7 +11,6 @@ namespace DsiWorkorders.Web.Helpers
 {
     public class Email
     {
-
         public static void SendEmail(string toEmails, string emailSubject, string htmlEmailBody, string plainTextEmailBody, string replyToEmail, string ccEmails)
         {
             // create email message
@@ -55,15 +54,18 @@ namespace DsiWorkorders.Web.Helpers
         public static MailMessage GetMailMessageObject(string toEmails, string emailSubject, string htmmlEmailBody, string plainTextEmailBody,
                                                        string replyToEmails, string ccEmails)
         {
+            var from = ConfigurationManager.AppSettings["EmailFromAddress"];
+            var display = ConfigurationManager.AppSettings["EmailFromDisplayName"];
+
             // create email message
             MailMessage msg = new MailMessage();
-
+            msg.From = new MailAddress(from, display);
 
             toEmails = toEmails.Replace(";", ",");
 
             //remove comma in case there was one by mistake
             toEmails = toEmails.TrimEnd(',');
-            
+
             // add the Recipient Email IDs
             msg.To.Add(toEmails);
 

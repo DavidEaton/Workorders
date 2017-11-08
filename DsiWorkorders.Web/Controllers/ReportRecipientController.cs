@@ -11,16 +11,18 @@ using System.Configuration;
 
 namespace DsiWorkorders.Web.Controllers
 {
-    [CustomAuthorize(AccessType = AccessType.Admins)]
+    //[CustomAuthorize(AccessType = AccessType.Admins)]
     public class ReportRecipientController : Controller
     {
         AppDbContext _db = new AppDbContext();
-        // GET: ReportRecipients
-        [CustomAuthorize(AccessType = AccessType.Admins)]
+
         public ActionResult Index()
         {
+            // Get area recipients
             ReportRecipientGridViewModel model = new ReportRecipientGridViewModel();
             model.Areas = UserFunctions.GetAreasSelectList(_db);
+
+            TestSendEmails();
 
             return View(model);
         }
@@ -29,8 +31,7 @@ namespace DsiWorkorders.Web.Controllers
         {
 
             {
-                AppDbContext _db = new AppDbContext();
-                //get al areas
+                //get all areas
                 var areas = _db.Areas.ToList();
 
                 foreach (var area in areas)
@@ -40,7 +41,7 @@ namespace DsiWorkorders.Web.Controllers
                     string emailBodyText = ReportEmailMessage.GetReportEmailMessage(area.Name, area.Id, _db);
 
                     //send email 
-                    Email.SendEmail(toBeSentEmails, ConfigurationManager.AppSettings["CompanyName"] + " Weekly Maintenance Work Orders Report", emailBodyText, emailBodyText, null, null);
+                    Email.SendEmail(toBeSentEmails, ConfigurationManager.AppSettings["CompanyAbbr"] + " Weekly Maintenance Workorders Report", emailBodyText, emailBodyText, null, null);
                 }
             }
         }

@@ -37,7 +37,7 @@ namespace DsiWorkorders.Web.Helpers
                 openedWorkOrderModels.Add(model);
             }
 
-            var message = @"<h2>" + ConfigurationManager.AppSettings["CompanyName"] + @" Weekly Maintenance Work Orders Report</h2>
+            var message = @"<h2>" + ConfigurationManager.AppSettings["CompanyAbbr"] + @" Weekly Maintenance Workorders Report</h2>
                                     <h2>" + areaName + @"</h2>
                                     <h5>Report created " + @DateTime.UtcNow.ToCentralTime() + @"</h5><br />
                                       <h4 ><i>Workorders Opened over the past week</i> </h4> ";
@@ -48,15 +48,15 @@ namespace DsiWorkorders.Web.Helpers
             }
             else
             {
-                message += @" <table style=""border:1px solid #000"">
+                message += @" <table style=""border:1px"">
                                        <tr style=""text-align:left"">
-                                            <th style=""border-bottom:1px solid #000; border-right: 1px solid #000;"">Departments</th> 
-                                            <th style=""border-bottom:1px solid #000; border-right: 1px solid #000;"">Reported </th>   
-                                             <th style=""border-bottom:1px solid #000; border-right: 1px solid #000;"">Details</th>
-                                            <th style=""border-bottom:1px solid #000; border-right: 1px solid #000;"">Priorty</th>
-                                            <th style=""border-bottom:1px solid #000; border-right: 1px solid #000;"">Due</th>
-                                            <th style=""border-bottom:1px solid #000; border-right: 1px solid #000;"">Days Overdue</th>
-                                           <th style=""border-bottom:1px solid #000"">Days Open </th>
+                                            <th style=""border-bottom:1px; border-right: 1px;"">Department</th> 
+                                            <th style=""border-bottom:1px; border-right: 1px;"">Reported </th>   
+                                             <th style=""border-bottom:1px; border-right: 1px;"">Details</th>
+                                            <th style=""border-bottom:1px; border-right: 1px;"">Priorty</th>
+                                            <th style=""border-bottom:1px; border-right: 1px;"">Due</th>
+                                            <th style=""border-bottom:1px; border-right: 1px;"">Days Overdue</th>
+                                           <th style=""border-bottom:1px"">Days Open </th>
                                         </tr>";
 
                 foreach (var workorder in openedWorkOrderModels)
@@ -89,15 +89,15 @@ namespace DsiWorkorders.Web.Helpers
             }
             else
             {
-                message += @" <table style=""border:1px solid #000"">
+                message += @" <table style=""border:1px"">
                                        <tr style=""text-align:left"">
-                                            <th style=""border-bottom:1px solid #000; border-right: 1px solid #000;"">Departments</th> 
-                                            <th style=""border-bottom:1px solid #000; border-right: 1px solid #000;"">Reported </th>   
-                                             <th style=""border-bottom:1px solid #000; border-right: 1px solid #000;"">Details</th>
-                                            <th style=""border-bottom:1px solid #000; border-right: 1px solid #000;"">Priorty</th>
-                                            <th style=""border-bottom:1px solid #000; border-right: 1px solid #000;"">Due</th>
-                                            <th style=""border-bottom:1px solid #000; border-right: 1px solid #000;"">Days Overdue</th>
-                                           <th style=""border-bottom:1px solid #000"">Days Open </th>
+                                            <th style=""border-bottom:1px; border-right: 1px;"">Department</th> 
+                                            <th style=""border-bottom:1px; border-right: 1px;"">Reported </th>   
+                                             <th style=""border-bottom:1px; border-right: 1px;"">Details</th>
+                                            <th style=""border-bottom:1px; border-right: 1px;"">Priorty</th>
+                                            <th style=""border-bottom:1px; border-right: 1px;"">Due</th>
+                                            <th style=""border-bottom:1px; border-right: 1px;"">Days Overdue</th>
+                                           <th style=""border-bottom:1px"">Days Open </th>
                                         </tr>";
 
                 foreach (var workorder in closedWorkOrderModels)
@@ -115,13 +115,13 @@ namespace DsiWorkorders.Web.Helpers
         public static string GetWorkorderEmailRow(WorkOrdersGridViewModel workorder)
         {
             return @"<tr style=""text-align:left"">
-                        <td style=""border-right: 1px solid #000;""> " + workorder.DepartmentName + @" </td>
-                        <td style=""border-right: 1px solid #000;""> " + workorder.Reported.ToShortDateString() + @"  </td>
-                        <td style=""border-right: 1px solid #000;""> " + workorder.Details + @"  </td>
-                        <td style=""border-right: 1px solid #000;""> " + workorder.Priority + @"  </td>
-                         <td style=""border-right: 1px solid #000;""> " + workorder.Due.ToShortDateString() + @"  </td>
-                        <td style=""border-right: 1px solid #000;""> " + workorder.DaysOverdue + @"  </td>
-                        <td> " + workorder.DaysOpen + @" </td>
+                        <td style=""border-right: 1px;""> " + workorder.DepartmentName + "&nbsp" + @" </td>
+                        <td style=""border-right: 1px;""> " + workorder.Reported.ToShortDateString() + "&nbsp" + @"  </td>
+                        <td style=""border-right: 1px;""> " + workorder.Details + "&nbsp" + @"  </td>
+                        <td style=""border-right: 1px;""> " + workorder.Priority + "&nbsp" + @"  </td>
+                         <td style=""border-right: 1px;""> " + workorder.Due.ToShortDateString() + "&nbsp" + @"  </td>
+                        <td style=""border-right: 1px;""> " + workorder.DaysOverdue + "&nbsp" + @"  </td>
+                        <td> " + workorder.DaysOpen + "&nbsp" + @" </td>
                 </tr >";
 
         }
