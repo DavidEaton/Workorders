@@ -18,29 +18,33 @@ namespace DsiWorkorders.Web.Services.Common
 
             if (currentDateTime.DayOfWeek == DayOfWeek.Monday && currentDateTime.Hour == 3 && currentDateTime.Minute == 0 && currentDateTime.Second > 0)
             {
+                SendAreaReport();
+            }
+        }
 
-                    AppDbContext _db = new AppDbContext();
+        private static void SendAreaReport()
+        {
+            AppDbContext _db = new AppDbContext();
 
-                    //get al areas
-                    var areas = _db.Areas.ToList();
+            //get all areas
+            var areas = _db.Areas.ToList();
 
-                    foreach (var area in areas)
+            foreach (var area in areas)
+            {
+                //get area reportrecpients
+                var reportRecipients = _db.ReportRecipients.Where(x => x.AreaId == area.Id).ToList();
+                if (reportRecipients.Any())
+                {
+                    var toBeSentEmails = string.Join(";", _db.ReportRecipients.Where(x => x.AreaId == area.Id).Select(x => x.Emails).ToList());
+                    string emailBodyText = ReportEmailMessage.GetReportEmailMessage(area.Name, area.Id, _db);
+
+                    //send email 
+                    if (emailBodyText != null)
                     {
-                        //get reportrecpients according area
-                        var reportRecipients = _db.ReportRecipients.Where(x => x.AreaId == area.Id).ToList();
-                        if (reportRecipients.Any())
-                        {
-                            var toBeSentEmails = string.Join(";", _db.ReportRecipients.Where(x => x.AreaId == area.Id).Select(x => x.Emails).ToList());
-                            string emailBodyText = ReportEmailMessage.GetReportEmailMessage(area.Name, area.Id, _db);
-
-                            //send email 
-                            if (emailBodyText != null)
-                            {
-                                Email.SendEmail(toBeSentEmails, ConfigurationManager.AppSettings["CompanyName"] + " Weekly Maintenance Work Orders Report", emailBodyText, emailBodyText, null, null);
-                            }
-                        }
+                        Email.SendEmail(toBeSentEmails, ConfigurationManager.AppSettings["CompanyName"] + " Weekly Maintenance Work Orders Report", emailBodyText, emailBodyText, null, null);
                     }
                 }
             }
         }
+    }
     }

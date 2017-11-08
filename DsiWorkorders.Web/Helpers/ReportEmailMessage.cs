@@ -20,6 +20,7 @@ namespace DsiWorkorders.Web.Helpers
 
             var openedWorkOrderModels = new List<WorkOrdersGridViewModel>();
             var closedWorkOrderModels = new List<WorkOrdersGridViewModel>();
+            //Add Awaiting Approval workorders
 
             var openedWorkOrders = _db.Workorders.Where(x => x.Reported >= lastWeekStart && x.Reported <= lastWeekEnd && x.Department.AreaID == areaId).ToList();
 
