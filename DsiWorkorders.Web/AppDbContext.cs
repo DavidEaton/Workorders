@@ -38,7 +38,7 @@ namespace DsiWorkorders.Web
                     return ConfigurationManager.
                         AppSettings["ConnectionStringName"].ToString();
                 }
-                return "AppConnectionDsi";
+                return "AppConnection";
             }
         }
 

@@ -22,8 +22,6 @@ namespace DsiWorkorders.Web.Controllers
             ReportRecipientGridViewModel model = new ReportRecipientGridViewModel();
             model.Areas = UserFunctions.GetAreasSelectList(_db);
 
-            TestSendEmails();
-
             return View(model);
         }
 

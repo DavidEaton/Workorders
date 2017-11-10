@@ -14,9 +14,10 @@ namespace DsiWorkorders.Web.Services.Common
         public void Execute()
         {
             //get current time by zone 
-            DateTime currentDateTime = DateTime.UtcNow.ToCentralTime();
+            var now = DateTime.UtcNow.ToCentralTime();
 
-            if (currentDateTime.DayOfWeek == DayOfWeek.Monday && currentDateTime.Hour == 3 && currentDateTime.Minute == 0 && currentDateTime.Second > 0)
+            //Monday 3:00 am
+            if (now.DayOfWeek == DayOfWeek.Monday && now.Hour == 3 && now.Minute == 0 && now.Second > 0)
             {
                 SendAreaReport();
             }
