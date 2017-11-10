@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens;
 using System.Linq;
 using System.Web;
-using DsiWorkorders.Web.Models;
+using Workorders.Web.Models;
 
-namespace DsiWorkorders.Web.Utils
+namespace Workorders.Web.Utils
 {
     public class MemoryIssuerNameRegistry : ValidatingIssuerNameRegistry
     {

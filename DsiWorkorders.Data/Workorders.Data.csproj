@@ -7,8 +7,8 @@
     <ProjectGuid>{702EBF8B-279C-484D-9D62-DE852E839D64}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DsiWorkorders.Data</RootNamespace>
-    <AssemblyName>DsiWorkorders.Data</AssemblyName>
+    <RootNamespace>Workorders.Data</RootNamespace>
+    <AssemblyName>Workorders.Data</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>

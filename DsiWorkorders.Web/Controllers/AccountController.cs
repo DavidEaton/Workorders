@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
-using DsiWorkorders.Web.Models;
+using Workorders.Web.Models;
 
-namespace DsiWorkorders.Web.Controllers
+namespace Workorders.Web.Controllers
 {
     public class AccountController : Controller
     {

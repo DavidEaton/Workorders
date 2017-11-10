@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace DsiWorkorders.Web
+namespace Workorders.Web
 {
     public class FilterConfig
     {

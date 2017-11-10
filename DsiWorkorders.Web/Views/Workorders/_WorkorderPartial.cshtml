@@ -1,6 +1,6 @@
-﻿@using DsiWorkorders.Web.ViewModels
+﻿@using Workorders.Web.ViewModels
 @using Kendo.Mvc.UI
-@using DsiWorkorders.Web.Helpers
+@using Workorders.Web.Helpers
 
 <div  class="grid-parent" data-departmentfilterurl="@(ViewBag.WorkorderType == "Resloved" ? Url.Action("GetClosedDepartmentDropdownItems") : Url.Action("GetOpenDepartmentDropdownItems"))">
 

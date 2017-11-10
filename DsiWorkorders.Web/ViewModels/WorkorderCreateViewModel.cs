@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using DsiWorkorders.Data;
-using DsiWorkorders.Data.Enums;
+using Workorders.Data;
+using Workorders.Data.Enums;
 
-namespace DsiWorkorders.Web.ViewModels
+namespace Workorders.Web.ViewModels
 {
     public class WorkorderCreateViewModel
     {

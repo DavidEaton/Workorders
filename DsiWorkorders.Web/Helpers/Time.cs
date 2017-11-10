@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace DsiWorkorders.Web.Helpers
+namespace Workorders.Web.Helpers
 {
     public static class Time
     {

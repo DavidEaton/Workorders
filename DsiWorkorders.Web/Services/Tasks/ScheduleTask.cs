@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DsiWorkorders.Web.Services.Tasks
+namespace Workorders.Web.Services.Tasks
 {
   public class ScheduleTask
   {

@@ -1,15 +1,15 @@
-﻿using DsiWorkorders.Web.Helpers;
+﻿using Workorders.Web.Helpers;
 using System.Linq;
 using System.Web.Mvc;
-using DsiWorkorders.Web.ViewModels.ReportRecipient;
-using DsiWorkorders.Data.Enums;
-using DsiWorkorders.Web.Filters;
-using DsiWorkorders.Data;
+using Workorders.Web.ViewModels.ReportRecipient;
+using Workorders.Data.Enums;
+using Workorders.Web.Filters;
+using Workorders.Data;
 using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
 using System.Configuration;
 
-namespace DsiWorkorders.Web.Controllers
+namespace Workorders.Web.Controllers
 {
     //[CustomAuthorize(AccessType = AccessType.Admins)]
     public class ReportRecipientController : Controller

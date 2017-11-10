@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Web.WebPages;
 using System.Globalization;
 
-namespace DsiWorkorders.Web.Helpers
+namespace Workorders.Web.Helpers
 {
     public class AzureGraphAPIFunctions
     {

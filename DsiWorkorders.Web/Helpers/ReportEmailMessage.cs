@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DsiWorkorders.Web.ViewModels;
+using Workorders.Web.ViewModels;
 using System.Configuration;
 
-namespace DsiWorkorders.Web.Helpers
+namespace Workorders.Web.Helpers
 {
     public class ReportEmailMessage
     {

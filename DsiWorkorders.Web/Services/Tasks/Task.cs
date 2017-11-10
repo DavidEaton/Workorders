@@ -2,9 +2,9 @@
 using System.Configuration;
 using System.Net.Mail;
 using System.Text;
-using DsiWorkorders.Web.Helpers;
+using Workorders.Web.Helpers;
 
-namespace DsiWorkorders.Web.Services.Tasks
+namespace Workorders.Web.Services.Tasks
 {
   /// <summary>
   /// Task

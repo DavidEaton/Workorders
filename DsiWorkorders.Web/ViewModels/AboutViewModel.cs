@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace DsiWorkorders.Web.ViewModels
+namespace Workorders.Web.ViewModels
 {
     public class AboutViewModel
     {

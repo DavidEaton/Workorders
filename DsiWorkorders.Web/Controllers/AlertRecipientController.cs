@@ -1,18 +1,18 @@
-﻿using DsiWorkorders.Web.Helpers;
+﻿using Workorders.Web.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-using DsiWorkorders.Web.ViewModels.AlertRecipient;
-using DsiWorkorders.Web.Filters;
-using DsiWorkorders.Data.Enums;
-using DsiWorkorders.Data;
+using Workorders.Web.ViewModels.AlertRecipient;
+using Workorders.Web.Filters;
+using Workorders.Data.Enums;
+using Workorders.Data;
 using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
 
-namespace DsiWorkorders.Web.Controllers
+namespace Workorders.Web.Controllers
 {
 
     [CustomAuthorize(AccessType = AccessType.Admins)]

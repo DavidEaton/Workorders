@@ -1,7 +1,7 @@
 ﻿
 using System;
 
-namespace DsiWorkorders.Web.Services.Tasks
+namespace Workorders.Web.Services.Tasks
 {
     /// <summary>
     /// Interface that should be implemented by each task

@@ -1,4 +1,4 @@
-﻿namespace DsiWorkorders.Data.Enums
+﻿namespace Workorders.Data.Enums
 {
     public enum Priority
     {

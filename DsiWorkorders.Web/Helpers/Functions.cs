@@ -3,11 +3,11 @@ using System.Security.Claims;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
-using DsiWorkorders.Data.Enums;
+using Workorders.Data.Enums;
 using System.Web.Mvc;
-using DsiWorkorders.Web.Services.Tasks;
+using Workorders.Web.Services.Tasks;
 
-namespace DsiWorkorders.Web.Helpers
+namespace Workorders.Web.Helpers
 {
     public static class ExtensionMethods
     {
@@ -88,7 +88,7 @@ namespace DsiWorkorders.Web.Helpers
 
                 alertSchedules.Add(new ScheduleTask
                 {
-                    Type = "DsiWorkorders.Web.Services.Common.SendReportEmailTask, DsiWorkorders.Web",
+                    Type = "Workorders.Web.Services.Common.SendReportEmailTask, Workorders.Web",
                     Name = "Send Workorder Report",
                     Seconds = 60, //every five minute
                     Enabled = true,

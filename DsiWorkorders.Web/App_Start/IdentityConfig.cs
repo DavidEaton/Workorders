@@ -5,10 +5,10 @@ using System.IdentityModel.Claims;
 using System.IdentityModel.Services;
 using System.Linq;
 using System.Web.Helpers;
-using DsiWorkorders.Web.Utils;
-using DsiWorkorders.Web.CustomAuthenticaton;
+using Workorders.Web.Utils;
+using Workorders.Web.CustomAuthenticaton;
 
-namespace DsiWorkorders.Web
+namespace Workorders.Web
 {
     // For more information on ASP.NET Identity, please visit http://go.microsoft.com/fwlink/?LinkId=301863
     public static class IdentityConfig

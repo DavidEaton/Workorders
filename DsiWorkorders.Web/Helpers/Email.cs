@@ -7,7 +7,7 @@ using System.Web;
 using System.Net.Mail;
 using System.Net.Mime;
 
-namespace DsiWorkorders.Web.Helpers
+namespace Workorders.Web.Helpers
 {
     public class Email
     {

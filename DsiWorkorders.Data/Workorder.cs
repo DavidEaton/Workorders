@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DsiWorkorders.Data.Enums;
+using Workorders.Data.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DsiWorkorders.Data
+namespace Workorders.Data
 {
     public class Workorder
     {

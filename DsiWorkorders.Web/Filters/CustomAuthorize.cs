@@ -1,5 +1,5 @@
-﻿using DsiWorkorders.Data.Enums;
-using DsiWorkorders.Web.Helpers;
+﻿using Workorders.Data.Enums;
+using Workorders.Web.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 
 
-namespace DsiWorkorders.Web.Filters
+namespace Workorders.Web.Filters
 {
     public class CustomAuthorize : AuthorizeAttribute
     {

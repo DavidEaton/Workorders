@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DsiWorkorders.Data
+namespace Workorders.Data
 {
     public class AlertRecipient
     {

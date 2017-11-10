@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using DsiWorkorders.Data.Enums;
-using DsiWorkorders.Web.Helpers;
+using Workorders.Data.Enums;
+using Workorders.Web.Helpers;
 
-namespace DsiWorkorders.Web.ViewModels
+namespace Workorders.Web.ViewModels
 {
     public class WorkOrdersGridViewModel
     {

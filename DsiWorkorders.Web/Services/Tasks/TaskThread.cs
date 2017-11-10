@@ -3,7 +3,7 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace DsiWorkorders.Web.Services.Tasks
+namespace Workorders.Web.Services.Tasks
 {
     /// <summary>
     /// Represents task thread

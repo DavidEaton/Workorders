@@ -3,10 +3,10 @@ using System.Configuration;
 using System.Data;
 using System.Collections.Generic;
 using System.Linq;
-using DsiWorkorders.Web.Services.Tasks;
-using DsiWorkorders.Web.Helpers;
+using Workorders.Web.Services.Tasks;
+using Workorders.Web.Helpers;
 
-namespace DsiWorkorders.Web.Services.Common
+namespace Workorders.Web.Services.Common
 {
     public class SendReportEmailTask : ITask
     {

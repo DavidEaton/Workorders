@@ -4,10 +4,10 @@ using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using DsiWorkorders.Data.Enums;
-using DsiWorkorders.Web.ViewModels;
+using Workorders.Data.Enums;
+using Workorders.Web.ViewModels;
 
-namespace DsiWorkorders.Web.ModelBinder
+namespace Workorders.Web.ModelBinder
 {
   public class CurrencyFormatedEstimateBinder : DefaultModelBinder
   {

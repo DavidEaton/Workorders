@@ -4,10 +4,10 @@ using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
-using DsiWorkorders.Data;
+using Workorders.Data;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DsiWorkorders.Web
+namespace Workorders.Web
 {
     public class AppDbContext : DbContext
     {

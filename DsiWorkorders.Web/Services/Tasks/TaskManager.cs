@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using DsiWorkorders.Web.Helpers;
+using Workorders.Web.Helpers;
 
-namespace DsiWorkorders.Web.Services.Tasks
+namespace Workorders.Web.Services.Tasks
 {
   /// <summary>
   /// Represents task manager

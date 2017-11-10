@@ -4,16 +4,16 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
-using DsiWorkorders.Data;
-using DsiWorkorders.Data.Enums;
-using DsiWorkorders.Web.ViewModels;
+using Workorders.Data;
+using Workorders.Data.Enums;
+using Workorders.Web.ViewModels;
 using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
 using System.Configuration;
-using DsiWorkorders.Web.Filters;
-using DsiWorkorders.Web.Helpers;
+using Workorders.Web.Filters;
+using Workorders.Web.Helpers;
 
-namespace DsiWorkorders.Web.Controllers
+namespace Workorders.Web.Controllers
 {
     [CustomAuthorize(AccessType = AccessType.Users)]
     public class WorkordersController : Controller

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace DsiWorkorders.Web.ViewModels.ReportRecipient
+namespace Workorders.Web.ViewModels.ReportRecipient
 {
     public class ReportRecipientViewModel
     {

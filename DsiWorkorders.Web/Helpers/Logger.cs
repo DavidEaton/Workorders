@@ -5,7 +5,7 @@ using System.Web;
 using System.Configuration;
 
 
-namespace DsiWorkorders.Web.Helpers
+namespace Workorders.Web.Helpers
 {
     public class Logger
     {

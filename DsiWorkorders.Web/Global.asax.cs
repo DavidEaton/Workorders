@@ -1,6 +1,6 @@
-﻿using DsiWorkorders.Web.Services.Tasks;
-using DsiWorkorders.Web.ModelBinder;
-using DsiWorkorders.Web.ViewModels;
+﻿using Workorders.Web.Services.Tasks;
+using Workorders.Web.ModelBinder;
+using Workorders.Web.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Services;
@@ -10,7 +10,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
-namespace DsiWorkorders.Web
+namespace Workorders.Web
 {
     public class MvcApplication : System.Web.HttpApplication
     {

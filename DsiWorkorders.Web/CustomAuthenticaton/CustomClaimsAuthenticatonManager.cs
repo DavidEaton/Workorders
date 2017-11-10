@@ -1,4 +1,4 @@
-﻿using DsiWorkorders.Web.Helpers;
+﻿using Workorders.Web.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Web;
 
-namespace DsiWorkorders.Web.CustomAuthenticaton
+namespace Workorders.Web.CustomAuthenticaton
 {
     public class CustomClaimsAuthenticatonManager : ClaimsAuthenticationManager
     {
