@@ -646,9 +646,9 @@ namespace Workorders.Web.Controllers
             var applicationName = Settings.ApplicationName;
             var applicationDescription = Settings.ApplicationDescription;
             var companyAbbreviation = Settings.CompanyAbbr;
-            var users = companyAbbreviation + "_Users";
-            var editors = companyAbbreviation + "_WorkorderEditors";
-            var admins = companyAbbreviation + "_WorkorderAdmins";
+            var users = Settings.ViewersRole;
+            var editors = Settings.EditorsRole;
+            var admins = Settings.AdminsRole;
             var currentYear = DateTime.Now.Year.ToString();
 
             var model = new AboutViewModel();

@@ -313,7 +313,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <None Include="Properties\PublishProfiles\DsiWorkorders.pubxml" />
     <Content Include="Images\accent.png" />
     <Content Include="Images\ajax-loader-footer.gif" />
     <Content Include="Images\ajax-loader.gif" />
@@ -339,8 +338,8 @@
     <Content Include="Scripts\BootstrapSwitch\bootstrap-switch.js" />
     <Content Include="Scripts\BootstrapSwitch\bootstrap-switch.min.js" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <None Include="Properties\PublishProfiles\WorkordersCsi - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\WorkordersCsi - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\WorkordersCsi-stage - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\WorkordersCsi-stage - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\workordersTest - Web Deploy.pubxml" />
     <None Include="Scripts\_references.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
