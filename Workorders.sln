@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workorders.Data", "DsiWorkorders.Data\Workorders.Data.csproj", "{702EBF8B-279C-484D-9D62-DE852E839D64}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workorders.Data", "Workorders.Data\Workorders.Data.csproj", "{702EBF8B-279C-484D-9D62-DE852E839D64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workorders.Web", "DsiWorkorders.Web\Workorders.Web.csproj", "{DE193636-2B16-4EFC-9070-47542D9BCA03}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workorders.Web", "Workorders.Web\Workorders.Web.csproj", "{DE193636-2B16-4EFC-9070-47542D9BCA03}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublishScripts", "PublishScripts", "{E0A5111D-3FCE-4C13-BF81-0E9C0F18A2E3}"
 	ProjectSection(SolutionItems) = preProject
@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublishScripts", "PublishSc
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurations", "Configurations", "{D604EBC6-4C9B-4920-9695-A9474E944898}"
 	ProjectSection(SolutionItems) = preProject
-		PublishScripts\Configurations\DsiWorkordersWeb-WAWS-dev.json = PublishScripts\Configurations\DsiWorkordersWeb-WAWS-dev.json
+		PublishScripts\Configurations\WorkordersWeb-WAWS-dev.json = PublishScripts\Configurations\WorkordersWeb-WAWS-dev.json
 	EndProjectSection
 EndProject
 Global

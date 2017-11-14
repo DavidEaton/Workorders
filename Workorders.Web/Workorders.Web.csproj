@@ -338,9 +338,11 @@
     <Content Include="Scripts\BootstrapSwitch\bootstrap-switch.js" />
     <Content Include="Scripts\BootstrapSwitch\bootstrap-switch.min.js" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <None Include="Properties\PublishProfiles\WorkordersCsi-stage - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\WorkordersCsi-stage - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\workordersTest - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\Csi.pubxml" />
+    <None Include="Properties\PublishProfiles\Csi-stage.pubxml" />
+    <None Include="Properties\PublishProfiles\Dsi-stage.pubxml" />
+    <None Include="Properties\PublishProfiles\Dsi.pubxml" />
+    <None Include="Properties\PublishProfiles\workordersTest.pubxml" />
     <None Include="Scripts\_references.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -416,7 +418,7 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DsiWorkorders.Data\Workorders.Data.csproj">
+    <ProjectReference Include="..\Workorders.Data\Workorders.Data.csproj">
       <Project>{702ebf8b-279c-484d-9d62-de852e839d64}</Project>
       <Name>Workorders.Data</Name>
     </ProjectReference>

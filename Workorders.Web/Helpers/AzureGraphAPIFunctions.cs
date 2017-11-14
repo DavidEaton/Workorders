@@ -70,7 +70,11 @@ namespace Workorders.Web.Helpers
             }
             catch (Exception ex)
             {
-                Logger.LogEvent("Workorders DSI - " + LogLevel.Error.ToString(), username + " : Exception while getting Group: " + groupName + DateTime.UtcNow, ex);
+                var subject = $"Workorders - {Settings.CompanyAbbr} {LogLevel.Error.ToString()}";
+
+                var msg = $"{username} : Exception while getting Group: {groupName} {DateTime.UtcNow}";
+
+                Logger.LogEvent(subject, msg, ex);
 
                 return false;
             }
