@@ -415,7 +415,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <None Include="Project_Readme.html" />
+    <None Include="default.html" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Workorders.Data\Workorders.Data.csproj">
