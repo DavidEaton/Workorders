@@ -337,6 +337,8 @@
     <None Include="Properties\PublishProfiles\Csi-stage.pubxml" />
     <None Include="Properties\PublishProfiles\Dsi-stage.pubxml" />
     <None Include="Properties\PublishProfiles\Dsi.pubxml" />
+    <None Include="Properties\PublishProfiles\WorkordersNoAuth - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\WorkordersNoAuth - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\workordersTest.pubxml" />
     <None Include="Scripts\_references.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
