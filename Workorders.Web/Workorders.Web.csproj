@@ -167,20 +167,16 @@
     <Compile Include="AppDbContext.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccessDeniedController.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlertRecipientController.cs" />
     <Compile Include="Controllers\ReportRecipientController.cs" />
     <Compile Include="Controllers\WorkordersController.cs" />
-    <Compile Include="CustomAuthenticaton\CustomClaimsAuthenticatonManager.cs" />
     <Compile Include="Filters\CustomAuthorize.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AsyncHelper.cs" />
-    <Compile Include="Helpers\AzureGraphAPIFunctions.cs" />
     <Compile Include="Helpers\Email.cs" />
     <Compile Include="Helpers\Functions.cs" />
     <Compile Include="Helpers\GraphConfiguration.cs" />
@@ -197,7 +193,6 @@
     <Compile Include="Services\Tasks\Task.cs" />
     <Compile Include="Services\Tasks\TaskManager.cs" />
     <Compile Include="Services\Tasks\TaskThread.cs" />
-    <Compile Include="Utils\MemoryIssuerNameRegistry.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\AlertRecipient\AlertRecipientViewModel.cs" />
     <Compile Include="ViewModels\AlertRecipient\AlertRecipientGridViewModel.cs" />
@@ -412,10 +407,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="CustomAuthenticaton\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <None Include="default.html" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Workorders.Data\Workorders.Data.csproj">

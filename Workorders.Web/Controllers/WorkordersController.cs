@@ -15,7 +15,7 @@ using Workorders.Web.Helpers;
 
 namespace Workorders.Web.Controllers
 {
-    [CustomAuthorize(AccessType = AccessType.Users)]
+    //[CustomAuthorize(AccessType = AccessType.Users)]
     public class WorkordersController : Controller
     {
         AppDbContext _db = new AppDbContext();
@@ -280,7 +280,7 @@ namespace Workorders.Web.Controllers
 
         // GET: /Workorders/Edit/1
         [HttpGet]
-        [CustomAuthorize(AccessType = AccessType.Editors)]
+        //[CustomAuthorize(AccessType = AccessType.Editors)]
         public ActionResult Edit(int id)
         {
             var model = _db.Workorders.Find(id);
@@ -319,7 +319,7 @@ namespace Workorders.Web.Controllers
         }
 
         [HttpPost]
-        [CustomAuthorize(AccessType = AccessType.Editors)]
+        //[CustomAuthorize(AccessType = AccessType.Editors)]
         public ActionResult Edit(WorkorderEditViewModel viewModel)
         {
             var workorder = _db.Workorders.Find(viewModel.Id);
@@ -499,7 +499,7 @@ namespace Workorders.Web.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        [CustomAuthorize(AccessType = AccessType.Admins)]
+        //[CustomAuthorize(AccessType = AccessType.Admins)]
         public JsonResult DeleteConfirmed(int id = 0)
         {
 
@@ -528,7 +528,7 @@ namespace Workorders.Web.Controllers
         }
 
         [HttpPost]
-        [CustomAuthorize(AccessType = AccessType.Editors)]
+        //[CustomAuthorize(AccessType = AccessType.Editors)]
         public JsonResult Approve(int id)
         {
             Workorder workorder = _db.Workorders.FirstOrDefault(x => x.Id == id);
@@ -552,7 +552,7 @@ namespace Workorders.Web.Controllers
         }
 
         [HttpPost]
-        [CustomAuthorize(AccessType = AccessType.Editors)]
+        //[CustomAuthorize(AccessType = AccessType.Editors)]
         public JsonResult Reject(int id, string reason)
         {
             Workorder workorder = _db.Workorders.FirstOrDefault(x => x.Id == id);

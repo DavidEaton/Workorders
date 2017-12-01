@@ -17,7 +17,7 @@ namespace Workorders.Web
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-            IdentityConfig.ConfigureIdentity();
+            //IdentityConfig.ConfigureIdentity();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
@@ -29,14 +29,6 @@ namespace Workorders.Web
             //init tasks in background
             TaskManager.Instance.Initialize();
             TaskManager.Instance.Start();
-        }
-
-        private void WSFederationAuthenticationModule_RedirectingToIdentityProvider(object sender, RedirectingToIdentityProviderEventArgs e)
-        {
-            if (!String.IsNullOrEmpty(IdentityConfig.Realm))
-            {
-                e.SignInRequestMessage.Realm = IdentityConfig.Realm;
-            }
         }
     }
 }

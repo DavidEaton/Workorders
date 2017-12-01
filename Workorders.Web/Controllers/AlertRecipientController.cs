@@ -15,7 +15,7 @@ using Kendo.Mvc.Extensions;
 namespace Workorders.Web.Controllers
 {
 
-    [CustomAuthorize(AccessType = AccessType.Admins)]
+    //[CustomAuthorize(AccessType = AccessType.Admins)]
     public class AlertRecipientController : Controller
     {
         AppDbContext _db = new AppDbContext();
@@ -84,7 +84,7 @@ namespace Workorders.Web.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        [CustomAuthorize(AccessType = AccessType.Admins)]
+        //[CustomAuthorize(AccessType = AccessType.Admins)]
         public JsonResult DeleteConfirmed(int id = 0)
         {
             AlertRecipient alertRecipient = _db.AlertRecipients.FirstOrDefault(x => x.Id == id);

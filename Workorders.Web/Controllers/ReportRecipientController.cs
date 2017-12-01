@@ -101,7 +101,7 @@ namespace Workorders.Web.Controllers
 
         }
         [HttpPost, ActionName("Delete")]
-        [CustomAuthorize(AccessType = AccessType.Admins)]
+        //[CustomAuthorize(AccessType = AccessType.Admins)]
         public JsonResult DeleteConfirmed(int id = 0)
         {
             ReportRecipient reportRecipient = _db.ReportRecipients.FirstOrDefault(x => x.Id == id);
