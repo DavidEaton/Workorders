@@ -662,6 +662,10 @@ namespace Workorders.Web.Controllers
             return View(model);
         }
 
+        public ActionResult Links()
+        {
+            return View();
+        }
 
         #region Helpers
         private SelectList GetDepartmentsSelectList(int? departmentId)
