@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
+﻿using System.Configuration;
 using System.Data.Entity;
-using System.Linq;
-using System.Web;
 using Workorders.Data;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -20,7 +16,7 @@ namespace Workorders.Web
         public DbSet<ReportRecipient> ReportRecipients { get; set; }
 
         public AppDbContext()
-            : base(nameOrConnectionString: AppDbContext.ConnectionStringName)
+            : base(nameOrConnectionString: ConnectionStringName)
         {
             //disable initializer
             Database.SetInitializer<AppDbContext>(null);
@@ -85,12 +81,12 @@ namespace Workorders.Web
             modelBuilder.Entity<DepartmentSupervisorEmail>().Map(c => { c.ToTable("Common.DepartmentSupervisorEmailLookup"); });
 
             //ReportRecipients
-            //Maintenance.ReportRecipients
+            //Maintenance.ReportRecipient
             modelBuilder.Entity<ReportRecipient>().Map(m => { m.ToTable("Maintenance.ReportRecipient"); });
             modelBuilder.Entity<ReportRecipient>().Property(a => a.Emails).HasColumnName("EmailAddresses");
 
-            //ReportRecipients
-            //Maintenance.ReportRecipients
+            //AlertRecipients
+            //Maintenance.AlertRecipient
             modelBuilder.Entity<AlertRecipient>().Map(m => { m.ToTable("Maintenance.AlertRecipient"); });
             modelBuilder.Entity<AlertRecipient>().Property(a => a.Emails).HasColumnName("EmailAddresses");
 
