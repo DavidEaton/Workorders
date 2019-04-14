@@ -1,53 +1,147 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Web;
+﻿using System.Configuration;
 
 namespace Workorders.Web.Helpers
 {
     public class Settings
     {
+        public static string GetConnectionStringName()
+        {
+            var company = CompanyCookie.SelectedCompany;
 
-        public static string ViewersRole
+            if (string.IsNullOrEmpty(company) == false)
+            {
+                if (ConfigurationManager.AppSettings[company] != null)
+                {
+                    return ConfigurationManager.AppSettings[company];
+                }
+            }
+
+            return "AppConnection";
+        }
+
+        public static string CsiViewersRole
         {
             get
             {
-                if (ConfigurationManager.AppSettings["Viewers"]
+                if (ConfigurationManager.AppSettings["CsiViewers"]
                     != null)
                 {
                     return ConfigurationManager.
-                        AppSettings["Viewers"].ToString();
+                        AppSettings["CsiViewers"].ToString();
                 }
-                return "Viewers";
+                return "CsiViewers";
             }
         }
 
-        public static string EditorsRole
+        public static string CsiEditorsRole
         {
             get
             {
-                if (ConfigurationManager.AppSettings["Editors"]
+                if (ConfigurationManager.AppSettings["CsiEditors"]
                     != null)
                 {
                     return ConfigurationManager.
-                        AppSettings["Editors"].ToString();
+                        AppSettings["CsiEditors"].ToString();
                 }
-                return "Editors";
+                return "CsiEditors";
             }
         }
 
-        public static string AdminsRole
+        public static string CsiAdminsRole
         {
             get
             {
-                if (ConfigurationManager.AppSettings["Admins"]
+                if (ConfigurationManager.AppSettings["CsiAdmins"]
                     != null)
                 {
                     return ConfigurationManager.
-                        AppSettings["Admins"].ToString();
+                        AppSettings["CsiAdmins"].ToString();
                 }
-                return "Admins";
+                return "CsiAdmins";
+            }
+        }
+
+        public static string DsiViewersRole
+        {
+            get
+            {
+                if (ConfigurationManager.AppSettings["DsiViewers"]
+                    != null)
+                {
+                    return ConfigurationManager.
+                        AppSettings["DsiViewers"].ToString();
+                }
+                return "DsiViewers";
+            }
+        }
+
+        public static string DsiEditorsRole
+        {
+            get
+            {
+                if (ConfigurationManager.AppSettings["DsiEditors"]
+                    != null)
+                {
+                    return ConfigurationManager.
+                        AppSettings["DsiEditors"].ToString();
+                }
+                return "DsiEditors";
+            }
+        }
+
+        public static string DsiAdminsRole
+        {
+            get
+            {
+                if (ConfigurationManager.AppSettings["DsiAdmins"]
+                    != null)
+                {
+                    return ConfigurationManager.
+                        AppSettings["DsiAdmins"].ToString();
+                }
+                return "DsiAdmins";
+            }
+        }
+
+        public static string DsnViewersRole
+        {
+            get
+            {
+                if (ConfigurationManager.AppSettings["DsnViewers"]
+                    != null)
+                {
+                    return ConfigurationManager.
+                        AppSettings["DsnViewers"].ToString();
+                }
+                return "DsnViewers";
+            }
+        }
+
+        public static string DsnEditorsRole
+        {
+            get
+            {
+                if (ConfigurationManager.AppSettings["DsnEditors"]
+                    != null)
+                {
+                    return ConfigurationManager.
+                        AppSettings["DsnEditors"].ToString();
+                }
+                return "DsnEditors";
+            }
+        }
+
+        public static string DsnAdminsRole
+        {
+            get
+            {
+                if (ConfigurationManager.AppSettings["DsnAdmins"]
+                    != null)
+                {
+                    return ConfigurationManager.
+                        AppSettings["DsnAdmins"].ToString();
+                }
+                return "DsnAdmins";
             }
         }
 
@@ -95,16 +189,16 @@ namespace Workorders.Web.Helpers
 
         public static string CompanyName
         {
-          get
-          {
-            if (ConfigurationManager.AppSettings["CompanyName"]
-                != null)
+            get
             {
-              return ConfigurationManager.
-                  AppSettings["CompanyName"].ToString();
+                if (ConfigurationManager.AppSettings["CompanyName"]
+                    != null)
+                {
+                    return ConfigurationManager.
+                        AppSettings["CompanyName"].ToString();
+                }
+                return "Alpha Information Systems, Inc.";
             }
-            return "Alpha Information Systems, Inc.";
-          }
         }
 
         public static string CompanyAbbr
@@ -137,15 +231,15 @@ namespace Workorders.Web.Helpers
 
         public static bool IsProduction
         {
-          get
-          {
-            if (ConfigurationManager.AppSettings["IsProduction"]
-                != null)
+            get
             {
-              return bool.Parse(ConfigurationManager.AppSettings["IsProduction"].ToString());
+                if (ConfigurationManager.AppSettings["IsProduction"]
+                    != null)
+                {
+                    return bool.Parse(ConfigurationManager.AppSettings["IsProduction"].ToString());
+                }
+                return false;
             }
-            return false;
-          }
         }
 
         public static string ApplicationDescription
@@ -161,6 +255,5 @@ namespace Workorders.Web.Helpers
                 return "Manage Service Location Maintenance issues, aka Workorders.";
             }
         }
-    
     }
 }

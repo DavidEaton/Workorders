@@ -1,10 +1,6 @@
-﻿using Workorders.Web.Helpers;
-using Workorders.Web.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Workorders.Web.ViewModels;
 using System.Web.Mvc;
+using Workorders.Web.Helpers;
 
 namespace Workorders.Web.Controllers
 {
@@ -13,7 +9,15 @@ namespace Workorders.Web.Controllers
         // GET: AccessDenied
         public ActionResult Index()
         {
-            var model = new WorkOrdersGridViewModel();
+            //read selected company from cookie
+            var selectedCompany = CompanyCookie.SelectedCompany;
+
+            var model = new WorkOrdersGridViewModel
+            {
+                Companies = UserFunctions.GetCompaniesSelectList(selectedCompany),
+                SelectedCompany = selectedCompany
+            };
+
             return View(model);
         }
     }

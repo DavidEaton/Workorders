@@ -1,10 +1,6 @@
 ﻿using Workorders.Web.Helpers;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-
 using Workorders.Web.ViewModels.AlertRecipient;
 using Workorders.Web.Filters;
 using Workorders.Data.Enums;
@@ -18,11 +14,14 @@ namespace Workorders.Web.Controllers
     [CustomAuthorize(AccessType = AccessType.Admins)]
     public class AlertRecipientController : Controller
     {
-        AppDbContext _db = new AppDbContext();
+        AppDbContext _db = new AppDbContext(Settings.GetConnectionStringName());
         // GET: AlertRecipient
         public ActionResult Index()
         {
             AlertRecipientGridViewModel model = new AlertRecipientGridViewModel();
+            var selectedCompany = CompanyCookie.SelectedCompany;
+            model.Companies = UserFunctions.GetCompaniesSelectList(selectedCompany);
+            model.SelectedCompany = selectedCompany;
             model.Areas = UserFunctions.GetAreasSelectList(_db);
 
             return View(model);
@@ -48,16 +47,26 @@ namespace Workorders.Web.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
+            var selectedCompany = CompanyCookie.SelectedCompany;
+
+            if (string.IsNullOrEmpty(selectedCompany))
+            {
+                return RedirectToAction("Index");
+            }
+
             var model = _db.AlertRecipients.Find(id);
             if (model == null)
             {
                 return HttpNotFound();
             }
 
-            var viewModel = new AlertRecipientViewModel();
-            viewModel.Id = id;
-            viewModel.AreaId = model.AreaId;
-            viewModel.Emails = model.Emails;
+            var viewModel = new AlertRecipientViewModel
+            {
+                Id = id,
+                AreaId = model.AreaId,
+                Emails = model.Emails
+            };
+
             viewModel.Areas = UserFunctions.GetAreasSelectList(_db, viewModel.AreaId);
             return View(viewModel);
         }

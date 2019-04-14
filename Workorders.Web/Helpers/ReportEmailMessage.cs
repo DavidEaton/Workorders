@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using Workorders.Web.ViewModels;
-using System.Configuration;
+using Workorders.Data.Enums;
 
 namespace Workorders.Web.Helpers
 {
     public class ReportEmailMessage
     {
-        public static string GetReportEmailMessage(string areaName, int areaId, AppDbContext _db)
+        public static string GetReportEmailMessage(CompanyEnum company, string areaName, int areaId, AppDbContext _db)
         {
 
             var today = System.DateTime.UtcNow.ToCentralTime();
@@ -37,7 +37,7 @@ namespace Workorders.Web.Helpers
                 openedWorkOrderModels.Add(model);
             }
 
-            var message = @"<h2>" + ConfigurationManager.AppSettings["CompanyAbbr"] + @" Weekly Maintenance Workorders Report</h2>
+            var message = @"<h2>" + company.ToString() + @" Weekly Maintenance Workorders Report</h2>
                                     <h2>" + areaName + @"</h2>
                                     <h5>Report created " + @DateTime.UtcNow.ToCentralTime() + @"</h5><br />
                                       <h4 ><i>Workorders Opened over the past week</i> </h4> ";

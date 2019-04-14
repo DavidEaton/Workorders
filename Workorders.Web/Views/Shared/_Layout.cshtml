@@ -51,7 +51,7 @@
                 <a href="javascript:void(0);" class="navbar-brand wo-brand visible-xs">@Settings.CompanyAbbr</a>
 
                 <ul class="nav navbar-nav pull-left" style="margin-left: 0; margin-right: 0;">
-
+                    
                     @{
                         if (UserFunctions.IsValidUser())
                         {
@@ -59,18 +59,25 @@
                             <li class="visible-xs">
                                 <a href="@Url.Action("Index", "Workorders")">
                                     Workorders
-                                    <span class="wo-mobile-grid-count">(@openIssuesCount)</span>
+                                    @if (string.IsNullOrEmpty(CompanyCookie.SelectedCompany) == false)
+                                    {
+                                        <span class="wo-mobile-grid-count">(@openIssuesCount)</span>
+                                    }
                                 </a>
                             </li>
                             <li class="hidden-xs">
                                 <a href="@Url.Action("Index", "Workorders")">
                                     Workorders
-                                    <span class="wo-mobile-grid-count">(@openIssuesCount Open)</span>
+                                    @if (string.IsNullOrEmpty(CompanyCookie.SelectedCompany) == false)
+                                    {
+                                        <span class="wo-mobile-grid-count">(@openIssuesCount Open)</span>
+                                    }
                                 </a>
                             </li>
                         }
 
                     }
+
                 </ul>
             </div>
             <div class="navbar-collapse collapse">
@@ -93,7 +100,7 @@
 
                     <li>@Html.ActionLink("About", "About", "Workorders")</li>
 
-                    <li class="dropdown">
+                    @*<li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">Help</a>
                         <ul class="dropdown-menu">
                             <li>
@@ -103,7 +110,7 @@
                                 <a href=@Settings.HelpVideoLinkEditors target="_blank">Editors Video</a>
                             </li>
                         </ul>
-                    </li>
+                    </li>*@
 
                 </ul>
                 @Html.Partial("_LoginPartial")

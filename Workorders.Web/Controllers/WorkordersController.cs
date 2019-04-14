@@ -18,7 +18,7 @@ namespace Workorders.Web.Controllers
     [CustomAuthorize(AccessType = AccessType.Users)]
     public class WorkordersController : Controller
     {
-        AppDbContext _db = new AppDbContext();
+        AppDbContext _db = new AppDbContext(Settings.GetConnectionStringName());
 
         public JsonResult GetOpen([DataSourceRequest]DataSourceRequest request, bool isOpen)
         {           
@@ -200,15 +200,41 @@ namespace Workorders.Web.Controllers
 
         public ActionResult Index()
         {
-            WorkOrdersGridViewModel model = new WorkOrdersGridViewModel();
+            var selectedCompany = CompanyCookie.SelectedCompany;
 
-            //fill dropdowns data. required for mobile view
-            model.Departments = GetMobileFilterDepartmentsSelectList();
-            model.Areas = GetMobileFilterAreasSelectList();
-            model.Closers = GetMobileFilterClosersSelectList();
-            model.Priorities = GetPrioritiesSelectList(null);
+            WorkOrdersGridViewModel model = new WorkOrdersGridViewModel
+            {
+                //fill dropdowns data. required for mobile view
+                Departments = GetMobileFilterDepartmentsSelectList(),
+                Areas = GetMobileFilterAreasSelectList(),
+                Closers = GetMobileFilterClosersSelectList(),
+                Priorities = GetPrioritiesSelectList(null),
+                Companies = UserFunctions.GetCompaniesSelectList(selectedCompany),
+                SelectedCompany = selectedCompany
+            };
 
             return View(model);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult SelectCompany(WorkOrdersGridViewModel model)
+        {
+            if (model != null && ModelState.IsValid)
+            {
+                CompanyCookie.SelectedCompany = model.SelectedCompany;
+            }
+
+            if (Request.UrlReferrer != null)
+            {
+                return Redirect(Request.UrlReferrer.ToString());
+
+            }
+            else
+            {
+                return RedirectToAction("Index");
+
+            }
         }
 
         public ActionResult Mobile()
@@ -283,30 +309,38 @@ namespace Workorders.Web.Controllers
         [CustomAuthorize(AccessType = AccessType.Editors)]
         public ActionResult Edit(int id)
         {
+            var selectedCompany = CompanyCookie.SelectedCompany;
+
+            if (string.IsNullOrEmpty(selectedCompany))
+            {
+                return RedirectToAction("Index");
+            }
+
             var model = _db.Workorders.Find(id);
             if (model == null)
             {
                 return HttpNotFound();
             }
 
-            var viewModel = new WorkorderEditViewModel();
-
-            viewModel.Id = id;
-            viewModel.DepartmentId = model.DepartmentId;
-            viewModel.DepartmentAreaId = model.Department.AreaID;
-            viewModel.Priority = model.Priority;
-            viewModel.Reported = model.Reported;
-            viewModel.Details = model.Details;
-            viewModel.Reporter = model.Reporter;
-            viewModel.ConsumerId = model.ConsumerId;
-            viewModel.Estimate = model.Estimate;
-            viewModel.PoNumber = model.PoNumber;
-            viewModel.Closed = model.Closed;
-            viewModel.Closer = model.Closer;
-            viewModel.Resolution = model.Resolution;
-            //viewModel.Approved = model.Approved ?? false;
-            viewModel.Approved = model.Approved;
-            viewModel.PersonServed = model.PersonServed;
+            var viewModel = new WorkorderEditViewModel
+            {
+                Id = id,
+                DepartmentId = model.DepartmentId,
+                DepartmentAreaId = model.Department.AreaID,
+                Priority = model.Priority,
+                Reported = model.Reported,
+                Details = model.Details,
+                Reporter = model.Reporter,
+                ConsumerId = model.ConsumerId,
+                Estimate = model.Estimate,
+                PoNumber = model.PoNumber,
+                Closed = model.Closed,
+                Closer = model.Closer,
+                Resolution = model.Resolution,
+                //viewModel.Approved = model.Approved ?? false;
+                Approved = model.Approved,
+                PersonServed = model.PersonServed
+            };
             viewModel.ResultOfPersonServed = !string.IsNullOrEmpty(viewModel.PersonServed) ? true : false;
             //fill dropdowns data
             viewModel.Departments = GetDepartmentsSelectList(viewModel.DepartmentId);
@@ -646,19 +680,22 @@ namespace Workorders.Web.Controllers
             var applicationName = Settings.ApplicationName;
             var applicationDescription = Settings.ApplicationDescription;
             var companyAbbreviation = Settings.CompanyAbbr;
-            var users = Settings.ViewersRole;
-            var editors = Settings.EditorsRole;
-            var admins = Settings.AdminsRole;
+            var users = Settings.CsiViewersRole;
+            var editors = Settings.CsiEditorsRole;
+            var admins = Settings.CsiAdminsRole;
             var currentYear = DateTime.Now.Year.ToString();
 
-            var model = new AboutViewModel();
-            model.ApplicationName = applicationName;
-            model.ApplicationDescription = applicationDescription;
-            model.Users = users;
-            model.Editors = editors;
-            model.Admins = admins;
-            model.CurrentYear = currentYear;
-            model.UrlReferrer = Request.UrlReferrer != null ? Request.UrlReferrer.ToString() : Url.Action("Index");
+            var model = new AboutViewModel
+            {
+                ApplicationName = applicationName,
+                ApplicationDescription = applicationDescription,
+                Users = users,
+                Editors = editors,
+                Admins = admins,
+                CurrentYear = currentYear,
+                UrlReferrer = Request.UrlReferrer != null ? Request.UrlReferrer.ToString() : Url.Action("Index")
+            };
+
             return View(model);
         }
 

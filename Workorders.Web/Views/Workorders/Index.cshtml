@@ -5,7 +5,7 @@
     ViewBag.Title = Settings.ApplicationName;
 }
 
-@*<div class="row" style="margin-top:20px;">
+<div class="row" style="margin-top:20px;">
     <div class="col-md-4 col-xs-12">
         @using (Html.BeginForm("SelectCompany", "Workorders"))
         {
@@ -16,18 +16,24 @@
             </div>
         }
     </div>
-</div>*@
+</div>
 
 <div class="">
-    <p>
-        @Html.ActionLink("Add New Workorder", "Create", "Workorders", null, new
-       {
-           @class = "btn btn-large btn-default",
-           @tabindex = "1"
-       })
 
-    </p>
-
+    @if (!string.IsNullOrEmpty(Model.SelectedCompany))
+    {
+        <p>
+            @Html.ActionLink("Add New Workorder",
+                            "Create",
+                            "Workorders",
+                            null,
+                            new
+                                {
+                                    @class = "btn btn-large btn-default",
+                                    @tabindex = "1"
+                                })
+        </p>
+    }
 
     <ul class="nav nav-tabs wo-nav-tabs">
         <li class="active"><a href="#open" data-toggle="tab">Open</a></li>
@@ -38,22 +44,64 @@
 
     <div class="tab-content" style="padding-top: 20px;">
         <div class="tab-pane fade in active" id="open">
-            @Html.Action("LoadWorkordersGridPartial", new { type = "open", isApproved = true })
+
+            @if (!string.IsNullOrEmpty(Model.SelectedCompany))
+            {
+                @Html.Action("LoadWorkordersGridPartial", new { type = "open", isApproved = true })
+            }
+            else
+            {
+                <div class="alert alert-info">Please select company first</div>
+            }
         </div>
         <div class="tab-pane fade" id="closed">
-            @Html.Action("LoadWorkordersGridPartial", new { type = "Resloved", isApproved = false })
+            @if (!string.IsNullOrEmpty(Model.SelectedCompany))
+            {
+                @Html.Action("LoadWorkordersGridPartial", new { type = "Resloved", isApproved = false })
+            }
+            else
+            {
+                <div class="alert alert-info">Please select company first</div>
+            }
+
         </div>
         <div class="tab-pane fade" id="awaiting">
-            @Html.Action("LoadWorkordersGridPartial", new { type = "Awaiting", isApproved = false })
+            @if (!string.IsNullOrEmpty(Model.SelectedCompany))
+            {
+                @Html.Action("LoadWorkordersGridPartial", new { type = "Awaiting", isApproved = false })
+            }
+            else
+            {
+                <div class="alert alert-info">Please select company first</div>
+            }
+
         </div>
         <div class="tab-pane fade" id="rejected">
-            @Html.Action("LoadWorkordersGridPartial", new { type = "Rejected", isApproved = false })
+            @if (!string.IsNullOrEmpty(Model.SelectedCompany))
+            {
+                @Html.Action("LoadWorkordersGridPartial", new { type = "Rejected", isApproved = false })
+            }
+            else
+            {
+                <div class="alert alert-info">Please select company first</div>
+            }
+
         </div>
     </div>
 
 </div>
 
 @Html.Partial("_ApproveConfirmationPartial")
+
+<script>
+    $(function () {
+        $('#SelectedCompany').change(function () {
+
+            $(this).parents('form').submit();
+        });
+    });
+
+</script>
 
 <script>
     function areaFilterJsFunction(element) {

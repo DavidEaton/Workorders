@@ -16,20 +16,20 @@ namespace Workorders.Web.ViewModels
         private DateTime reported;
         public DateTime Reported
         {
-            get { return this.reported; }
+            get { return reported; }
             set
             {
-                this.reported = new DateTime(value.Ticks, DateTimeKind.Utc);
+                reported = new DateTime(value.Ticks, DateTimeKind.Utc);
             }
         }
 
         private DateTime? closed;
         public DateTime? Closed
         {
-            get { return this.closed; }
+            get { return closed; }
             set
             {
-                this.closed = value.HasValue ? new DateTime(value.Value.Ticks, DateTimeKind.Utc) : (DateTime?)null;
+                closed = value.HasValue ? new DateTime(value.Value.Ticks, DateTimeKind.Utc) : (DateTime?)null;
             }
         }
 
@@ -85,13 +85,15 @@ namespace Workorders.Web.ViewModels
         }
 
         //public bool Approved { get; set; }
-        public Nullable<System.DateTime> Approved { get; set; }
+        public DateTime? Approved { get; set; }
 
         //required for mobile grid filter dropdowns
         public SelectList Departments { get; set; }
         public SelectList Areas { get; set; }
         public SelectList Priorities { get; set; }
         public SelectList Closers { get; set; }
+        public string SelectedCompany { get; set; }
+        public SelectList Companies { get; set; }
 
         public DateTime? Rejected { get; set; }
         public string Rejector { get; set; }

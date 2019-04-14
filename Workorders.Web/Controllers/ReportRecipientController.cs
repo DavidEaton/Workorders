@@ -8,40 +8,56 @@ using Workorders.Data;
 using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
 using System.Configuration;
+using System.Collections.Generic;
 
 namespace Workorders.Web.Controllers
 {
     //[CustomAuthorize(AccessType = AccessType.Admins)]
     public class ReportRecipientController : Controller
     {
-        AppDbContext _db = new AppDbContext();
-
+        AppDbContext _db = new AppDbContext(Settings.GetConnectionStringName());
+        // GET: ReportRecipients
+        [CustomAuthorize(AccessType = AccessType.Admins)]
         public ActionResult Index()
         {
-            // Get area recipients
             ReportRecipientGridViewModel model = new ReportRecipientGridViewModel();
+            var selectedCompany = CompanyCookie.SelectedCompany;
+            model.Companies = UserFunctions.GetCompaniesSelectList(selectedCompany);
+            model.SelectedCompany = selectedCompany;
             model.Areas = UserFunctions.GetAreasSelectList(_db);
+
 
             return View(model);
         }
 
         public void TestSendEmails()
         {
-
+            var companies = new List<CompanyEnum>
             {
-                //get all areas
+                CompanyEnum.CSI,
+                CompanyEnum.DSI,
+                CompanyEnum.DSN
+            };
+
+            foreach (var company in companies)
+            {
+                string companyConnectionString = null;
+                companyConnectionString = ConfigurationManager.AppSettings[company.ToString()];
+                AppDbContext _db = new AppDbContext(companyConnectionString);
+                //get al areas
                 var areas = _db.Areas.ToList();
 
                 foreach (var area in areas)
                 {
 
                     string toBeSentEmails = "davidzaeaton@outlook.com";
-                    string emailBodyText = ReportEmailMessage.GetReportEmailMessage(area.Name, area.Id, _db);
+                    string emailBodyText = ReportEmailMessage.GetReportEmailMessage(company, area.Name, area.Id, _db);
 
                     //send email 
-                    Email.SendEmail(toBeSentEmails, ConfigurationManager.AppSettings["CompanyAbbr"] + " Weekly Maintenance Workorders Report", emailBodyText, emailBodyText, null, null);
+                    Email.SendEmail(toBeSentEmails, company + " Weekly Maintenance Work Orders Report", emailBodyText, emailBodyText, null, null);
                 }
             }
+
         }
 
 
@@ -62,6 +78,13 @@ namespace Workorders.Web.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
+            var selectedCompany = CompanyCookie.SelectedCompany;
+
+            if (string.IsNullOrEmpty(selectedCompany))
+            {
+                return RedirectToAction("Index");
+            }
+
             var model = _db.ReportRecipients.Find(id);
             if (model == null)
             {

@@ -49,7 +49,7 @@ namespace Workorders.Web
             if (count == 0)
             {
                 FederatedAuthentication.FederationConfiguration.IdentityConfiguration
-                    .AudienceRestriction.AllowedAudienceUris.Add(new Uri(IdentityConfig.AudienceUri));
+                    .AudienceRestriction.AllowedAudienceUris.Add(new Uri(AudienceUri));
             }
         }
     }
