@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using Workorders.Data;
 using System.ComponentModel.DataAnnotations.Schema;
+using Workorders.Web.Helpers;
 
 namespace Workorders.Web
 {
@@ -41,9 +42,21 @@ namespace Workorders.Web
         // Interrupt the in-memory model creation and configure with the Fluent API.
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            var conn = Database.Connection;
+            var company = CompanyCookie.SelectedCompany;
             //Workorder
             //Maintenance.MaintWorkorder
-            modelBuilder.Entity<Workorder>().Map(m => { m.ToTable("Maintenance.MaintWorkorder"); });
+
+            if (company == "DSN")
+            {
+                modelBuilder.Entity<Workorder>().Map(m => { m.ToTable("dbo.MaintWorkorder"); });
+            }
+            else
+            {
+                modelBuilder.Entity<Workorder>().Map(m => { m.ToTable("Maintenance.MaintWorkorder"); });
+                modelBuilder.Entity<Workorder>().Property(m => m.PersonServed).HasColumnName("Consumer");
+            }
+
             modelBuilder.Entity<Workorder>().Property(m => m.Id).HasColumnName("MaintWorkorderID");
             modelBuilder.Entity<Workorder>().Property(m => m.DepartmentId).HasColumnName("DepartmentID");
             modelBuilder.Entity<Workorder>().Property(m => m.Reported).HasColumnName("MaintWorkorderDate");
@@ -53,7 +66,6 @@ namespace Workorders.Web
             modelBuilder.Entity<Workorder>().Property(m => m.Closed).HasColumnName("MaintWorkorderComplete");
             modelBuilder.Entity<Workorder>().Property(m => m.Details).HasColumnName("MaintWorkorderDetail");
             modelBuilder.Entity<Workorder>().Property(m => m.Closer).HasColumnName("CompletedBy");
-            modelBuilder.Entity<Workorder>().Property(m => m.PersonServed).HasColumnName("Consumer");
             modelBuilder.Entity<Workorder>().Property(m => m.Open).HasColumnName("Open").HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
 
             //Department
@@ -72,7 +84,15 @@ namespace Workorders.Web
 
             //Consumer
             //Common.ConsumersLookup
-            modelBuilder.Entity<Consumer>().Map(c => { c.ToTable("Common.ConsumersLookup"); });
+            if (company == "DSN")
+            {
+                modelBuilder.Entity<Consumer>().Map(c => { c.ToTable("Common.ConsumersLookups"); });
+            }
+            else
+            {
+                modelBuilder.Entity<Consumer>().Map(c => { c.ToTable("Common.ConsumersLookup"); });
+            }
+
             modelBuilder.Entity<Consumer>().Property(c => c.Id).HasColumnName("PartyId");
             modelBuilder.Entity<Consumer>().Property(c => c.Name).HasColumnName("ConsumerName");
 

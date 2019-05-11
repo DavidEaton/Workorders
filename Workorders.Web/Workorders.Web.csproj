@@ -378,8 +378,6 @@
     <Content Include="Views\Workorders\Detail.cshtml" />
     <Content Include="Views\Workorders\Edit.cshtml" />
     <Content Include="Views\Workorders\Index.cshtml" />
-    <Content Include="Views\Workorders\Index.Mobile.cshtml" />
-    <Content Include="Views\Workorders\Mobile.cshtml" />
     <Content Include="Views\Workorders\_WorkorderActionButtons.cshtml" />
     <Content Include="Views\Workorders\_WorkorderPartial.cshtml" />
     <Content Include="Views\Shared\_DeleteConfirmationPartial.cshtml" />
@@ -395,11 +393,7 @@
     <Content Include="Views\AlertRecipient\Create.cshtml" />
     <Content Include="Views\AlertRecipient\_AlertRecipientPartial.cshtml" />
     <Content Include="Views\ReportRecipient\_ReportRecipientPartial.cshtml" />
-    <Content Include="Views\AlertRecipient\Mobile.cshtml" />
-    <Content Include="Views\ReportRecipient\Mobile.cshtml" />
     <Content Include="Views\Workorders\Report.cshtml" />
-    <Content Include="Views\ReportRecipient\index.Mobile.cshtml" />
-    <Content Include="Views\AlertRecipient\Index.Mobile.cshtml" />
     <Content Include="Views\Workorders\Links.cshtml" />
   </ItemGroup>
   <ItemGroup>

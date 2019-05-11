@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Workorders.Data;
 using Workorders.Data.Enums;
 using Workorders.Web.Helpers;
 
@@ -35,7 +36,7 @@ namespace Workorders.Web.ViewModels
 
         public string Details { get; set; }
         public Priority Priority { get; set; }
-        public string ConsumerName { get; set; }
+        public Consumer Consumer { get; set; }
         public string Closer { get; set; }
         public string Resolution { get; set; }
         public decimal? Estimate { get; set; }

@@ -28,15 +28,13 @@ namespace Workorders.Web.Controllers
                                 //.Where(w => w.Closed == null && w.Approved == isOpen).Select(m => new WorkOrdersGridViewModel
                                 .Where(w => w.Open == true).Select(m => new WorkOrdersGridViewModel
                                 {
-                                    //Changed by David since all but ConsumerName can never be null.
-                                    //DepartmentAreaName = m.Department != null ? m.Department.AreaName : string.Empty,
-                                    //DepartmentName = m.Department != null ? m.Department.Name : string.Empty,
                                     DepartmentAreaName = m.Department.AreaName,
                                     DepartmentName = m.Department.Name,
                                     Reported = m.Reported,
                                     Details = m.Details,
                                     Priority = m.Priority,
-                                    ConsumerName = m.Consumer != null ? m.Consumer.Name : string.Empty,
+                                    //ConsumerName = m.Consumer != null ? m.Consumer.Name : string.Empty,
+                                    Consumer = m.Consumer, 
                                     Id = m.Id
                                 });
 
@@ -46,9 +44,9 @@ namespace Workorders.Web.Controllers
             // JavaScriptSerializer class used by the Json method cannot serialize object graphs which contain circular references (refer to each other). 
             //The best solution is to use View Model objects and avoid the serializing the properties which create the circular reference.
 
+            var moops = model;
 
-
-            return this.Json(model.ToDataSourceResult(request));
+            return Json(model.ToDataSourceResult(request));
         }
 
         public JsonResult GetClosed([DataSourceRequest]DataSourceRequest request)
@@ -68,7 +66,7 @@ namespace Workorders.Web.Controllers
                                         Reported = m.Reported,
                                         Details = m.Details,
                                         Priority = m.Priority,
-                                        ConsumerName = m.Consumer != null ? m.Consumer.Name : string.Empty,
+                                        Consumer= m.Consumer,
                                         Closed = m.Closed,
                                         Closer = m.Closer,
                                         Id = m.Id
@@ -95,7 +93,7 @@ namespace Workorders.Web.Controllers
                                         Reported = m.Reported,
                                         Details = m.Details,
                                         Priority = m.Priority,
-                                        ConsumerName = m.Consumer != null ? m.Consumer.Name : string.Empty,
+                                        Consumer = m.Consumer,
                                         Rejected = m.Rejected,
                                         Rejector = m.Rejector,
                                         Id = m.Id
@@ -121,7 +119,7 @@ namespace Workorders.Web.Controllers
                                         Reported = m.Reported,
                                         Details = m.Details,
                                         Priority = m.Priority,
-                                        ConsumerName = m.Consumer != null ? m.Consumer.Name : string.Empty,
+                                        Consumer = m.Consumer,
                                         Rejected = m.Rejected,
                                         Rejector = m.Rejector,
                                         Id = m.Id
@@ -131,76 +129,79 @@ namespace Workorders.Web.Controllers
             return this.Json(model.ToDataSourceResult(request));
         }
 
-        public JsonResult GetMobileGridData([DataSourceRequest]DataSourceRequest request, string workOrderType, string workOrderDueType)
-        {
-            // JavaScriptSerializer class used by the Json method cannot serialize object graphs which contain circular references (refer to each other). 
-            //The best solution is to use View Model objects and avoid the serializing the properties which create the circular reference.
-            var model = _db.Workorders.ToList()
-                                    .OrderBy(w => w.Department.AreaName)
-                                    .ThenBy(w => w.Department.Name)
-                                    .Select(m => new WorkOrdersGridViewModel
-                                    {
-                                        DepartmentAreaName = m.Department.AreaName,
-                                        DepartmentName = m.Department.Name,
-                                        Reported = m.Reported,
-                                        Details = m.Details,
-                                        Priority = m.Priority,
-                                        ConsumerName = m.Consumer != null ? m.Consumer.Name : string.Empty,
-                                        Closed = m.Closed,
-                                        Closer = m.Closer,
-                                        Id = m.Id,
-                                        Resolution = m.Resolution,
-                                        Estimate = m.Estimate,
-                                        //Approved = m.Approved ?? false
-                                        Approved=m.Approved
-                                    });
+        //public JsonResult GetMobileGridData([DataSourceRequest]DataSourceRequest request, string workOrderType, string workOrderDueType)
+        //{
+        //    // JavaScriptSerializer class used by the Json method cannot serialize object graphs which contain circular references (refer to each other). 
+        //    //The best solution is to use View Model objects and avoid the serializing the properties which create the circular reference.
+        //    var model = _db.Workorders.ToList()
+        //                            .OrderBy(w => w.Department.AreaName)
+        //                            .ThenBy(w => w.Department.Name)
+        //                            .Select(m => new WorkOrdersGridViewModel
+        //                            {
+        //                                DepartmentAreaName = m.Department.AreaName,
+        //                                DepartmentName = m.Department.Name,
+        //                                Reported = m.Reported,
+        //                                Details = m.Details,
+        //                                Priority = m.Priority,
+        //                                ConsumerName = m.Consumer != null ? m.Consumer.Name : string.Empty,
+        //                                Closed = m.Closed,
+        //                                Closer = m.Closer,
+        //                                Id = m.Id,
+        //                                Resolution = m.Resolution,
+        //                                Estimate = m.Estimate,
+        //                                //Approved = m.Approved ?? false
+        //                                Approved=m.Approved
+        //                            });
 
-            //filter by workorder type
-            if (workOrderType != null)
-            {
-                if (workOrderType.Equals("Closed"))
-                {
-                    model = model.Where(x => x.Closed != null);
-                }
-                else if (workOrderType.Equals("Open"))
-                {
-                    //model = model.Where(x => x.Closed == null && x.Approved == true);
-                    model = model.Where(x => x.Closed == null && x.Approved != null);
-                }
-                else if (workOrderType.Equals("Awaiting Approval"))
-                {
-                    //model = model.Where(x => x.Closed == null && x.Approved == false);
-                    model = model.Where(x => x.Closed == null && x.Approved == null && x.Rejected == null);
-                }
-            }
+        //    //filter by workorder type
+        //    if (workOrderType != null)
+        //    {
+        //        if (workOrderType.Equals("Closed"))
+        //        {
+        //            model = model.Where(x => x.Closed != null);
+        //        }
+        //        else if (workOrderType.Equals("Open"))
+        //        {
+        //            //model = model.Where(x => x.Closed == null && x.Approved == true);
+        //            model = model.Where(x => x.Closed == null && x.Approved != null);
+        //        }
+        //        else if (workOrderType.Equals("Awaiting Approval"))
+        //        {
+        //            //model = model.Where(x => x.Closed == null && x.Approved == false);
+        //            model = model.Where(x => x.Closed == null && x.Approved == null && x.Rejected == null);
+        //        }
+        //    }
 
-            //filter by due (due or overdue)
-            if (workOrderDueType != null)
-            {
-                if (workOrderDueType.Equals("Overdue"))
-                {
-                    model = model.Where(x => x.Overdue);
-                }
-                else if (workOrderDueType.Equals("Due"))
-                {
-                    model = model.Where(x => x.Overdue == false);
-                }
-            }
+        //    //filter by due (due or overdue)
+        //    if (workOrderDueType != null)
+        //    {
+        //        if (workOrderDueType.Equals("Overdue"))
+        //        {
+        //            model = model.Where(x => x.Overdue);
+        //        }
+        //        else if (workOrderDueType.Equals("Due"))
+        //        {
+        //            model = model.Where(x => x.Overdue == false);
+        //        }
+        //    }
 
-            var data = model;
-            var requestPageSize = request.PageSize;
-            request.PageSize = 0;
+        //    var data = model;
+        //    var requestPageSize = request.PageSize;
+        //    request.PageSize = 0;
 
-            //get total records
-            var totalRecords = data.ToDataSourceResult(request).Data.AsQueryable().Count();
-            request.PageSize = requestPageSize;
+        //    //get total records
+        //    var totalRecords = data.ToDataSourceResult(request).Data.AsQueryable().Count();
+        //    request.PageSize = requestPageSize;
 
-            return this.Json(new { Data = model.ToDataSourceResult(request), TotalRecords = totalRecords });
-        }
+        //    return this.Json(new { Data = model.ToDataSourceResult(request), TotalRecords = totalRecords });
+        //}
 
         public ActionResult Index()
         {
             var selectedCompany = CompanyCookie.SelectedCompany;
+
+            //if (selectedCompany == null)
+            //    selectedCompany = SelectCompany();
 
             WorkOrdersGridViewModel model = new WorkOrdersGridViewModel
             {
@@ -267,7 +268,7 @@ namespace Workorders.Web.Controllers
                 Reported = m.Reported,
                 Details = m.Details,
                 Priority = m.Priority,
-                ConsumerName = m.Consumer != null ? m.Consumer.Name : string.Empty,
+                Consumer = m.Consumer,
                 Id = m.Id
 
             });
@@ -296,7 +297,7 @@ namespace Workorders.Web.Controllers
                   Reported = m.Reported,
                   Details = m.Details,
                   Priority = m.Priority,
-                  ConsumerName = m.Consumer != null ? m.Consumer.Name : string.Empty,
+                  Consumer = m.Consumer,
                   Id = m.Id
 
               });
@@ -747,7 +748,7 @@ namespace Workorders.Web.Controllers
         }
         private SelectList GetMobileFilterClosersSelectList()
         {
-            return new SelectList(_db.Workorders.Select(x => new { Closer = x.Closer })
+            return new SelectList(_db.Workorders.Select(x => new { x.Closer })
                                 .Where(x => !string.IsNullOrEmpty(x.Closer)).Distinct()
                                .ToList()
                                .OrderBy(d => d.Closer), "Closer", "Closer");

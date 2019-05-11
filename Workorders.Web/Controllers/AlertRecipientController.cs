@@ -148,40 +148,40 @@ namespace Workorders.Web.Controllers
         }
 
 
-        public JsonResult GetMobileGridData([DataSourceRequest]DataSourceRequest request)
-        {
-            // JavaScriptSerializer class used by the Json method cannot serialize object graphs which contain circular references (refer to each other). 
-            //The best solution is to use View Model objects and avoid the serializing the properties which create the circular reference.
-            var model = _db.AlertRecipients.ToList()
+        //public JsonResult GetMobileGridData([DataSourceRequest]DataSourceRequest request)
+        //{
+        //    // JavaScriptSerializer class used by the Json method cannot serialize object graphs which contain circular references (refer to each other). 
+        //    //The best solution is to use View Model objects and avoid the serializing the properties which create the circular reference.
+        //    var model = _db.AlertRecipients.ToList()
 
-                                    .Select(m => new AlertRecipientGridViewModel
-                                    {
-                                        AreaName = m.Area != null ? m.Area.Name : null,
-                                        Emails = m.Emails,
-                                        Id = m.Id,
-                                        AreaId = m.AreaId
+        //                            .Select(m => new AlertRecipientGridViewModel
+        //                            {
+        //                                AreaName = m.Area != null ? m.Area.Name : null,
+        //                                Emails = m.Emails,
+        //                                Id = m.Id,
+        //                                AreaId = m.AreaId
 
-                                    });
+        //                            });
 
-            var data = model;
-            var requestPageSize = request.PageSize;
-            request.PageSize = 0;
+        //    var data = model;
+        //    var requestPageSize = request.PageSize;
+        //    request.PageSize = 0;
 
-            //get total records
-            var totalRecords = data.ToDataSourceResult(request).Data.AsQueryable().Count();
-            request.PageSize = requestPageSize;
+        //    //get total records
+        //    var totalRecords = data.ToDataSourceResult(request).Data.AsQueryable().Count();
+        //    request.PageSize = requestPageSize;
 
-            return this.Json(new { Data = model.ToDataSourceResult(request), TotalRecords = totalRecords });
-        }
+        //    return this.Json(new { Data = model.ToDataSourceResult(request), TotalRecords = totalRecords });
+        //}
 
 
-        private SelectList GetMobileFilterAreasSelectList()
-        {
-            return new SelectList(_db.Areas
-                               .ToList()
-                               .Where(d => (d.Active == true))
-                               .OrderBy(d => d.Name), "Id", "Name");
-        }
+        //private SelectList GetMobileFilterAreasSelectList()
+        //{
+        //    return new SelectList(_db.Areas
+        //                       .ToList()
+        //                       .Where(d => (d.Active == true))
+        //                       .OrderBy(d => d.Name), "Id", "Name");
+        //}
 
 
     }

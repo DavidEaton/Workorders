@@ -16,7 +16,7 @@ namespace Workorders.Web.Helpers
                 }
             }
 
-            return "AppConnection";
+            return "AppConnectionCsi";
         }
 
         public static string CsiViewersRole
