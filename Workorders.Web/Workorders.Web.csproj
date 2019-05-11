@@ -331,6 +331,8 @@
     <Content Include="Scripts\BootstrapSwitch\bootstrap-switch.js" />
     <Content Include="Scripts\BootstrapSwitch\bootstrap-switch.min.js" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <None Include="Properties\PublishProfiles\workorders-csn-stage - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\workorders-csn-stage - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\WorkordersCsi-stage.pubxml" />
     <None Include="Properties\PublishProfiles\WorkordersDsi - PROD.pubxml" />
     <None Include="Properties\PublishProfiles\WorkordersDsi-stage.pubxml" />
